@@ -2,39 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9ad33201-6778-4d61-ad39-becfec3d47e0" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/descriptions (2).xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/hamcrest-core-1.3.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/junit-4.13.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/players.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/saved.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/world.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/world/src/test/world/ItemTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/world/src/test/world/MansionTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/world/src/test/world/RoomTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/world/src/test/world/TargetTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/world/src/world/Controller.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/world/src/world/controllerDriver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/bin/world/Item.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/bin/world/Mansion.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/bin/world/MansionBuilder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/bin/world/Room.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/bin/world/Target.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/bin/world/driver.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/src/world/ComputerController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/src/world/HumanController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/src/world/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/Item.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/src/world/Mansion.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/Mansion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/src/world/MansionBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/MansionBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/src/world/OrderPlayer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/src/world/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/src/world/PlayerBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/PlayerBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/src/world/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/Room.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/src/world/Target.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/Target.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/src/world/driver.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/driver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/test/ItemTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/test/MansionTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/test/RoomTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/test/TargetTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,20 +27,31 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="c7b4b565-0eb1-4c9f-8960-c011c45054e8" />
+        <option name="url" value="https://github.com/dpchennev/PDP---Milestone-Mansion-Game-.git" />
+      </UrlAndAccount>
+    </option>
+  </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/world/src/world/Room.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/world/src/world/Controller.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/world/src/world/Item.java" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/world/src/world/driver.java" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/world/src/world/PlayerBuilder.java" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/world/src/world/controllerDriver.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../lab4--tictactoe/Controller/test/TicTacToeControllerTest.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../lab4--tictactoe/Controller/src/tictactoe/TicTacToeConsoleController.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/world/src/world/Player.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../lab4--tictactoe/Controller/src/tictactoe/TicTacToeModel.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/world/src/world/Target.java" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/world/src/world/MansionBuilder.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/world/src/world/Mansion.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/world/src/world/MansionBuilder.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/world/src/world/Player.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/world/src/world/PlayerBuilder.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/world/src/world/Room.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/world/src/world/Target.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/world/src/world/controllerDriver.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/world/src/world/driver.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/../lab4--tictactoe/Controller/src/tictactoe/TicTacToeConsoleController.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../lab4--tictactoe/Controller/src/tictactoe/TicTacToeModel.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../lab4--tictactoe/Controller/test/TicTacToeControllerTest.java" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2LnYawl69HABLtVzk2uD0XQT1FL" />
   <component name="ProjectLevelVcsManager">
@@ -82,24 +61,13 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
-    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="Downloaded.Files.Path.Enabled" value="true" />
-    <property name="Repository.Attach.Annotations" value="false" />
-    <property name="Repository.Attach.JavaDocs" value="false" />
-    <property name="Repository.Attach.Sources" value="false" />
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="TODO_SCOPE" value="All Places" />
-    <property name="create.test.in.the.same.root" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/world" />
-    <property name="project.structure.last.edited" value="SDKs" />
-    <property name="project.structure.proportion" value="0.15" />
-    <property name="project.structure.side.proportion" value="0.2" />
-    <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "/Users/dongping/Documents/GitHub/PDP---Milestone-Mansion-Game-"
+  }
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\dongpingchen\Documents\GitHub\milestone-2---controller\world\src\test\world" />
@@ -189,7 +157,6 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
