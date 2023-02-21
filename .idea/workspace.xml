@@ -3,6 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="9ad33201-6778-4d61-ad39-becfec3d47e0" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/saved.png" beforeDir="false" afterPath="$PROJECT_DIR$/saved.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/world/src/world/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/world/src/world/MansionBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/MansionBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/world/src/world/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/world/src/world/controllerDriver.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/controllerDriver.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,7 +70,8 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "/Users/dongping/Documents/GitHub/PDP---Milestone-Mansion-Game-"
+    "last_opened_file_path": "/Users/dongping/Documents/GitHub/PDP---Milestone-Mansion-Game-",
+    "settings.editor.selected.configurable": "preferences.keymap"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -166,7 +172,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/world/src/world/Player.java</url>
-          <line>184</line>
+          <line>187</line>
           <option name="timeStamp" value="25" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -222,7 +228,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/world/src/world/Room.java</url>
           <line>128</line>
-          <properties class="world.Room">
+          <properties class="world.Room" method="getAllNeighborsMap">
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="66" />

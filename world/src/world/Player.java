@@ -19,11 +19,12 @@ public class Player {
  private String computerOrHuman;
  private String playerName;
  private String playerRoom; //the room the player's currently at
+
+ private final int totalAllowedItems;
  // private ArrayList<String> totalItemsLst; //{all items in mansion put in this list.
  private ArrayList<String> playerItemsLst; //each this list represent a player's all items.
  // private ArrayList<String> playersRoomNamesLst; //{the top hat, the garden of eden, ...}
  //all other private fields (x5)
-
  /*for consistently needed to update maps: */
  private HashMap<String, String> playersTargetNameRoomMap; // update each time the players/target move
  //related maps below (update first, need to change the second map)
@@ -47,6 +48,7 @@ public class Player {
      String computerOrHuman, //each player info
      String playerName, //each player info
      String playerRoom, //each player info
+               int totalAllowedItems,
      ArrayList<String> playerItemsLst, //each player info
      /*info needs to be updated constantly (maps)*/
      HashMap<String, String> playersTargetNameRoomMap, // update each time the players/target move
@@ -66,6 +68,7 @@ public class Player {
   this.computerOrHuman = computerOrHuman;
   this.playerName = playerName;
   this.playerRoom = playerRoom;
+  this.totalAllowedItems = totalAllowedItems;
   this.playerItemsLst = playerItemsLst;
   this.playersTargetNameRoomMap = playersTargetNameRoomMap;
   this.playersItemsMap = playersItemsMap;
@@ -428,11 +431,11 @@ public class Player {
   this.itemsRoomMap = itemsRoomMap;
  }
 
- public HashMap<String, ArrayList> getAllNeighborsMap() {
+ public HashMap<String, ArrayList<String>> getAllNeighborsMap() {
   return allNeighborsMap;
  }
 
- public void setAllNeighborsMap(HashMap<String, ArrayList> allNeighborsMap) {
+ public void setAllNeighborsMap(HashMap<String, ArrayList<String>> allNeighborsMap) {
   this.allNeighborsMap = allNeighborsMap;
  }
 

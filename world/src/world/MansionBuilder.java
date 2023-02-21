@@ -34,7 +34,7 @@ public interface MansionBuilder {
 
   ArrayList<ArrayList<ArrayList<Integer>>> getListOfRoomCoordinates();
 
-  HashMap<String, ArrayList> getAllNeighborsMap();
+  HashMap<String, ArrayList<String>> getAllNeighborsMap();
 
   int getTargetHealth();
 

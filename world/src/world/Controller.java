@@ -1,9 +1,5 @@
 package world;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -24,7 +20,7 @@ public class Controller {
   * @param out          the target to print to
   * @param worldIn
   */
- public Controller(Readable ControllerIn, Appendable out, Readable worldIn) {
+ public Controller(Readable worldIn, Readable ControllerIn, Appendable out) {
   if (ControllerIn == null || out == null || worldIn == null) {
    throw new IllegalArgumentException("Readable and Appendable can't be null");
   }
@@ -60,44 +56,47 @@ public class Controller {
   //1. first line: an integer N (declaring how many players for this game).
   ///for example, 2
   ArrayList<Player> allPlayers = new ArrayList<>();
-  String input = scanController.nextLine(); //READ 1ST LINE: 2
-  int totalPlayers = Integer.parseInt(input);
-  out.append(input + '\n');
+  System.out.println("How many players are here for the game?");
+  String totalPlayersStr = scanController.nextLine(); //READ 1ST LINE: 2
+  int totalPlayers = Integer.parseInt(totalPlayersStr);
+  out.append(totalPlayersStr + '\n');
 
   //2. next N lines: each line represent each players information:
   ///line1(x4): h playerA, The Top Hat, 5(total items allowed)
   ///line2 (x4) : c(if it's just a pc) computerA, 3(room), 3(total items allowed)
   for (int i = 0; i < totalPlayers; i++) { //next N lines for players info.
-   input = scanController.nextLine(); //
-   String[] strSplit = input.split(", ");
-   ArrayList<String> strList = new ArrayList<String>(Arrays.asList(strSplit));
-
-   String type = strList.get(0); //h
+   System.out.println("Is this a human or a computer: ");
+   String typeStr = scanController.nextLine();
+   out.append("ComputerORHuman: " + typeStr);
+//   String[] strSplit = input.split(", ");
+//   ArrayList<String> strList = new ArrayList<String>(Arrays.asList(strSplit));
+//   String type = strList.get(0); //h
    //   op.getComputerOrHumanLst().add(type.charAt(0));//put 'type' into the lst
-   out.append("ComputerORHuman: " + input);
 
-   String name = strList.get(1); //playerA
+   System.out.println("Please input one player's name: ");
+   String playerNameStr = scanController.nextLine();
    //   m.getPlayersNameLst().add(name);
-   out.append("PlayerName: " + input);
+   out.append("PlayerName: " + playerNameStr);
 
-   String room = strList.get(2); //The Top Hat
    //   m.getPlayersNameRoomMap().put(name, room);
    //   m.getPlayersRoomNamesLst().add(room);
-   out.append("Player initial room: " + input);
+   System.out.println("Please input this player's initial room name: ");
+   String roomNameStr= scanController.nextLine();
+   out.append("Player initial room: " + roomNameStr);
 
-   String totalItems = strList.get(3); //5 (total allowed items
-   //   m.getTotalItemsAllowedMap().put(name, Integer.parseInt(totalItems));
-   //   m.getTurnsMap().put(name, 1); //'1' represents default false true value.
-   out.append("Total items allowed for this player: " + input + '\n');
+   System.out.println("Please input the total numbers allowed for this player:");
+   String itemsAmountAllowedStr = scanController.nextLine();
+   out.append("Total items allowed for this player: " + itemsAmountAllowedStr + '\n');
    //*note: assume the players not poccessing items when first dropped into the rooms.
 
    /*adding attributes to one player instance*/
    Player player = new Player(m.getRoomNameIndexMap(), m.getTotalItemsAllowedMap(),
-       m.getItemsDamageMap(), m.getAllNeighborsMap(),//vals from mansion
+       m.getItemsDamageMap(), m.getAllNeighborsMap(),//vals 2from mansion
        m.getTargetHealth(), m.getTargetLocation(), //target info from mansion
        true, //player default boolean turn value is true.
-       type, //human or computer player
-       name, room, new ArrayList<>(), //empty arrlist is for the items each player possess
+       typeStr, //human or computer player
+       playerNameStr, roomNameStr,Integer.parseInt(itemsAmountAllowedStr),
+           new ArrayList<>(), //empty arrlist is for the items each player possess
        //initialize all hashmaps that need be updating constantly after each moves from players:
        m.getPlayersTargetNameRoomMap(), // HashMap<String, String> playersTargetNameRoomMap
        m.getPlayersItemsMap(), //HashMap<String, ArrayList<String>> playersItemsMap
@@ -105,11 +104,11 @@ public class Controller {
        m.getTurnsMap() // HashMap<String,Integer> turnsMap
    );
    allPlayers.add(player); //add one player to the 'allPlayers' list.
-   out.append(String.format("%s is successfully added to this Mansion.", name));
+   out.append(String.format("%s is successfully added to this Mansion.", playerNameStr));
   }//end of for loop.
 
 
-
+String input = "";
 
   /*  TODO 3rd. read the rest 'move actions':*/
   while (true) { ///from here the scan.next should only have 'move actions'
@@ -117,7 +116,7 @@ public class Controller {
     break; //break the while loop, game IS DONE!!
    } else {
     //note: each line represents an action.
-    input = scanController.nextLine(); //for example， move
+     input = scanController.nextLine(); //for example， move
    }
 
    //   int i = 0;//to track the players turn.
