@@ -19,26 +19,23 @@ import java.util.HashMap;
 
 public class Mansion implements MansionBuilder {
 
- //private fields: (x24)
- //world attributes:
+
+ private HashMap<String, ArrayList<String>> allNeighborsMap;
+
  private String worldName;
  private String targetName;
- // private int numPlayers;
- //target attributes:
  private int targetHealth;
  private int targetLocation;
  //room attributes:
  private ArrayList<String> allRoomsNamesLst;
  private ArrayList<ArrayList<ArrayList<Integer>>> listOfRoomCoordinates; //room Coords store in arraylist.
  private HashMap<String, Integer> roomNameIndexMap; //<room name, room Index>
- private HashMap<String, ArrayList<String>> allNeighborsMap;
-
  private int totalRooms;
  //item attributes
  private int totalItems;
  private HashMap<String, Integer> totalItemsAllowedMap;
  private HashMap<String, Integer> itemsDamageMap; // <item, damage>
- private HashMap<String, Integer> itemRoomMap; //<Item, room index>
+ private HashMap<String, Integer> itemsRoomMap; //<Item, room index>
  //graph info
  private Graphics graph;
  private static final int BUFFER_SIZE = 4096;
@@ -47,49 +44,38 @@ public class Mansion implements MansionBuilder {
  private Room room;
  private Target target;
 
- /*for consistently needed to update maps: */
  private HashMap<String, String> playersTargetNameRoomMap; // update each time the players/target move
- //related maps below (update first, need to change the second map)
  private HashMap<String, ArrayList<String>> playersItemsMap; //*just 'put' new items into this arrlst.
- private HashMap<String, Integer> itemsRoomMap; //*remove the items in this hashmap once the player pick it.
  private HashMap<String, Integer> turnsMap; //defaults are true -> 1.
+
+ private ArrayList<Player> allPlayers;
+
  //2. constructor
 
  public Mansion() {
+  this.allNeighborsMap = new HashMap<>();
   //initialize variables:
-  //  this.numPlayers = numPlayers;
-  //  this.playersNameLst = playersNameLst;
+  this.allPlayers = new ArrayList<>();
   this.totalItemsAllowedMap = new HashMap<>();
-  //  this.turnsMap = turns;
-  //  this.computerOrHumanLst = computerOrHuman;
   this.roomNameIndexMap = new HashMap<>();
   this.targetHealth = targetHealth;
   this.targetLocation = 0;
-  //  this.playerItemsMap = playerItemsMap;
   this.itemsDamageMap = new HashMap<>();
-  //  this.playersNameRoomMap = new HashMap<>();
-
   this.listOfRoomCoordinates = new ArrayList<ArrayList<ArrayList<Integer>>>();
   this.roomNameIndexMap = new HashMap<>();
   this.itemsDamageMap = new HashMap<>();
-  this.itemRoomMap = new HashMap<>();
-  this.allNeighborsMap = new HashMap<>();
-  //  this.playersRoomNamesLst = playersRoomNames;
+  this.itemsRoomMap = new HashMap<>();
   this.allRoomsNamesLst = new ArrayList<>(); // for room attributes.
-  //  this.allPlayersLst = new ArrayList<>();
-
   //initialize objects: (x5)
-  this.item = new Item(getItemsDamageMap(), getItemRoomMap());
-  this.target = new Target(targetName, targetHealth, targetLocation, itemRoomMap,
+  this.item = new Item(this.getItemsDamageMap(), this.getItemsRoomMap());
+  this.target = new Target(targetName, targetHealth, targetLocation, itemsRoomMap,
       this.itemsDamageMap);
-  this.room = new Room(this.itemRoomMap, roomNameIndexMap, listOfRoomCoordinates, allRoomsNamesLst,
-      allNeighborsMap);
-
+  this.room = new Room(this.itemsRoomMap, this.roomNameIndexMap, this.listOfRoomCoordinates, this.allRoomsNamesLst,
+      this.allNeighborsMap);
   /*info needs to be updated constantly (maps)*/
   this.playersTargetNameRoomMap = new HashMap<>();// update each time the players/target move
   //related maps below (update first, need to change the second map)
   this.playersItemsMap = new HashMap<>(); //*just 'put' new items into this arrlst.
-  this.itemsRoomMap = new HashMap<>();
   //*remove the items in this hashmap once the player pick it.
   this.turnsMap = new HashMap<>();
 
@@ -160,42 +146,6 @@ public class Mansion implements MansionBuilder {
 
   /**
    * 2nd part: parse room information
-   *
-   * 18 0 22 5 The Garden of Eden
-   * 15 4 18 7 The Top Hat
-   * 14 7 17 10 The Myths
-   * 13 10 16 15 The Natural Philosophers
-   * 21 5 24 12 Democritus
-   * 21 12 23 22 Fate
-   * 23 12 26 18 Socrates
-   * 21 18 24 22 Athens
-   * 16 10 21 24 Plato
-   * 10 16 16 31 The Major's Cabin
-   * 21 22 26 34 Aristotle
-   * 16 24 21 33 Hellenism
-   * 8 30 13 33 The Postcards
-   * 3 16 10 30 Two Cultures
-   * 24 4 29 12 The Middle Ages
-   * 26 12 34 18 The Renaissance
-   * 24 18 36 22 The Baroque
-   * 34 9 40 18 Descartes
-   * 26 22 40 37 Spinoza
-   * 8 5 12 15 Locke
-   * 0 15 10 16 Hume
-   * 3 6 5 15 Berkeley
-   * 0 0 3 15 Bjerkely
-   * 0 16 3 25 The Enligntenment
-   * 0 25 2 29 Kant
-   * 0 29 1 37 Romanticism
-   * 1 30 4 34 Hegel
-   * 1 33 5 40 Kierkegaard
-   * 4 30 6 34 Marx
-   * 6 33 8 36 Darwin
-   * 5 36 12 40 Freud
-   * 8 33 11 36 Our Own Time
-   * 11 33 15 36 The Garden Party
-   * 13 36 15 39 Counterpoint
-   * 15 33 26 40 The Big Bang
    */
 
   ///cut the first 3 lines of the text as they already been parsed:
@@ -236,58 +186,7 @@ public class Mansion implements MansionBuilder {
 
   /**
    * 3rd part: parse the items information.
-   *
-   * 36
-   * 0 3 apple
-   * 0 4 Eve
-   * 1 8 morning dress
-   * 2 7 Sacred history book
-   * 3 6 physics book
-   * 4 4 atomic theory book
-   * 5 2 crystall ball
-   * 6 4 plato's dialogues
-   * 7 8 fish
-   * 8 0 cat
-   * 9 9 beer
-   * 10 7 daisy flower
-   * 11 6 an antique cup
-   * 12 4 glues
-   * 13 3 some fire matches
-   * 14 67 Cross of Mathilde
-   * 15 1 book about Florence
-   * 16 2 A broken dagger
-   * 17 4 A diary in French
-   * 18 12 A moldy Cheese
-   * 19 32 some candles
-   * 20 11 A bottle of Scotch whisky
-   * 21 3 A glass of Irish Whisky
-   * 22 16 a painting of a lake
-   * 23 21 A math book of Trigonometry
-   * 24 2 A germany map
-   * 25 3 A pair of leather boots
-   * 26 7 A teapot
-   * 27 9 Luther rose
-   * 28 4 A book titled The Communist Manifesto
-   * 29 26 some Rocks seems collected near beaches
-   * 30 1 A half smoked Cigar
-   * 31 2 A later modern period history book
-   * 32 4 some pothos plants
-   * 33 21 a music book
-   * 34 3 an old, dirty, broken glasses
-   */
 
-  /**
-   * I need hashMap() for parsing items:
-   *
-   // Create a HashMap object called capitalCities
-   HashMap<String, String> capitalCities = new HashMap<String, String>();
-
-   // Add keys and values (Country, City)
-   capitalCities.put("England", "London");
-   capitalCities.put("Germany", "Berlin");
-   capitalCities.put("Norway", "Oslo");
-   capitalCities.put("USA", "Washington DC");
-   System.out.println(capitalCities);       *
    */
 
   ///cut the lines again to only left with the rooms information to parse:
@@ -309,10 +208,11 @@ public class Mansion implements MansionBuilder {
    /// (1) PUT to hashmap 'itemDamgeMap' during each iteration:
    itemsDamageMap.put(strItemName, itemDamage);
    /// (2) Put to hashmap ' itemRoomMap':
-   itemRoomMap.put(strItemName, itemRoom);
+   itemsRoomMap.put(strItemName, itemRoom);
 
    ///(3) update allNeighborsMap:
-   this.getRoom().getAllNeighborsMap();
+   this.allNeighborsMap = this.getRoom().getAllNeighborsMap();
+//   System.out.println("all its neighbors are: " + this.allNeighborsMap);
 
   } //end of the for-loop for reading the information of items.
  } //end of method readFile().
@@ -371,21 +271,14 @@ public class Mansion implements MansionBuilder {
 
  //--------------------getters:-------------------------
 
- // public ArrayList<Player> getAllPlayersLst() {
- //  return allPlayersLst;
- // }
- //
- // public ArrayList<String> getPlayersRoomNamesLst() {
- //  return playersRoomNamesLst;
- // }
-
- public HashMap<String, Integer> getTotalItemsAllowedMap() {
-  return totalItemsAllowedMap;
+ public ArrayList<Player> getAllPlayers() {
+  return allPlayers;
  }
 
- // public int getNumPlayers() {
- //  return numPlayers;
- // }
+ public HashMap<String, Integer> getTotalItemsAllowedMap() {
+//  return this.getAllPlayers().get(0).getTotalItemsAllowedMap();
+    return totalItemsAllowedMap;
+ }
 
  public Graphics getGraph() {
   return graph;
@@ -419,26 +312,9 @@ public class Mansion implements MansionBuilder {
   return target;
  }
 
- //
- // public HashMap<String, Integer> getTurnsMap() {
- //  return turnsMap;
- // }
- //
- // public ArrayList<Character> getComputerOrHumanLst() {
- //  return computerOrHumanLst;
- // }
-
  public ArrayList<String> getAllRoomsNamesLst() {
   return allRoomsNamesLst;
  }
- //
- // public HashMap<String, String> getPlayersNameRoomMap() {
- //  return playersNameRoomMap;
- // }
- //
- // public HashMap<String, ArrayList<String>> getPlayerItemsMap() {
- //  return playerItemsMap;
- // }
 
  @Override public ArrayList<ArrayList<ArrayList<Integer>>> getListOfRoomCoordinates() {
   return listOfRoomCoordinates;
@@ -477,8 +353,8 @@ public class Mansion implements MansionBuilder {
   *
   * @return an array-list of array-list of all the names in each room
   */
- @Override public HashMap<String, Integer> getItemRoomMap() {///
-  return this.itemRoomMap;
+ @Override public HashMap<String, Integer> getItemsRoomMap() {///
+  return this.itemsRoomMap;
  }
 
  /**
@@ -496,14 +372,11 @@ public class Mansion implements MansionBuilder {
   return playersItemsMap;
  }
 
- public HashMap<String, Integer> getItemsRoomMap() {
-  return itemsRoomMap;
- }
 
  public HashMap<String, Integer> getTurnsMap() {
   return turnsMap;
  }
 
- //========================SETTERS:====================================//
+ //========================HELPERS:====================================//
 
 }//end of Mansion class.

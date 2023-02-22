@@ -57,7 +57,7 @@ public interface MansionBuilder {
    * @param itemNames
    * @return all items names
    */
-  HashMap<String, Integer> getItemRoomMap();
+  HashMap<String, Integer> getItemsRoomMap();
 
   /**
    * this method will get the damage of each item in the 'world'

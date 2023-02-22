@@ -45,14 +45,9 @@ public Room(HashMap<String, Integer> itemsRoomMap, HashMap<String, Integer> room
   * @return all the neighbors of the current room as a String arrayList.
   */
  public ArrayList<String> getNeighbors(String roomName) {
-  //		System.out.println("getNeighbors() input name is: " + roomName);
   int roomIndex = roomNamesMap.get(roomName);
-  //		System.out.println("getNeighbors() the index is: (should be a vaild index!) " + roomIndex);
-
   ArrayList<ArrayList<Integer>> coordinates = listOfRoomCoordinates
       .get(roomIndex);//gets current room two coordinates.
-  //(x1, y1) represents the coordinate of the given room's upper left coordinate.
-  //(x2, y2) represents the coordinate of the given room's lower right coordinate.
   int x1, y1, x2, y2;
   x1 = coordinates.get(0).get(0);
   y1 = coordinates.get(0).get(1);
@@ -61,8 +56,6 @@ public Room(HashMap<String, Integer> itemsRoomMap, HashMap<String, Integer> room
   int width = x2 - x1;
   int height = y2 - y1;
 
-  //(a1, b1) represents the coordinate of the checked room's upper left coordinate to see if it's a neighboring room.
-  //(a2, b2) represents the coordinate of the checked room's lower right coordinate.
   int a1, b1, a2, b2;
   ArrayList<Integer> roomIndexes = new ArrayList<>();
   ArrayList<String> rooms = roomNames; //gets all room names.

@@ -4,14 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
-////TODO: fix the player class
+
 
 public class Player {
  /*for fixed value map (no need for update)*/ /*porb. need to be parsed in from mansion after calling playGame() from controller*/
  private HashMap<String, Integer> roomNameIndexMap; //<room name, room Index>
- private HashMap<String, Integer> totalItemsAllowedMap;
  private HashMap<String, Integer> itemsDamageMap; // <item, damage>
- private HashMap<String, ArrayList<String>> allNeighborsMap; //<room name, all neighbors in a list>
  //private fields: (x6)
  private int targetHealth;
  private int targetLocation;
@@ -20,63 +18,214 @@ public class Player {
  private String playerName;
  private String playerRoom; //the room the player's currently at
 
- private final int totalAllowedItems;
+ private int playerTotalAllowedItem;
+ private HashMap<String, Integer> totalItemsAllowedMap; //<room name, the total number alloed
+
  // private ArrayList<String> totalItemsLst; //{all items in mansion put in this list.
  private ArrayList<String> playerItemsLst; //each this list represent a player's all items.
- // private ArrayList<String> playersRoomNamesLst; //{the top hat, the garden of eden, ...}
- //all other private fields (x5)
- /*for consistently needed to update maps: */
- private HashMap<String, String> playersTargetNameRoomMap; // update each time the players/target move
- //related maps below (update first, need to change the second map)
  private HashMap<String, ArrayList<String>> playersItemsMap; //*just 'put' new items into this arrlst.
+
+ private HashMap<String, String> playersTargetNameRoomMap; // update each time the players/target move
  private HashMap<String, Integer> itemsRoomMap; //*remove the items in this hashmap once the player pick it.
- private HashMap<String, Integer> turnsMap; //defaults are true -> 1.
+ private HashMap<String, Integer> turnsMap; //defaults are true -> 1. //TODO turns map
+
 
  //Constructor
 
- public Player(//Player Constructor
-     /*info from mansion*/
-     HashMap<String, Integer> roomNameIndexMap, //<room name, room Index>
-     HashMap<String, Integer> totalItemsAllowedMap, //totalItemsAllowedMap
-     HashMap<String, Integer> itemsDamageMap, // <item, damage>
-     HashMap<String, ArrayList<String>> allNeighborsMap, //<room name, all neighbors in a list>
-     /*target info from mansion*/
-     int targetHealth, //target info
-     int targetLocation, //target info
-     /*info for each player*/
-     boolean playerTurn, //each player info
-     String computerOrHuman, //each player info
-     String playerName, //each player info
-     String playerRoom, //each player info
-               int totalAllowedItems,
-     ArrayList<String> playerItemsLst, //each player info
-     /*info needs to be updated constantly (maps)*/
-     HashMap<String, String> playersTargetNameRoomMap, // update each time the players/target move
-     //related maps below (update first, need to change the second map)
-     HashMap<String, ArrayList<String>> playersItemsMap, //*just 'put' new items into this arrlst.
-     HashMap<String, Integer> itemsRoomMap,
-     //*remove the items in this hashmap once the player pick it.
-     HashMap<String,Integer> turnsMap
- ) {
+ public Player(HashMap<String, Integer> roomNameIndexMap,
+     HashMap<String, Integer> totalItemsAllowedMap, HashMap<String, Integer> itemsDamageMap, int targetHealth, int targetLocation,
+     boolean playerTurn, String computerOrHuman, String playerName, String playerRoom,
+     int playerTotalAllowedItem, ArrayList<String> playerItemsLst,
+     HashMap<String, String> playersTargetNameRoomMap,
+     HashMap<String, ArrayList<String>> playersItemsMap, HashMap<String, Integer> itemsRoomMap,
+     HashMap<String, Integer> turnsMap) {
+  //inputs from mansion:
   this.roomNameIndexMap = roomNameIndexMap;
   this.totalItemsAllowedMap = totalItemsAllowedMap;
   this.itemsDamageMap = itemsDamageMap;
-  this.allNeighborsMap = allNeighborsMap;
   this.targetHealth = targetHealth;
   this.targetLocation = targetLocation;
-  this.playerTurn = playerTurn;
+  this.playerTurn = playerTurn; //default is false.
+  //inputs from controller:
   this.computerOrHuman = computerOrHuman;
   this.playerName = playerName;
   this.playerRoom = playerRoom;
-  this.totalAllowedItems = totalAllowedItems;
+  this.playerTotalAllowedItem = playerTotalAllowedItem;
+  //below inputs from mansion:
   this.playerItemsLst = playerItemsLst;
   this.playersTargetNameRoomMap = playersTargetNameRoomMap;
   this.playersItemsMap = playersItemsMap;
   this.itemsRoomMap = itemsRoomMap;
   this.turnsMap = turnsMap;
+
+  //update maps:
+  this.totalItemsAllowedMap.put(this.playerName, this.playerTotalAllowedItem);
+  this.playersTargetNameRoomMap.put(this.playerName, this.playerRoom);
+this.turnsMap.put(this.playerName, 1); //default is 1 for true
  }
 
- //methods:
+
+
+
+ public HashMap<String, Integer> getTotalItemsAllowedMap() {
+  return totalItemsAllowedMap;
+ }
+
+ public HashMap<String, String> getPlayersTargetNameRoomMap() {
+  return playersTargetNameRoomMap;
+ }
+
+ public HashMap<String, ArrayList<String>> getPlayersItemsMap() {
+  return playersItemsMap;
+ }
+
+ public HashMap<String, Integer> getItemsRoomMap() {
+  return itemsRoomMap;
+ }
+
+ /**
+  * check if the turnsMap returns 1 (true) or 0(false) for the current player
+  * @return boolean
+  */
+ public boolean checkTurnsMap() {
+  if (this.turnsMap.get(this.playerName) == 1) {
+   return true;
+  } else if (this.turnsMap.get(this.playerName) == 0) {
+   return false;
+  }
+  return false;
+ }
+
+ /**
+  * getters & setters
+  */
+
+
+ public void setPlayerTotalAllowedItem(int playerTotalAllowedItem) {
+  this.playerTotalAllowedItem = playerTotalAllowedItem;
+ }
+
+ public void setTotalItemsAllowedMap(HashMap<String, Integer> totalItemsAllowedMap) {
+  this.totalItemsAllowedMap = totalItemsAllowedMap;
+ }
+
+ public ArrayList<String> getPlayerItemsLst() {
+  return playerItemsLst;
+ }
+
+ public void setPlayerItemsLst(ArrayList<String> playerItemsLst) {
+  this.playerItemsLst = playerItemsLst;
+ }
+
+
+ //------------------------------------------------------------ getters (x10) ---------------------------------------------------//
+ public int getPlayerTotalAllowedItem() {
+  return playerTotalAllowedItem;
+ }
+
+
+ public boolean getPlayerTurn() {
+  return this.playerTurn;
+ }
+
+ public String getComputerOrHuman() {
+  return computerOrHuman;
+ }
+
+ public void setComputerOrHuman(String computerOrHuman) {
+  this.computerOrHuman = computerOrHuman;
+ }
+
+ public String getPlayerRoom() {
+  return playerRoom;
+ }
+
+ public int getPlayerTotalItemsAllowed() {
+  return totalItemsAllowedMap.get(this.playerName);
+ }
+
+ public String getPlayerName() {
+  return playerName;
+ }
+
+ public boolean isPlayerTurn() {
+  return playerTurn;
+ }
+
+ public void setPlayerTurn(boolean playerTurn) {
+  this.playerTurn = playerTurn;
+ }
+
+ public void setPlayerName(String playerName) {
+  this.playerName = playerName;
+ }
+
+ public void setPlayerRoom(String playerRoom) {
+  this.playerRoom = playerRoom;
+ }
+
+ public void setTurnsMap(HashMap<String, Integer> turnsMap) {
+  this.turnsMap = turnsMap;
+ }
+
+
+ public void setTargetHealth(int targetHealth) {
+  this.targetHealth = targetHealth;
+ }
+
+ public void setTargetLocation(int targetLocation) {
+  this.targetLocation = targetLocation;
+ }
+
+ public HashMap<String, Integer> getRoomNameIndexMap() {
+  return roomNameIndexMap;
+ }
+
+ public void setRoomNameIndexMap(HashMap<String, Integer> roomNameIndexMap) {
+  this.roomNameIndexMap = roomNameIndexMap;
+ }
+
+ public void setItemsRoomMap(HashMap<String, Integer> itemsRoomMap) {
+  this.itemsRoomMap = itemsRoomMap;
+ }
+
+ public HashMap<String, Integer> getTurnsMap() {
+  return turnsMap;
+ }
+
+ public void setPlayersTargetNameRoomMap(HashMap<String, String> playersTargetNameRoomMap) {
+  this.playersTargetNameRoomMap = playersTargetNameRoomMap;
+ }
+
+ public void setPlayersItemsMap(HashMap<String, ArrayList<String>> playersItemsMap) {
+  this.playersItemsMap = playersItemsMap;
+ }
+
+ public HashMap<String, Integer> getItemsDamageMap() {
+  return itemsDamageMap;
+ }
+
+ public void setItemsDamageMap(HashMap<String, Integer> itemsDamageMap) {
+  this.itemsDamageMap = itemsDamageMap;
+ }
+
+ // 0getters:
+
+ public int getTargetLocation() {
+  return targetLocation;
+ }
+
+ public int getTargetHealth() {
+  return targetHealth;
+ }
+
+// public ArrayList<String> getPlayerItemsLst() {
+//  return playerItemsLst;
+// }
+
+ /**
+  * Main methods:
+  */
 
  //--------s3 - movePlayer(done.) ------------------------------------//
 
@@ -95,16 +244,15 @@ public class Player {
   *
   * @return Integer (the moved room's index)
   */
-  public int movePlayer() {
+ public int movePlayer(HashMap<String, ArrayList<String>> allNeighborsMap) {
   /*costing a TURN*/
   this.turnsMap.put(this.playerName, 0);
 
-  ArrayList<String> playerNeighbors = this.allNeighborsMap.get(this.playerRoom);
+  ArrayList<String> playerNeighbors = allNeighborsMap.get(this.playerRoom);
   int size = playerNeighbors.size();
-  int index = this.helperRandNum(size) - 1;
+  int index = this.helperRandNum(size-1);
   //player move to a random index:
-  String neighborRoom = playerNeighbors
-      .get(index); //got the name of the room the player is supposed to move to.
+  String neighborRoom = playerNeighbors.get(index); //got the name of the room the player is supposed to move to.
   //update hashmaps:
   int neighborIndex = this.roomNameIndexMap.get(neighborRoom);
   this.playerRoom = this.helperIndexGetRoomName(neighborIndex); //to update player's current room
@@ -125,17 +273,10 @@ public class Player {
   *
   * @return Item (the player just picked)
   */
-  public String pickUp() {
+ public String pickUp() {
   /*costing a TURN*/
+
   this.turnsMap.put(this.playerName, 0);
-
-  //condition1, an item in this room.
-  //condition2, still allowed to pick one more item.
-
-  /*item (position) room hashmap needs be updated*/
-  /*player items carreis be updated in a hashmap?*/
-  /*player total allowed items left need be updated*/
-
   ///which room player at?
   int roomIndex = this.roomNameIndexMap.get(playerRoom);
   ///what items in this room?
@@ -155,10 +296,6 @@ public class Player {
   return allItems.get(0); //null means no items left in room.
  }
 
- //// working on the following methods: (x3)
-
- //--------s5 - lookAround (done.)------------------------------------//
-
  /**
   * a player LOOK AROUND to check a specific player's information:
   * -what room's the specific player is at
@@ -168,17 +305,18 @@ public class Player {
   * @param playerName String
   * @return String (the checked player's information)
   */
-  public String lookAround(String playerName) {
+ public String lookAround(String playerName, HashMap<String, ArrayList<String>> allNeighborsMap) {
   /*costing a TURN*/
   this.turnsMap.put(this.playerName, 0);
-
   String currRoom = this.playersTargetNameRoomMap.get(playerName);
+  System.out.println("it's current room is: " + currRoom);
   //2. get its neighboring rooms:
-  ArrayList<String> allNeighbors = this.allNeighborsMap.get(currRoom);
-
+  ArrayList<String> allNeighbors = allNeighborsMap.get(currRoom);
+  System.out.println("all its neighbors: " + allNeighbors);
   String strNeighbors = this.helperArrayListToString(allNeighbors);
+
   String res = String
-      .format("The current room the player is in: %s. And its neighboring rooms: %", currRoom,
+      .format("The current room the player is in: %s. And its neighboring rooms: %s", currRoom,
           strNeighbors);
 
   this.autoMoveTarget();
@@ -194,7 +332,7 @@ public class Player {
   *
   * @param roomName Integer
   */
-  public void updatePlayerRoomInfo(String roomName) {
+ public void updatePlayerRoomInfo(String roomName) {
   this.playersTargetNameRoomMap.put(playerName, roomName);
  }
 
@@ -209,7 +347,7 @@ public class Player {
   * @param playerName
   * @return String (the specific player's information)
   */
-  public String displayPlayerInfo(String playerName) {
+ public String displayPlayerInfo(String playerName) {
   //this doesn't cost a turn.
 
   //know the player's room (where they are) 1.
@@ -230,7 +368,7 @@ public class Player {
   *
   * @return Integer (the room's index the TARGET just moved to)
   */
-  public int autoMoveTarget() { //this method probably wil be called from any methods that consuming a TURN.
+ public int autoMoveTarget() { //this method probably wil be called from any methods that consuming a TURN.
   //TARGET TARGET MOVE!!! EVERY TURN!!!! OF THE GAME!
   int totalRooms = this.itemsRoomMap.size();
   if (targetLocation + 1 != totalRooms) {
@@ -267,21 +405,28 @@ public class Player {
   return targetLocation;
  }
 
+ //===================================================
+ //=====================================================
  //other useful methods:
 
  /**
   * check how many more items a player can still pick up.
   *
-  * @return
+  * @return the number of more items a player can pick up.
   */
  public int pickMoreItems() {
   int total = this.totalItemsAllowedMap.get(this.playerName);
   int size = this.playerItemsLst.size();
   return total - size;
  }
-
+ /**
+  * flip the turns:
+  * 1 -> 0
+  * 0 -> 1
+  * @return an integer representation as true (1) or false (0)
+  */
  public int flipTurn() {
-  boolean currTurn = this.getTurn();
+  boolean currTurn = this.getPlayerTurn();
   if (currTurn) {
    currTurn = false;
    return 0;
@@ -292,17 +437,20 @@ public class Player {
   return -1;
  }
 
- //------------------------------------------------------------helper functions---------------------------------------------------//
+
+
+
+ //------------------------------------------------------------PRIVATE helper functions---------------------------------------------------//
 
  /**
   * to generate a random number between 0 and (i).
   *
-  * @param j
+  * @param i
   */
- private int helperRandNum(int j) {
+ private int helperRandNum(int i) {
   //random generator:
   Random ran = new Random();
-  return ran.nextInt(j);
+  return ran.nextInt(i);
  }
 
  /**
@@ -310,7 +458,7 @@ public class Player {
   *
   * @return
   */
- public String helperIndexGetRoomName(int index) {
+ private String helperIndexGetRoomName(int index) {
   for (String str : this.roomNameIndexMap.keySet()) {
    if (this.roomNameIndexMap.get(str) == index) {
     return str;
@@ -319,12 +467,13 @@ public class Player {
   return null;
  }
 
+
  /**
   * get items in the room from hashmap
   *
   * @return
   */
- public ArrayList<String> helperRoomGetItems(String room) {
+ private ArrayList<String> helperRoomGetItems(String room) { //room get items
   ArrayList<String> arrLst = new ArrayList<>();
   int roomIndex = this.roomNameIndexMap.get(room);
   for (String item : this.itemsRoomMap.keySet()) {
@@ -334,8 +483,7 @@ public class Player {
   }
   return arrLst;
  }
-
- public String helperArrayListToString(ArrayList<String> arrLst) {
+ private String helperArrayListToString(ArrayList<String> arrLst) {
   StringBuffer sb = new StringBuffer();
   for (String str : arrLst) {
    sb.append(str);
@@ -345,142 +493,7 @@ public class Player {
   str = str.substring(0, str.length() - 2); //deleting the last ','
   return str;
  }
-
- //------------------------------------------------------------ getters (x10) ---------------------------------------------------//
-
- public boolean getTurn() {
-  return this.playerTurn;
- }
-
- public String getComputerOrHuman() {
-  return computerOrHuman;
- }
-
- public void setComputerOrHuman(String computerOrHuman) {
-  this.computerOrHuman = computerOrHuman;
- }
-
- public String getPlayerRoom() {
-  return playerRoom;
- }
-
- public int getTotalItemsAllowedMap() {
-  return totalItemsAllowedMap.get(this.playerName);
- }
-
- public String getPlayerName() {
-  return playerName;
- }
-
-
- public HashMap<String, Integer> getItemsRoomMap() {
-  return itemsRoomMap;
- }
-
- public HashMap<String, String> getPlayersTargetNameRoomMap() {
-  return playersTargetNameRoomMap;
- }
-
- public boolean isPlayerTurn() {
-  return playerTurn;
- }
-
- public void setPlayerTurn(boolean playerTurn) {
-  this.playerTurn = playerTurn;
- }
-
- public void setPlayerName(String playerName) {
-  this.playerName = playerName;
- }
-
- public void setPlayerRoom(String playerRoom) {
-  this.playerRoom = playerRoom;
- }
-
- public void setTurnsMap(HashMap<String, Integer> turnsMap) {
-  this.turnsMap = turnsMap;
- }
-
-
-
- public void setPlayerItemsLst(ArrayList<String> playerItemsLst) {
-  this.playerItemsLst = playerItemsLst;
- }
-
- public void setTargetHealth(int targetHealth) {
-  this.targetHealth = targetHealth;
- }
-
- public void setTargetLocation(int targetLocation) {
-  this.targetLocation = targetLocation;
- }
-
- public void setTotalItemsAllowedMap(HashMap<String, Integer> totalItemsAllowedMap) {
-  this.totalItemsAllowedMap = totalItemsAllowedMap;
- }
-
- public HashMap<String, Integer> getRoomNameIndexMap() {
-  return roomNameIndexMap;
- }
-
- public void setRoomNameIndexMap(HashMap<String, Integer> roomNameIndexMap) {
-  this.roomNameIndexMap = roomNameIndexMap;
- }
-
- public void setItemsRoomMap(HashMap<String, Integer> itemsRoomMap) {
-  this.itemsRoomMap = itemsRoomMap;
- }
-
- public HashMap<String, ArrayList<String>> getAllNeighborsMap() {
-  return allNeighborsMap;
- }
-
- public void setAllNeighborsMap(HashMap<String, ArrayList<String>> allNeighborsMap) {
-  this.allNeighborsMap = allNeighborsMap;
- }
-
- public void setPlayersTargetNameRoomMap(HashMap<String, String> playersTargetNameRoomMap) {
-  this.playersTargetNameRoomMap = playersTargetNameRoomMap;
- }
-
- public HashMap<String, ArrayList<String>> getPlayersItemsMap() {
-  return playersItemsMap;
- }
-
- public void setPlayersItemsMap(HashMap<String, ArrayList<String>> playersItemsMap) {
-  this.playersItemsMap = playersItemsMap;
- }
-
- public HashMap<String, Integer> getItemsDamageMap() {
-  return itemsDamageMap;
- }
-
- public void setItemsDamageMap(HashMap<String, Integer> itemsDamageMap) {
-  this.itemsDamageMap = itemsDamageMap;
- }
-
-
- public boolean getTurnsMap() {
-  if (this.turnsMap.get(this.playerName) == 1) {
-   return true;
-  } else if (this.turnsMap.get(this.playerName) == 0) {
-   return false;
-  }
-  return false;
- }
-
- // getters:
-
- public int getTargetLocation() {
-  return targetLocation;
- }
-
- public int getTargetHealth() {
-  return targetHealth;
- }
-
- public ArrayList<String> getPlayerItemsLst() {
-  return playerItemsLst;
- }
-
 }
+
+
+
