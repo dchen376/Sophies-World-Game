@@ -17,7 +17,7 @@ import java.awt.BorderLayout; //for display Jframe
 import java.awt.Color;
 import java.util.HashMap;
 
-public class Mansion implements MansionBuilder {
+public class MansionMockModel implements MansionBuilder {
  /**
   * private fields & private objects
   */
@@ -51,7 +51,7 @@ public class Mansion implements MansionBuilder {
  /**
   * Constructor
   */
- public Mansion() {
+ public MansionMockModel() {
   this.allNeighborsMap = new HashMap<>();
   //initialize variables:
   this.allPlayers = new ArrayList<>();

@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class driver {
+public class MansionDriver {
  public static void main(String[] args) {
 
 //  int numPlayers = 2;

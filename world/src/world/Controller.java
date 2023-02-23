@@ -1,36 +1,43 @@
 package world;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 public class Controller {
- private Appendable out;
- private Scanner scanController;
- // private Scanner scanWorld;
+ /**
+  * declare fields.
+  */
+// private Appendable out;
+// private Scanner scanController;
+ private final Readable in;
+ private final Appendable out;
+ Mansion m;
 
  /**
-  * Constructor for the controller.
-  *
-  * @param ControllerIn the source to read from
-  * @param out          the target to print to
+  * Constructor
+  * @param in an InputStream prompts inputs from user.
+  * @param out an OutputStream that appends game logs.
   */
- public Controller(Readable ControllerIn, Appendable out) {
-  if (ControllerIn == null || out == null) {
+ public Controller(Readable in, Appendable out) {
+  if (in == null || out == null) {
    throw new IllegalArgumentException("Readable and Appendable can't be null");
   }
+  this.in = in;
   this.out = out;
-  //  this.scanWorld = new Scanner(worldIn);
-  this.scanController = new Scanner(ControllerIn);
 
  } //end of constructor.
 
- //main controller method
- public void playGame() throws IOException {
+ /**
+  * play the world game.
+  * @throws IOException for file handles.
+  */
+ public void playGame(Mansion m) throws IOException {
+  Objects.requireNonNull(m);
+  this.m = m;
+  Scanner scanController = new Scanner(in);
+//  scanController.close();
 
   /*first, init. Mansion */
-  Mansion m = new Mansion();
   System.out.println("First, we will test the Mansion class!!");
   System.out.println("Please enter the text file path to read: ");
   String worldInput = scanController.nextLine();
@@ -87,28 +94,27 @@ public class Controller {
    allPlayers.add(player); //add one player to the 'allPlayers' list.
    out.append(String.format("%s is successfully added to this Mansion.", playerNameStr));
 
-
-   /*TODO: print outs player info before proceeding*/
-   System.out.println("==================================================================");
-   System.out.println(m.getRoomNameIndexMap());
-   System.out.println(m.getTotalItemsAllowedMap());
-   System.out.println(m.getItemsDamageMap());
-   System.out.println(m.getTargetHealth());
-   System.out.println(m.getTargetLocation());
-   System.out.println(true);
-   System.out.println(typeStr);
-   System.out.println(playerNameStr);
-   System.out.println(roomNameStr);
-   System.out.println(itemsAmountAllowedStr);
-   System.out.println("empty array list first!");
-   System.out.println(m.getPlayersTargetNameRoomMap()); // update each time the players/target move
-   //TODO: supposed to be null first until picking up an item
-   System.out.println(m.getPlayersItemsMap()); //*just 'put' new items into this arrlst
-   System.out.println(m.getItemsRoomMap());
-   //TODO: supposed to be empty at first. Update each pick() / move():
-   System.out.println(m.getTurnsMap()); //defaults are true -> 1.
-   System.out.println("size of allPlayers list is: " + allPlayers.size());
-   System.out.println("==================================================================");
+   //   /*TODO: print outs player info before proceeding*/
+   //   System.out.println("==================================================================");
+   //   System.out.println(m.getRoomNameIndexMap());
+   //   System.out.println(m.getTotalItemsAllowedMap());
+   //   System.out.println(m.getItemsDamageMap());
+   //   System.out.println(m.getTargetHealth());
+   //   System.out.println(m.getTargetLocation());
+   //   System.out.println(true);
+   //   System.out.println(typeStr);
+   //   System.out.println(playerNameStr);
+   //   System.out.println(roomNameStr);
+   //   System.out.println(itemsAmountAllowedStr);
+   //   System.out.println("empty array list first!");
+   //   System.out.println(m.getPlayersTargetNameRoomMap()); // update each time the players/target move
+   //   //TODO: supposed to be null first until picking up an item
+   //   System.out.println(m.getPlayersItemsMap()); //*just 'put' new items into this arrlst
+   //   System.out.println(m.getItemsRoomMap());
+   //   //TODO: supposed to be empty at first. Update each pick() / move():
+   //   System.out.println(m.getTurnsMap()); //defaults are true -> 1.
+   //   System.out.println("size of allPlayers list is: " + allPlayers.size());
+   //   System.out.println("==================================================================");
 
   }//end of for loop.
 
@@ -215,26 +221,21 @@ public class Controller {
         allPlayers.get(j).setPlayerTurn(true);
        }
 
-
       }//finished of round checking.
-      System.out.println("here1");
      }//end if: check if it's a certain player's turn.
-     System.out.println("here2");
     }
     System.out.println("One round has just finished");
     this.out.append("Just finished one round.");
-    System.out.println("here3");
    }//end of for-loop: found whose turn is it, and execute certain action from readline.
-   System.out.println("here4");
   }//end of while(true) loop.
  } //end of playGame().
 
  //===============================helper functions====================================
 
  /**
-  * to generate a random number between 0 and (j).
-  *
-  * @param j
+  * helper function:
+  *generate a random integer value from 0 to 'j'
+  * @param j the upper limit of the value generated.
   */
  private int helperRandNum(int j) {
   //random generator:
@@ -242,6 +243,11 @@ public class Controller {
   return ran.nextInt(j);
  }
 
+ /**
+  * get the string representation of moves based on integer values.
+  * @param j upper limit of the random value.
+  * @return String the move a player executed.
+  */
  private String helperGetComputerMove(int j) {
   if (j == 0)
    return "move";
@@ -251,7 +257,6 @@ public class Controller {
    return "look";
   return "wrong answer";
  }
-
 } //end of HumanController!
 
 

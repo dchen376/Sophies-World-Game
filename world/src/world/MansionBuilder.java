@@ -6,21 +6,13 @@ import java.util.HashMap;
 public interface MansionBuilder {
 
   /**
-   * this method will read the provided .txt file
-   *
-   * @param file
+   * read the provided .txt file
+   * @param readable
    */
   void readFile(Readable readable);
 
   /**
-   * this method will draw the world map
    *
-   * @param worldName
-   * @param row
-   * @param column
-   * @param roomNames
-   * @param coordinates
-   * @return
    */
   void drawWorld();
 
