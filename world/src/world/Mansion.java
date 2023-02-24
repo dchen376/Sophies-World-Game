@@ -236,7 +236,6 @@ public class Mansion implements MansionBuilder {
   return allPlayers;
  }
  public HashMap<String, Integer> getTotalItemsAllowedMap() {
-  //  return this.getAllPlayers().get(0).getTotalItemsAllowedMap();
   return totalItemsAllowedMap;
  }
  public Graphics getGraph() {

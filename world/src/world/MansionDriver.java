@@ -46,7 +46,7 @@ public class MansionDriver {
   File file = new File(userInput);
   try {
    // Creates a reader using the FileReader
-   FileReader input = new FileReader(userInput);
+   FileReader input = new FileReader(file);
    //Reads the 'readable'
    ms.readFile(input);
    //Closes the reader

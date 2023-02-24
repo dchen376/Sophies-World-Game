@@ -9,8 +9,8 @@ public class controllerDriver {
   //"/Users/dongping/Documents/GitHub/PDP---Milestone-Mansion-Game-/world.txt"; //mac
  public static void main(String[] args) throws IOException {
   Mansion mansion = new Mansion(); //model
-  StringBuilder strb = new StringBuilder();
   BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+  StringBuilder strb = new StringBuilder();
   Controller controller = new Controller(bf, strb); //controller
   controller.playGame(mansion);
  } //end of main()

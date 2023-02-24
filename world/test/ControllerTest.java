@@ -1,40 +1,58 @@
 import org.junit.Test;
 import org.junit.Before;
 import world.Controller;
+import world.ControllerMock;
+import world.Mansion;
+import world.MansionMockModel;
 
+import java.io.*;
 import java.util.Scanner;
 
 /**
  * Junit tests for controller class.
+ *
  * @author <DongPing Chen>
  * @version 1.0
  * @since <pre>Feb 22, 2023</pre>
  */
 public class ControllerTest {
+ private FileReader in;
+ private StringBuilder out = new StringBuilder();
+ private StringBuilder out_mock = new StringBuilder();
+ /* model */ private Mansion mansion;
+ /* controller */private Controller controller;
 
- /* declare fields & controllers.*/
- private final Scanner in; //input from user of the controller class
- private final Appendable out;
-
- private Controller controller1;
- private Controller controller2;
- private Controller mock_Controller;
-
- public ControllerTest(Readable in, Appendable out) {
-this.in = new Scanner(in);
- this.out = out;
- }
-
- /* initialize controllers. */
+ /* mock model */ private MansionMockModel mansion_mock;
+ /* mock controller */ private ControllerMock controller_mock;
 
  /**
-  * Testing setups
-  *
-  * @throws Exception
+  * set up the world text file to read.
+  * set up the all objects after
   */
- @Before public void setup() throws Exception {
-  controller1 = new Controller();
-  controller2 =; mock_Controller =;
+ @Before public void setup() {
+  String filePath = "C:\\Users\\dongpingchen\\Documents\\GitHub\\milestone-2---controller\\world.txt";
+  File file = new File(filePath);
+  try {
+   in = new FileReader(file);
+  } catch (FileNotFoundException e) {
+   e.printStackTrace();
+  }
+  mansion = new Mansion();
+  controller = new Controller(in, out);
+  mansion_mock = new MansionMockModel();
+  controller_mock = new ControllerMock(in, out_mock);
+ }
+
+ /**
+  * mock model testing
+  *
+  * @throws IOException
+  */
+ public void mockModelTest() throws IOException {
+  controller_mock.playGame(mansion_mock);
+
+
+  //make all the move(s):
  }
 
 

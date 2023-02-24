@@ -124,7 +124,7 @@ public class MansionMockModel implements MansionBuilder {
    */
   ///cut the first 3 lines of the text as they already been parsed:
   lines = Arrays.copyOfRange(lines, 3, lines.length);
-  ///start reading from the 4th line: (room information)
+  ///start reading from th 4th line: (room information)
   for (int i = 0; i < totalRooms; i++) { //totalRooms
    ArrayList<Integer> coordinateLeftTop = new ArrayList<>(); ///(x1,y1) upper left.
    ArrayList<Integer> coordinateRightBot = new ArrayList<>();///(x2, y2) lower right.

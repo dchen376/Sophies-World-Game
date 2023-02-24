@@ -140,9 +140,6 @@ this.turnsMap.put(this.playerName, 1); //default is 1 for true
   return playerRoom;
  }
 
- public int getPlayerTotalItemsAllowed() {
-  return totalItemsAllowedMap.get(this.playerName);
- }
 
  public String getPlayerName() {
   return playerName;

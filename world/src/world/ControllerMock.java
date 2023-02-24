@@ -3,109 +3,138 @@ package world;
 import java.io.*;
 import java.util.*;
 
-public class Controller {
+public class ControllerMock {
  /**
-  * declare fields.
+  * declare fields & mansion, player objects
   */
  private final Readable in;
  private final Appendable out;
- Mansion m;
+ MansionMockModel m;
+ Player playerMock1_Sam;
+ Player playerMock2_Amy;
+ private ArrayList<Player> allPlayersLst;
+// private ArrayList<String> moves_player1;
+// private ArrayList<String> moves_player2;
+ private ArrayList<String> moves_lst;
+
 
  /**
-  * Constructor
-  * @param in an InputStream prompts inputs from user.
+  * Constructor: initialize mansion and player objects.
+  *
+  * @param in  an InputStream prompts inputs from user.
   * @param out an OutputStream that appends game logs.
   */
- public Controller(Readable in, Appendable out) {
+ public ControllerMock(Readable in, Appendable out) {
+  /*initialize Readable and Appendable.*/
   if (in == null || out == null) {
    throw new IllegalArgumentException("Readable and Appendable can't be null");
   }
   this.in = in;
   this.out = out;
 
+  /*initialize mock model*/
+  this.m = new MansionMockModel();
+
+  /*initialize mock players*/
+  this.allPlayersLst = m.getAllPlayers();
+  this.playerMock1_Sam = new Player(m.getRoomNameIndexMap(), m.getTotalItemsAllowedMap(),
+      m.getItemsDamageMap(), m.getTargetHealth(), m.getTargetLocation(), true, "human", "Sam",
+      "Fate", 5, new ArrayList<>(), this.m.getPlayersTargetNameRoomMap(),
+      this.m.getPlayersItemsMap(), this.m.getItemsRoomMap(), this.m.getTurnsMap());
+  this.allPlayersLst.add(playerMock1_Sam);
+  this.playerMock2_Amy = new Player(m.getRoomNameIndexMap(), m.getTotalItemsAllowedMap(),
+      m.getItemsDamageMap(), m.getTargetHealth(), m.getTargetLocation(), true, "human", "Amy",
+      "The Enlightenment", 4, new ArrayList<>(), this.m.getPlayersTargetNameRoomMap(),
+      this.m.getPlayersItemsMap(), this.m.getItemsRoomMap(), this.m.getTurnsMap());
+  this.allPlayersLst.add(playerMock2_Amy);
+
+  /*assigning players moves: move, pick, look around, display */
+//  this.moves_player1 = new ArrayList<>();
+//  moves_player1.add("move");
+//  moves_player1.add("pick");
+//  moves_player1.add("look around");
+//  moves_player1.add("display"); //need other player's name.
+//
+//  this.moves_player2 = new ArrayList<>();
+//  moves_player2.add("move");
+//  moves_player2.add("pick");
+//  moves_player2.add("look around");
+//  moves_player2.add("display");
+  this.moves_lst = new ArrayList<>();
+  moves_lst.add("move"); //sam
+  moves_lst.add("move"); //amy
+  moves_lst.add("move"); //sam
+  moves_lst.add("look around"); //amy
+  moves_lst.add("pick"); //sam
+  moves_lst.add("pick"); //amy
+  moves_lst.add("display"); //sam
+
+
  } //end of constructor.
 
  /**
   * play the world game.
+  *
   * @throws IOException for file handles.
   */
- public void playGame(Mansion m) throws IOException {
+ public void playGame(MansionMockModel m) throws IOException {
   Objects.requireNonNull(m);
-  this.m =  m;
+  this.m = m;
   Scanner scanController = new Scanner(in);
-//  scanController.close();
+  //  scanController.close();
 
   /*first, init. Mansion */
-  System.out.println("First, we will test the Mansion class!!");
-  System.out.println("Please enter the text file path to read: ");
-  String worldInput = scanController.nextLine();
+  out.append("playgame() started.\n");
+  String worldInput = "C:\\Users\\dongpingchen\\Documents\\GitHub\\PDP---Milestone-Mansion-Game-\\world.txt";
   File file = new File(worldInput);
+  out.append("File path entered correctly.\n");
   try {
    // Creates a reader using the FileReader
    FileReader input = new FileReader(file);
-   //Reads the 'readable'
+   out.append("FileReader read this file.");
    m.readFile(input);
-   //Closes the reader
+   out.append("Mock model read this file");
    input.close();
   } catch (Exception e) {
    e.getStackTrace();
   }
   m.drawWorld();
+  out.append("draw the Mansion.\n");
 
-  /*second, handle the players*/
   //1. first line: an integer N (declaring how many players for this game).
-  ///for example, 2
-  ArrayList<Player> allPlayers = m.getAllPlayers();
-  System.out.println("How many players are here for the game?");
-  String totalPlayersStr = scanController.nextLine(); //READ 1ST LINE: 2
-  int totalPlayers = Integer.parseInt(totalPlayersStr);
-  out.append(totalPlayersStr + '\n');
+  int totalPlayers = this.allPlayersLst.size();
+  out.append(totalPlayers + " players for this game.\n");
 
   //2. next N lines: each line represent each players information:
-  ///line1(x4): h playerA, The Top Hat, 5(total items allowed)
-  ///line2 (x4) : c(if it's just a pc) computerA, 3(room), 3(total items allowed)
+
   for (int i = 0; i < totalPlayers; i++) { //next N lines for players info.
-   System.out.println("Is this a human or a computer: ");
-   String typeStr = scanController.nextLine();
-   out.append("ComputerORHuman: " + typeStr);
+   Player currPlayer = allPlayersLst.get(i);
 
-   System.out.println("Please input one player's name: ");
-   String playerNameStr = scanController.nextLine();
-   out.append("PlayerName: " + playerNameStr);
-   System.out.println("Please input this player's initial room name: ");
-   String roomNameStr = scanController.nextLine();
-   out.append("Player initial room: " + roomNameStr);
+   String typeStr = currPlayer.getComputerOrHuman();
+   out.append("A " + typeStr + " player just entered this game.\n");
 
-   System.out.println("Please input the total numbers of items allowed for this player:");
-   String itemsAmountAllowedStr = scanController.nextLine();
-   out.append("Total items allowed for this player: " + itemsAmountAllowedStr + '\n');
+   String playerNameStr = currPlayer.getPlayerName();
+   out.append("PlayerName: \n" + playerNameStr);
+
+   String roomNameStr = currPlayer.getPlayerRoom();
+   out.append("Player initial room: \n" + roomNameStr);
+
+   int itemsAmountAllowed = currPlayer.getPlayerTotalAllowedItem();
+   out.append("Total items allowed for this player: \n" + itemsAmountAllowed);
    //*note: assume the players not poccessing items when first dropped into the rooms.
 
-   /*adding attributes to one player instance*/
-   Player player = new Player(m.getRoomNameIndexMap(), m.getTotalItemsAllowedMap(),
-       m.getItemsDamageMap(), m.getTargetHealth(), m.getTargetLocation(), true,
-       // default player turn is TRUE
-       typeStr, playerNameStr, roomNameStr, Integer.parseInt(itemsAmountAllowedStr),
-       new ArrayList<>(),//player items list?
-       m.getPlayersTargetNameRoomMap(), m.getPlayersItemsMap(), m.getItemsRoomMap(),
-       m.getTurnsMap());
-   allPlayers.add(player); //add one player to the 'allPlayers' list.
-   out.append(String.format("%s is successfully added to this Mansion.", playerNameStr));
-
-
+   out.append(String.format("%s is successfully added to this Mansion.\n", playerNameStr));
   }//end of for loop.
 
   String input = "";
+  int track_moves = 0;
   while (true) { ///from here the scan.next should only have 'move actions'
    for (int i = 0; i < totalPlayers; i++) { //start iterating over each readline()
-    Player currPlayer = allPlayers.get(i);
-    if (currPlayer.getPlayerTurn()) { // if his turn is -> true.
+    Player currPlayer = allPlayersLst.get(i);
      while (currPlayer.getPlayerTurn()) {
       if (currPlayer.getComputerOrHuman().equals("human")) { //a human player
-       System.out
-           .println("Please input the action you want for player: " + currPlayer.getPlayerName());
-       System.out.println("Available moves for human players: move, pick, look around, display.");
-       input = scanController.nextLine(); //for example， move
+       out.append("Human Player, " + currPlayer.getPlayerName() + " ,is having this turn and picking the move.");
+       input = moves_lst.get(track_moves++); //for example， move
        switch (input) {
         //===================Methods Cost a turn:
         case "move": /*int movePlayer()*/
@@ -115,8 +144,8 @@ public class Controller {
          //flip its boolean turn value:
          currPlayer.flipTurn(); //now val is false.
          currPlayer.setPlayerTurn(false); //now val is false.
-
          break;
+
         case "pick": /*String pickUp()*/
          currPlayer.pickUp();
          this.out.append(
@@ -124,8 +153,8 @@ public class Controller {
          //flip its boolean turn value:
          currPlayer.flipTurn(); //now val is false.
          currPlayer.setPlayerTurn(false); //now val is false.
-
          break;
+
         case "look around": /*String lookAround(String playerName)*/
          System.out.println("Please input the name of the player you want to look around for: ");
          input = scanController.nextLine();
@@ -135,7 +164,6 @@ public class Controller {
          //flip its boolean turn value:
          currPlayer.flipTurn(); //now val is false.
          currPlayer.setPlayerTurn(false); //now val is false.
-
          break;
 
         //=========Methods Dont cost a turn:
@@ -149,13 +177,7 @@ public class Controller {
          break;
        }
       } else if (currPlayer.getComputerOrHuman().equals("computer")) { //a PC player
-       /*moves for PC:
-        * 1. move() -> costs Turn!
-        * 2. pickup() -> costs Turn!
-        * 3. lookAround() -> costs Turn!
-        * */
-
-       System.out.println("Now, it's the computer player's move");
+       out.append("Computer Player, " + currPlayer.getPlayerName() + " ,is having the turn and picking the move.");
        int move = this.helperRandNum(2);
        input = this.helperGetComputerMove(move);
        switch (input) { //for a computer
@@ -166,54 +188,46 @@ public class Controller {
          //flip its boolean turn value:
          currPlayer.flipTurn(); //now val is false.
          currPlayer.setPlayerTurn(false); //now val is false.
-
-         System.out.println("Computer player just executed 'move'. ");
          break;
+
         case "pick": /*String pickUp()*/
          this.out.append(
              String.format("%s is trying to pick up an item. \n", currPlayer.getPlayerName()));
          //flip its boolean turn value:
          currPlayer.flipTurn(); //now val is false.
          currPlayer.setPlayerTurn(false); //now val is false.
-
-         System.out.println("Computer player just executed 'pick'. ");
          break;
+
         case "look around": /*String lookAround(String playerName)*/
          this.out.append(String
              .format("%s is looking around on another player.\n", currPlayer.getPlayerName()));
          //flip its boolean turn value:
          currPlayer.flipTurn(); //now val is false.
          currPlayer.setPlayerTurn(false); //now val is false.
-
-         System.out.println("Computer player just executed 'look'. ");
          break;
-
         //       default:
 
        }
       }
-      if (i + 1 == totalPlayers) { //just finished a round .
+     }//end while(current players turn).
+   }//end for() -> finished one round.
 
-      }//finished of round checking.
-     }//end if: check if it's a certain player's turn.
-    }
-   }//end for().
+  //TODO: 2nd part (get players to play)
+   /* flip turns all back to 'true' after each round fnishing. */
        for (int j = 0; j < totalPlayers; j++) {
-        allPlayers.get(j).flipTurn(); //flip them all back to true.
-        allPlayers.get(j).setPlayerTurn(true);
+        this.allPlayersLst.get(j).flipTurn(); //flip them all back to true.
+        this.allPlayersLst.get(j).setPlayerTurn(true);
        }
-    System.out.println("One round has just finished");
-    this.out.append("Just finished one round.");
-  }//end of while(true) loop.
+    this.out.append("One round of game has been finished.");
+  }//end of while(true) loop -> game ends.
  } //end of playGame().
-
-
 
  //===============================helper functions====================================
 
  /**
   * helper function:
-  *generate a random integer value from 0 to 'j'
+  * generate a random integer value from 0 to 'j'
+  *
   * @param j the upper limit of the value generated.
   */
  private int helperRandNum(int j) {
@@ -224,6 +238,7 @@ public class Controller {
 
  /**
   * get the string representation of moves based on integer values.
+  *
   * @param j upper limit of the random value.
   * @return String the move a player executed.
   */

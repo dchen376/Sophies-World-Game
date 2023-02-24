@@ -24,7 +24,7 @@
 0 15 10 16 Hume
 3 6 5 15 Berkeley
 0 0 3 15 Bjerkely
-0 16 3 25 The Enligntenment
+0 16 3 25 The Enlightenment
 0 25 2 29 Kant
 0 29 1 37 Romanticism
 1 30 4 34 Hegel
