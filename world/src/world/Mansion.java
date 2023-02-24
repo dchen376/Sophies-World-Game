@@ -61,7 +61,6 @@ public class Mansion implements MansionBuilder {
   this.targetLocation = 0;
   this.itemsDamageMap = new HashMap<>();
   this.listOfRoomCoordinates = new ArrayList<ArrayList<ArrayList<Integer>>>();
-  this.roomNameIndexMap = new HashMap<>();
   this.itemsDamageMap = new HashMap<>();
   this.itemsRoomMap = new HashMap<>();
   this.allRoomsNamesLst = new ArrayList<>(); // for room attributes.

@@ -56,7 +56,6 @@ public class MansionMockModel implements MansionBuilder {
   //initialize variables:
   this.allPlayers = new ArrayList<>();
   this.totalItemsAllowedMap = new HashMap<>();
-  this.roomNameIndexMap = new HashMap<>();
   this.targetHealth = targetHealth;
   this.targetLocation = 0;
   this.itemsDamageMap = new HashMap<>();
@@ -152,6 +151,9 @@ public class MansionMockModel implements MansionBuilder {
    eachLineStringBuilder.setLength(0);//reset the stringbuilder.
    ///add to the final arraylist: 'roomNames'
    this.roomNameIndexMap.put(strRoomName, i);
+//   System.out.println(" i is : "+ i);
+//   System.out.println("the name of the room is: " + strRoomName);
+//   System.out.println("the map is now: " + this.roomNameIndexMap);
    this.allRoomsNamesLst.add(strRoomName);
   }
   /*
