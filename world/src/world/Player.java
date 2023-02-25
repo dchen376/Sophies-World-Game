@@ -136,32 +136,8 @@ public class Player {
   return playerName;
  }
 
- public boolean isPlayerTurn() {
-  return playerTurn;
- }
-
  public void setPlayerTurn(boolean playerTurn) {
   this.playerTurn = playerTurn;
- }
-
- public void setPlayerName(String playerName) {
-  this.playerName = playerName;
- }
-
- public void setPlayerRoom(String playerRoom) {
-  this.playerRoom = playerRoom;
- }
-
- public void setTurnsMap(HashMap<String, Integer> turnsMap) {
-  this.turnsMap = turnsMap;
- }
-
- public void setTargetHealth(int targetHealth) {
-  this.targetHealth = targetHealth;
- }
-
- public void setTargetLocation(int targetLocation) {
-  this.targetLocation = targetLocation;
  }
 
  public HashMap<String, Integer> getRoomNameIndexMap() {
@@ -180,20 +156,8 @@ public class Player {
   return turnsMap;
  }
 
- public void setPlayersTargetNameRoomMap(HashMap<String, String> playersTargetNameRoomMap) {
-  this.playersTargetNameRoomMap = playersTargetNameRoomMap;
- }
-
- public void setPlayersItemsMap(HashMap<String, ArrayList<String>> playersItemsMap) {
-  this.playersItemsMap = playersItemsMap;
- }
-
  public HashMap<String, Integer> getItemsDamageMap() {
   return itemsDamageMap;
- }
-
- public void setItemsDamageMap(HashMap<String, Integer> itemsDamageMap) {
-  this.itemsDamageMap = itemsDamageMap;
  }
 
  // 0getters:
@@ -232,12 +196,10 @@ public class Player {
   * @return Integer (the moved room's index)
   */
  public int movePlayer(HashMap<String, ArrayList<String>> allNeighborsMap) {
-  //  System.out.println("running movePlayer()");
   /*costing a TURN*/
   this.turnsMap.put(this.playerName, 0);
 
   ArrayList<String> playerNeighbors = allNeighborsMap.get(this.playerRoom);
-  //  System.out.println("the all neighborsmap is: " + allNeighborsMap);
   int size = playerNeighbors.size();
   int index = 0;
   if (size != 1) {
@@ -252,8 +214,8 @@ public class Player {
   //  this.pickUp(); //player performing the pickup() action(updaing items hashmap happening inside this function).
   this.updatePlayerRoomInfo(playerRoom);
 
+  this.setPlayerTurn(false);
   //return the moved to room index?
-  //  System.out.println("movePlayer() execute autoMoveTarget()");
   this.autoMoveTarget();
   return neighborIndex;
  }
@@ -269,12 +231,10 @@ public class Player {
   * @return Item (the player just picked)
   */
  public String pickUp() {
-  //  System.out.println("!!running pickUp()");
   /*costing a TURN*/
 
   this.turnsMap.put(this.playerName, 0);
   ///which room player at?
-  //  System.out.println("the roomnameindexmap is " + this.roomNameIndexMap);
   int roomIndex = this.roomNameIndexMap.get(playerRoom);
   ///what items in this room?
   String roomName = this.helperIndexGetRoomName(roomIndex);
@@ -288,13 +248,12 @@ public class Player {
    this.itemsRoomMap.remove(allItems.get(0)); //room's removed the item.
    this.playersItemsMap.put(this.playerName, playerItemsLst); //add it to hashmap: playerItemsMap
   }
-  //  System.out.println("pickUp() execute autoMoveTarget()");
 
   this.autoMoveTarget();
   //return the picked up item?
-  //  System.out.println("!!ending pickUp()");
   if (allItems.isEmpty())
    return null; //if no items in the current room.
+  this.setPlayerTurn(false);
 
   return allItems.get(0); //null means no items left in room.
  }
@@ -309,23 +268,21 @@ public class Player {
   * @return String (the checked player's information)
   */
  public String lookAround(String playerName, HashMap<String, ArrayList<String>> allNeighborsMap) {
-  //  System.out.println("running lookAround()");
 
   /*costing a TURN*/
   this.turnsMap.put(this.playerName, 0);
   String currRoom = this.playersTargetNameRoomMap.get(playerName);
-  //  System.out.println("it's current room is: " + currRoom);
   //2. get its neighboring rooms:
   ArrayList<String> allNeighbors = allNeighborsMap.get(currRoom);
-  //  System.out.println("all its neighbors: " + allNeighbors);
   String strNeighbors = this.helperArrayListToString(allNeighbors);
 
   String res = String
       .format("The current room the player is in: %s. And its neighboring rooms: %s", currRoom,
           strNeighbors);
-  //  System.out.println("lookAround() execute autoMoveTarget()");
 
   this.autoMoveTarget();
+  this.setPlayerTurn(false);
+
   return res;
  }
 
@@ -354,15 +311,9 @@ public class Player {
   * @return String (the specific player's information)
   */
  public String displayPlayerInfo(String playerName) {
-  //  System.out.println("running displayPlayerInfo()");
-
   //this doesn't cost a turn.
-  //  System.out.println("player name is: " + playerName);
-  //  System.out.println("the target roomNameMap is: "+ this.playersTargetNameRoomMap);
-  //  System.out.println("this is: " + this.playersTargetNameRoomMap.get(playerName));
   //know the player's room (where they are) 1.
   String roomStr = this.playersTargetNameRoomMap.get(playerName);
-  //  System.out.println("so the room is: " + roomStr);
   //what they carry 2.
   //TODO: fix null input roomStr
   ArrayList<String> allTheItems = this.helperRoomGetItems(roomStr);
@@ -370,7 +321,6 @@ public class Player {
 
   String ans = String
       .format("The player is at room: %s. The item(s) in the room: %s", roomStr, itemsStr);
-  //  System.out.println("end of displayPlaerInfo()");
   return ans;
  }
 
@@ -383,7 +333,6 @@ public class Player {
   */
  public int autoMoveTarget() { //this method probably wil be called from any methods that consuming a TURN.
   //  return 1;
-  //  System.out.println("running autoMoveTarget()");
 
   //TARGET TARGET MOVE!!! EVERY TURN!!!! OF THE GAME!
   int totalRooms = this.itemsRoomMap.size();
@@ -396,23 +345,16 @@ public class Player {
   //1. the target moves to one of a random room.
   //CHECK:
   int roomIndex = targetLocation;
-  //  System.out.println("target's current location index: " + roomIndex);
   String roomStr = this.helperIndexGetRoomName(roomIndex);
-  //  System.out.println("room name related to index: " +roomStr);
   ///items in this room?
   ArrayList<String> allItemsLst = this.helperRoomGetItems(roomStr);
-  //  System.out.println("all items in the room?: " + allItemsLst);
   String itemsStr = this.helperArrayListToString(allItemsLst);//2.
-  //  System.out.println("now to reformatted items list: " + itemsStr);
 
   ///3. target taking damge:
   for (String playerName : this.playersTargetNameRoomMap.keySet()) {
-   //   System.out.println("here1: this player's name: " + playerName);
    if (this.playersTargetNameRoomMap.get(playerName).equals(roomStr)) {
-    //    System.out.println("here2 this player's room in: " + roomStr);
     //items the each player has:
     ArrayList<String> itemsLst = this.playersItemsMap.get(playerName);
-    //    System.out.println("this player's playersItemsMap?: " + itemsLst);
 
     if (itemsLst == null)
      return targetLocation; //if no items for the player simply return.
@@ -441,7 +383,6 @@ public class Player {
   * @return the number of more items a player can pick up.
   */
  public int pickMoreItems() {
-  //  System.out.println("running pickMoreItems");
   int total = this.totalItemsAllowedMap.get(this.playerName);
   int size = this.playerItemsLst.size();
   return total - size;
@@ -501,13 +442,6 @@ public class Player {
   */ //TODO: fix this method for: []
  private ArrayList<String> helperRoomGetItems(String room) { //room get items
   ArrayList<String> arrLst = new ArrayList<>();
-  //  System.out.println("the player is: " + this.playerName);
-  //  System.out.println("the player is at room: " + this.playerRoom);
-  //  System.out.println("this room is: " + room );
-  //  System.out.println("playersTargetNameRoomMap: " + this.playersTargetNameRoomMap);
-  //  System.out.println("roomnameIndexMap: " + this.roomNameIndexMap);
-  //  System.out.println("items in this roomMap? " + this.roomNameIndexMap);
-  //TODO
   if (room == null)
    return null; //if the room doesn't exist.
   int roomIndex = this.roomNameIndexMap.get(room);

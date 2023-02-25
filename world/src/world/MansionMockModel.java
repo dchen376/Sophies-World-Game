@@ -151,9 +151,6 @@ public class MansionMockModel implements MansionBuilder {
    eachLineStringBuilder.setLength(0);//reset the stringbuilder.
    ///add to the final arraylist: 'roomNames'
    this.roomNameIndexMap.put(strRoomName, i);
-//   System.out.println(" i is : "+ i);
-//   System.out.println("the name of the room is: " + strRoomName);
-//   System.out.println("the map is now: " + this.roomNameIndexMap);
    this.allRoomsNamesLst.add(strRoomName);
   }
   /*
@@ -179,7 +176,6 @@ public class MansionMockModel implements MansionBuilder {
    itemsRoomMap.put(strItemName, itemRoom);
    ///(3) update allNeighborsMap:
    this.allNeighborsMap = this.getRoom().getAllNeighborsMap();
-   //   System.out.println("all its neighbors are: " + this.allNeighborsMap);
   } //end of the for-loop for reading the information of items.
  } //end of method readFile().
 
@@ -233,71 +229,94 @@ public class MansionMockModel implements MansionBuilder {
   }
  }
 
- /**all the getter methods below are below: */
+ /**
+  * all the getter methods below are below:
+  */
  public ArrayList<Player> getAllPlayers() {
   return allPlayers;
  }
+
  public HashMap<String, Integer> getTotalItemsAllowedMap() {
   //  return this.getAllPlayers().get(0).getTotalItemsAllowedMap();
   return totalItemsAllowedMap;
  }
+
  public Graphics getGraph() {
   return graph;
  }
+
  public static int getBufferSize() {
   return BUFFER_SIZE;
  }
+
  public int getTotalItems() {
   return totalItems;
  }
+
  public int getTotalRooms() {
   return totalRooms;
  }
+
  public Item getItem() {
   return item;
  }
+
  public Room getRoom() {
   return room;
  }
+
  public String getWorldName() {
   return worldName;
  }
+
  public Target getTarget() {
   return target;
  }
+
  public ArrayList<String> getAllRoomsNamesLst() {
   return allRoomsNamesLst;
  }
+
  public HashMap<String, String> getPlayersTargetNameRoomMap() {
   return playersTargetNameRoomMap;
  }
+
  public HashMap<String, ArrayList<String>> getPlayersItemsMap() {
   return playersItemsMap;
  }
+
  public HashMap<String, Integer> getTurnsMap() {
   return turnsMap;
  }
+
  @Override public ArrayList<ArrayList<ArrayList<Integer>>> getListOfRoomCoordinates() {
   return listOfRoomCoordinates;
  }
+
  @Override public HashMap<String, ArrayList<String>> getAllNeighborsMap() {
   return allNeighborsMap;
  }
+
  @Override public int getTargetHealth() {
   return targetHealth;
  }
+
  @Override public int getTargetLocation() {
   return targetLocation;
  }
+
  @Override public String getTargetName() {
   return this.targetName;
  }
+
  @Override public HashMap<String, Integer> getRoomNameIndexMap() {
   return this.roomNameIndexMap;
  }
+
  @Override public HashMap<String, Integer> getItemsRoomMap() {///
   return this.itemsRoomMap;
  }
+
  @Override public HashMap<String, Integer> getItemsDamageMap() {///
   return this.itemsDamageMap;
  }

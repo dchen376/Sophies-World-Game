@@ -10,32 +10,31 @@ public class Room {
  private ArrayList<String> roomNames;
  private HashMap<String, ArrayList<String>> allNeighborsMap;
 
-
-
-//
-//  private String roomName;
-//  private int[] roomCoordinate;
+ //
+ //  private String roomName;
+ //  private int[] roomCoordinate;
 
  //constructor (good)
-public Room(HashMap<String, Integer> itemsRoomMap, HashMap<String, Integer> roomNamesMap,
-    ArrayList<ArrayList<ArrayList<Integer>>> listOfRoomCoordinates,
-    ArrayList<String> roomNames, HashMap<String, ArrayList<String>> allNeighborsMap){
+ public Room(HashMap<String, Integer> itemsRoomMap, HashMap<String, Integer> roomNamesMap,
+     ArrayList<ArrayList<ArrayList<Integer>>> listOfRoomCoordinates, ArrayList<String> roomNames,
+     HashMap<String, ArrayList<String>> allNeighborsMap) {
 
- this.itemsRoomMap = itemsRoomMap;
- this.roomNamesMap = roomNamesMap;
- this.listOfRoomCoordinates = listOfRoomCoordinates;
- this.roomNames = roomNames;
- this.allNeighborsMap = allNeighborsMap;
-}
+  this.itemsRoomMap = itemsRoomMap;
+  this.roomNamesMap = roomNamesMap;
+  this.listOfRoomCoordinates = listOfRoomCoordinates;
+  this.roomNames = roomNames;
+  this.allNeighborsMap = allNeighborsMap;
+ }
 
  /**
   * get the room index of the room.
+  *
   * @param roomName
   * @return
   */
-   public int getRoomIndex(String roomName) {
-     return roomNamesMap.get(roomName);
-   }
+ public int getRoomIndex(String roomName) {
+  return roomNamesMap.get(roomName);
+ }
 
  /**
   * this method finds the other rooms that share a common wall with the given room as neighbors.
@@ -119,17 +118,16 @@ public Room(HashMap<String, Integer> itemsRoomMap, HashMap<String, Integer> room
   return neighbors;
  }
 
- public HashMap<String, ArrayList<String>> getAllNeighborsMap(){
-  for (int i = 0; i < roomNamesMap.size(); i++){
+ public HashMap<String, ArrayList<String>> getAllNeighborsMap() {
+  for (int i = 0; i < roomNamesMap.size(); i++) {
    this.allNeighborsMap.put(roomNames.get(i), this.getNeighbors(roomNames.get(i)));
   }
   return this.allNeighborsMap;
  }
 
-
-
  /**
   * display the room's information
+  *
   * @param roomName
   * @return
   */
@@ -161,7 +159,6 @@ public Room(HashMap<String, Integer> itemsRoomMap, HashMap<String, Integer> room
   //3. get the neighbors.
   ArrayList<String> neighbors = this.getNeighbors(roomName);
 
-
   String neighborsStr = this.helperArrayListToString(neighbors);
 
   String ans = String
@@ -179,7 +176,7 @@ public Room(HashMap<String, Integer> itemsRoomMap, HashMap<String, Integer> room
    sb.append(",");
   }
   String str = sb.toString();
-  str = str.substring(0, str.length() - 2); //deleting the last ','
+  str = str.substring(0, str.length() - 1); //deleting the last ','
   return str;
  }
 

@@ -10,24 +10,6 @@ import java.util.Scanner;
 public class MansionDriver {
  public static void main(String[] args) {
 
-//  int numPlayers = 2;
-//  ArrayList<String> playersName = new ArrayList<String>(Arrays.asList("PlayerA", "PlayerB"));
-//  HashMap<String, Integer> totalItemsAllowedMap = new HashMap<>();
-//  totalItemsAllowedMap.put("PlayerA", 4);
-//  totalItemsAllowedMap.put("PlayerB", 5);
-//  HashMap<String, Integer> turnsMap = new HashMap<>();
-//  turnsMap.put("PlayerA", 1);
-//  turnsMap.put("PlayersB", 1);
-//  ArrayList<Character> computerOrHuman = new ArrayList<Character>(Arrays.asList('h', 'h'));
-//  HashMap<String, Integer> roomNamesMap = new HashMap<>();
-//  //    int targetHealth,
-//  //    int targetLocation,
-//  HashMap<String, ArrayList<String>> playerItemsMap = new HashMap<>();
-//  HashMap<String, Integer> itemsDamageMap = new HashMap<>();
-  //  HashMap<String, Integer> playersRoomNames = new HashMap<>();
-  //  ArrayList<Integer> playersRoomIndexLst = new ArrayList<Integer>(Arrays.asList(2, 7));
-  //creating the Mansion object:
-
   ArrayList<String> playersRoomNames = new ArrayList<String>(
       Arrays.asList("The Top Hat", "Socrates"));
 
@@ -42,7 +24,7 @@ public class MansionDriver {
   System.out.println("First, we will test the Mansion class!!");
   System.out.println("Please enter the text file path to read: ");
   String userInput = "C:\\Users\\dongpingchen\\Documents\\GitHub\\milestone-2---controller\\world.txt";
-//  String userInput = myObj.nextLine();
+  //  String userInput = myObj.nextLine();
   File file = new File(userInput);
   try {
    // Creates a reader using the FileReader
@@ -56,7 +38,6 @@ public class MansionDriver {
   }
   ms.drawWorld();
   System.out.println("All the room names are: " + ms.getAllRoomsNamesLst());
-  //    System.out.println("All the item names are: " + ms.getItemsNames());
   System.out.println("All the coordinates are of each room: " + ms.getListOfRoomCoordinates());
   System.out.println("The target's name is: " + ms.getTargetName());
   System.out.println("The target's total health is: " + ms.getTargetHealth());
@@ -78,8 +59,6 @@ public class MansionDriver {
   //third, to drive the Target object:
   System.out.println();
   System.out.println("Third, we will test the Target class!!");
-  //  target.setTargetName(ms.getTargetName());
-  //  target.setTargetHealth(ms.getTargetHealth());
   System.out.println("The current health of the target is: " + ms.getTarget().getTargetHealth());
   System.out.println(
       "After moving the target, his/her current postion is: " + ms.getTarget().moveTarget());

@@ -3,10 +3,9 @@ package test;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.Before;
-import world.Controller;
 import world.ControllerMock;
-import world.Mansion;
 import world.MansionMockModel;
+
 import java.io.*;
 
 /**
@@ -20,11 +19,9 @@ public class ControllerTest {
  private FileReader in;
  private StringBuilder out = new StringBuilder();
  private StringBuilder out_mock = new StringBuilder();
- /* model */  Mansion mansion;
- /* controller */ Controller controller;
 
- /* mock model */  MansionMockModel mansion_mock;
- /* mock controller */  ControllerMock controller_mock;
+ /* mock model */ MansionMockModel mansion_mock;
+ /* mock controller */ ControllerMock controller_mock;
 
  /**
   * set up the world text file to read.
@@ -38,14 +35,21 @@ public class ControllerTest {
   } catch (FileNotFoundException e) {
    e.printStackTrace();
   }
-//  mansion = new Mansion();
-//  controller = new Controller(in, out);
   mansion_mock = new MansionMockModel();
   controller_mock = new ControllerMock(in, out_mock);
  }
 
  /**
-  * mock model testing.
+  * mock model testing with heavy player moves quit with a "quit option"
+  * <p>
+  * this is a holitic testing that includes all the possible moves the players can pick:
+  * such moves as 'move', 'pick', 'look around', 'display' and 'quit'.
+  * <p>
+  * notes: I do feel like for only 5 move type inputs from the players, it is best to put them all together
+  * to test the final outcome; rather than writing several test cases to tests.
+  * This way, if this holistic testing is passing the test. It first means all the separate tests (if I wrote)
+  * should also pass the test, and second it means that these separate moves when put them together like this is
+  * also working, which is what this milestone 2 wants.
   *
   * @throws IOException
   */
@@ -56,13 +60,4 @@ public class ControllerTest {
   String actual_out = out_mock.toString();
   Assert.assertEquals(expected_out, actual_out);
  }
-
- /**
-  * normal inputs testing.
-  */
- @Test public void testPlayGame() throws Exception {
-  //TODO: Test goes here...
- }
-
-
 }

@@ -9,10 +9,8 @@ public class Target {
  private HashMap<String, Integer> itemRoomMap;
  private HashMap<String, Integer> itemDamageMap;
 
-
-
  //constructor (good)
- public Target(String targetName,int targetHealth, int targetLocation,
+ public Target(String targetName, int targetHealth, int targetLocation,
      HashMap<String, Integer> itemRoomMap, HashMap<String, Integer> itemDamageMap) {
   this.targetName = targetName;
   this.targetHealth = targetHealth;
@@ -21,25 +19,9 @@ public class Target {
   this.itemDamageMap = itemDamageMap;
  }
 
-
- //methods:
-
-
  public int getTargetHealth() {
   return targetHealth;
  }
-
-// public int getTargetLocation() {
-//  return targetLocation;
-// }
-//
-// public void setTargetHealth(int targetHealth) {
-//  this.targetHealth = targetHealth;
-// }
-//
-// public void setTargetLocation(int targetLocation) {
-//  this.targetLocation = targetLocation;
-// }
 
  /**
   * this method moves the target one index
@@ -50,6 +32,7 @@ public class Target {
   * such as throw exceptions when the index if out of
   * the range, but I'll await for more information
   * before fully implementing this method.
+  *
   * @return the current room index.
   */
  public int moveTarget() {
@@ -76,7 +59,6 @@ public class Target {
   return targetLocation;
  }
 
-
  //setters:
 
  public void setTargetName(String targetName) {
@@ -86,4 +68,13 @@ public class Target {
  public void setTargetHealth(int targetHealth) {
   this.targetHealth = targetHealth;
  }
+
+ public String getTargetName() {
+  return targetName;
+ }
+
+ public int getTargetLocation() {
+  return targetLocation;
+ }
+
 }

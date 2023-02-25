@@ -2,16 +2,16 @@ package world;
 
 public interface PlayerBuilder {
 
-  void updatePlayerRoomInfo(String roomName);
+ void updatePlayerRoomInfo(String roomName);
 
-  int movePlayer();
+ int movePlayer();
 
-  public String pickUp();
+ public String pickUp();
 
-  String lookAround(String playerName);
+ String lookAround(String playerName);
 
-  String displayPlayerInfo(String playerName);
+ String displayPlayerInfo(String playerName);
 
-  int autoMoveTarget();
+ int autoMoveTarget();
 
 }

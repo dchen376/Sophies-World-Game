@@ -36,8 +36,6 @@ public class ControllerMock {
   /*initialize mock model*/
   this.m = new MansionMockModel();
 
-
-
   /*assigning players moves: move, pick, look around, display(don't cost turn) */
   this.moves_lst = new ArrayList<>();
   moves_lst.add("move"); //sam
@@ -73,11 +71,6 @@ public class ControllerMock {
   this.namesLookAroundLst.add("computer_player_1");
   this.namesLookAroundLst.add("Amy");
   this.namesLookAroundLst.add("computer_player_1");
-
-//  this.namesLookAroundLst.add("Sam");
-//  this.namesLookAroundLst.add("Amy");
-//  this.namesLookAroundLst.add("Sam");
-
  } //end of constructor.
 
  /**
@@ -89,7 +82,6 @@ public class ControllerMock {
   Objects.requireNonNull(m);
   this.m = m;
   Scanner scanController = new Scanner(in);
-  //  scanController.close();
 
   /*first, init. Mansion */
   out.append("playgame() started.\n");
@@ -124,21 +116,16 @@ public class ControllerMock {
   this.allPlayersLst.add(playerMock2_Amy);
 
   this.playerMock_Computer1 = new Player(m.getRoomNameIndexMap(), m.getTotalItemsAllowedMap(),
-      m.getItemsDamageMap(), m.getTargetHealth(), m.getTargetLocation(), true, "computer", "computer_player_1",
-      "The Myths", 10, new ArrayList<>(), this.m.getPlayersTargetNameRoomMap(),
+      m.getItemsDamageMap(), m.getTargetHealth(), m.getTargetLocation(), true, "computer",
+      "computer_player_1", "The Myths", 10, new ArrayList<>(), this.m.getPlayersTargetNameRoomMap(),
       this.m.getPlayersItemsMap(), this.m.getItemsRoomMap(), this.m.getTurnsMap());
   this.allPlayersLst.add(playerMock_Computer1);
 
-
-
-
   out.append("Finished initializing all the players in this game.\n");
-  //  System.out.println("finished initializing players.");
 
   //1. first line: an integer N (declaring how many players for this game).
   int totalPlayers = this.allPlayersLst.size();
   out.append("There are " + totalPlayers + " players for this game.\n");
-  //  System.out.println(totalPlayers + " players for this game.\n");
 
   //2. next N lines: each line represent each players information:
 
@@ -147,23 +134,18 @@ public class ControllerMock {
 
    String typeStr = currPlayer.getComputerOrHuman();
    out.append("-> A " + typeStr + " player just entered this game.\n");
-   //   System.out.println("A " + typeStr + " player just entered this game.\n");
 
    String playerNameStr = currPlayer.getPlayerName();
    out.append("PlayerName: " + playerNameStr + '\n');
-   //   System.out.println("PlayerName: \n" + playerNameStr);
 
    String roomNameStr = currPlayer.getPlayerRoom();
    out.append("Player initial room: " + roomNameStr + '\n');
-   //   System.out.println("Player initial room: \n" + roomNameStr);
 
    int itemsAmountAllowed = currPlayer.getPlayerTotalAllowedItem();
    out.append("Total items allowed for this player: " + itemsAmountAllowed + '\n');
-   //   System.out.println("Total items allowed for this player: \n" + itemsAmountAllowed);
    //*note: assume the players not poccessing items when first dropped into the rooms.
 
    out.append(String.format("%s is successfully added to this Mansion. <-\n", playerNameStr));
-   //   System.out.println(String.format("%s is successfully added to this Mansion.\n", playerNameStr));
   }//end of for loop.
 
   String input = "";
@@ -174,25 +156,18 @@ public class ControllerMock {
    for (int i = 0; i < totalPlayers; i++) { //start iterating over each readline()
     Player currPlayer = allPlayersLst.get(i);
     while (currPlayer.getPlayerTurn()) {
-     //      System.out.println("curr player is :" + currPlayer.getPlayerName());
      if (currPlayer.getComputerOrHuman().equals("human")) { //a human player
       out.append("Human Player, " + currPlayer
           .getPlayerName() + ", is having this turn and picking the move.\n");
-      //       System.out.println("Human Player, " + currPlayer.getPlayerName() + " , is having this turn and picking the move.");
       if (track_moves == moves_lst.size()) {
        exit = true;
        out.append("Players running out of moves. GAME IS ENDED!!!");
        break;
       }
       input = moves_lst.get(track_moves++); //for example， move
-      //        System.out.println("the switch input is " + input);
-//       System.out.println("the input is now: " + input + '\n');
       switch (input) {
        //===================Methods Cost a turn:
        case "move": /*int movePlayer()*/
-        //         System.out.println(String.format("%s is trying to move to another room.\n", currPlayer.getPlayerName()));
-        //         System.out.println("player room:  " + currPlayer.getPlayerRoom());
-        //         System.out.println("ItemsRoomMap: "+currPlayer.getItemsRoomMap());
 
         currPlayer.movePlayer(m.getAllNeighborsMap());
         this.out.append(
@@ -213,7 +188,6 @@ public class ControllerMock {
         break;
 
        case "look around": /*String lookAround(String playerName)*/
-        //         System.out.println("Please input the name of the player you want to look around for: ");
         currPlayer.lookAround(this.namesLookAroundLst.get(track_names++), m.getAllNeighborsMap());
         this.out.append(String
             .format("%s is 'looking around' on another player.\n", currPlayer.getPlayerName()));
@@ -224,14 +198,14 @@ public class ControllerMock {
 
        //=========Methods Dont cost a turn:
        case "display": /*String displayPlayerInfo(String playerName)*/
-        //         System.out.println("11Please input the name of the player you want to display for: ");
         currPlayer.displayPlayerInfo(this.namesLookAroundLst.get(track_names++));
         this.out.append(
             String.format("%s is trying to 'pick up' an item.\n", currPlayer.getPlayerName()));
         break;
 
        case "quit":
-        this.out.append("Current player, " + currPlayer.getPlayerName() + ", chose to close this game. :)))\n");
+        this.out.append(
+            "Current player, " + currPlayer.getPlayerName() + ", chose to close this game. :)))\n");
         currPlayer.setPlayerTurn(false);
         this.out.append("Game has been Ended!");
         exit = true;
@@ -240,8 +214,7 @@ public class ControllerMock {
 
       }
 
-     }
-     else if (currPlayer.getComputerOrHuman().equals("computer")) { //a PC player
+     } else if (currPlayer.getComputerOrHuman().equals("computer")) { //a PC player
       out.append("Computer Player, " + currPlayer
           .getPlayerName() + " ,is having the turn and picking the move. And this is a random move that the compuer player will pick.\n");
       int move = this.helperRandNum(2);
@@ -249,24 +222,24 @@ public class ControllerMock {
       switch (input) { //for a computer
        case "move": /*int movePlayer()*/
         currPlayer.movePlayer(m.getAllNeighborsMap());
-//        this.out.append(
-//            String.format("%s is trying to 'move' to another room.\n", currPlayer.getPlayerName()));
+        //        this.out.append(
+        //            String.format("%s is trying to 'move' to another room.\n", currPlayer.getPlayerName()));
         //flip its boolean turn value:
         currPlayer.flipTurn(); //now val is false.
         currPlayer.setPlayerTurn(false); //now val is false.
         break;
 
        case "pick": /*String pickUp()*/
-//        this.out.append(
-//            String.format("%s is trying to 'pick up' an item. \n", currPlayer.getPlayerName()));
+        //        this.out.append(
+        //            String.format("%s is trying to 'pick up' an item. \n", currPlayer.getPlayerName()));
         //flip its boolean turn value:
         currPlayer.flipTurn(); //now val is false.
         currPlayer.setPlayerTurn(false); //now val is false.
         break;
 
        case "look around": /*String lookAround(String playerName)*/
-//        this.out.append(
-//            String.format("%s is 'looking around' on another player.\n", currPlayer.getPlayerName()));
+        //        this.out.append(
+        //            String.format("%s is 'looking around' on another player.\n", currPlayer.getPlayerName()));
         //flip its boolean turn value:
         currPlayer.flipTurn(); //now val is false.
         currPlayer.setPlayerTurn(false); //now val is false.
