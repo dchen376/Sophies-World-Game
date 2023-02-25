@@ -3,6 +3,9 @@ package world;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * this is the room class.
+ */
 public class Room {
   private HashMap<String, Integer> itemsRoomMap;
   private HashMap<String, Integer> roomNamesMap; // <room name, room Index>

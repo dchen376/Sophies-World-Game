@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+/**
+ * this is the player class.
+ */
 public class Player {
   /* for fixed value map (no need for update) */ /*
                                                   * porb. need to be parsed in from mansion after

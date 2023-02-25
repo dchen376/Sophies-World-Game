@@ -2,6 +2,9 @@ package world;
 
 import java.util.HashMap;
 
+/**
+ * this is the item class.
+ */
 public class Item {
   // private fields:
   private HashMap<String, Integer> itemsDamageMap;

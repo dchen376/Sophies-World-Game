@@ -2,6 +2,9 @@ package world;
 
 import java.util.HashMap;
 
+/**
+ * this is the target class.
+ */
 public class Target {
   private String targetName;
   private int targetHealth;

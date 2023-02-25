@@ -7,8 +7,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9ad33201-6778-4d61-ad39-becfec3d47e0" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/src/world/Mansion.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/Mansion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/world/src/world/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/world/src/world/ControllerMock.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/ControllerMock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/world/src/world/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/Item.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/world/src/world/MansionBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/MansionBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/world/src/world/MansionDriver.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/MansionDriver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/world/src/world/MansionMockModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/MansionMockModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/world/src/world/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/world/src/world/PlayerBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/PlayerBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/world/src/world/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/Room.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/world/src/world/Target.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/Target.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/world/src/world/controllerDriver.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/controllerDriver.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -248,36 +257,57 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/world/src/world/Player.java</url>
-          <line>224</line>
+          <line>227</line>
           <option name="timeStamp" value="112" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/world/src/world/Player.java</url>
-          <line>264</line>
+          <line>267</line>
           <option name="timeStamp" value="117" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/world/src/world/Player.java</url>
-          <line>377</line>
+          <line>380</line>
           <option name="timeStamp" value="118" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/world/src/world/ControllerMock.java</url>
-          <line>221</line>
+          <line>224</line>
           <option name="timeStamp" value="120" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/world/src/world/Player.java</url>
-          <line>7</line>
+          <line>10</line>
           <option name="timeStamp" value="123" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/world/src/world/MansionBuilder.java</url>
+          <line>6</line>
+          <option name="timeStamp" value="127" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/world/src/world/Player.java</url>
-          <line>213</line>
+          <line>216</line>
           <properties class="world.Player">
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="110" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/world/src/world/MansionBuilder.java</url>
+          <line>26</line>
+          <properties class="world.MansionBuilder" method="getRoomNameIndexMap">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="128" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/world/src/world/MansionBuilder.java</url>
+          <line>42</line>
+          <properties class="world.MansionBuilder" method="getTargetName">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="129" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-field">
           <url>file://$PROJECT_DIR$/world/test/ControllerTest.java</url>

@@ -8,6 +8,9 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
 
+/**
+ * this is the controller class.
+ */
 public class Controller {
   /**
    * declare fields.

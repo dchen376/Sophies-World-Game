@@ -42,18 +42,16 @@ public interface MansionBuilder {
    */
   String getTargetName();
 
+
   /**
    * this method gets all the items names from each room, and at each index
    * represents the related room index.
-   *
-   * @param
    * @return all items names
    */
   HashMap<String, Integer> getItemsRoomMap();
 
   /**
    * this method will get the damage of each item in the 'world'
-   *
    * @return an array-list of array-list representing the damages of the items.
    */
   HashMap<String, Integer> getItemsDamageMap();

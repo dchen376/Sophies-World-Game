@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
+/**
+ * this is the driver for milestone 1.
+ */
 public class MansionDriver {
   public static void main(String[] args) {
 

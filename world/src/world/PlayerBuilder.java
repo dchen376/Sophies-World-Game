@@ -1,5 +1,7 @@
 package world;
-
+/**
+ * this is the interface for the player object.
+ */
 public interface PlayerBuilder {
 
   void updatePlayerRoomInfo(String roomName);

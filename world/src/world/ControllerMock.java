@@ -8,6 +8,9 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
 
+/**
+ * this is used for mocking testing for the method playGame().
+ */
 public class ControllerMock {
   /**
    * declare fields & mansion, player objects

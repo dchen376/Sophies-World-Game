@@ -16,6 +16,9 @@ import java.awt.BorderLayout; //for display Jframe
 import java.awt.Color;
 import java.util.HashMap;
 
+/**
+ * this is the mock model.
+ */
 public class MansionMockModel implements MansionBuilder {
   /**
    * private fields & private objects
