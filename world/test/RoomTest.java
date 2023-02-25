@@ -14,47 +14,56 @@ import java.util.ArrayList;
  *
  * @author <Authors name>
  * @version 1.0
- * @since <pre>Feb 17, 2023</pre>
+ * @since
+ * 
+ *        <pre>
+ * Feb 17, 2023
+ *        </pre>
  */
 public class RoomTest {
- private Room room;
- private Mansion m;
+  private Room room;
+  private Mansion m;
 
- public RoomTest() {
- }
-
- @Before public void setup() {
-  this.m = new Mansion();
-  File file = new File(
-      "C:\\Users\\dongpingchen\\Documents\\GitHub\\PDP---Milestone-Mansion-Game-\\world.txt");
-
-  try {
-   FileReader input = new FileReader(file);
-   this.m.readFile(input);
-   input.close();
-  } catch (Exception var3) {
-   var3.getStackTrace();
-   Assert.fail("failed! Exception was thrown.");
+  public RoomTest() {
   }
 
-  this.room = new Room(this.m.getItemsRoomMap(), this.m.getRoomNameIndexMap(),
-      this.m.getListOfRoomCoordinates(), this.m.getAllRoomsNamesLst(), this.m.getAllNeighborsMap());
+  @Before
+  public void setup() {
+    this.m = new Mansion();
+    File file = new File(
+        "C:\\Users\\dongpingchen\\Documents\\GitHub\\PDP---Milestone-Mansion-Game-\\world.txt");
 
- }
+    try {
+      FileReader input = new FileReader(file);
+      this.m.readFile(input);
+      input.close();
+    } catch (Exception var3) {
+      var3.getStackTrace();
+      Assert.fail("failed! Exception was thrown.");
+    }
 
- @Test public void testGetRoomIndex() {
-  int index = this.room.getRoomIndex("The Garden of Eden");
-  Assert.assertEquals(0L, (long) index);
- }
+    this.room = new Room(this.m.getItemsRoomMap(), this.m.getRoomNameIndexMap(),
+        this.m.getListOfRoomCoordinates(), this.m.getAllRoomsNamesLst(),
+        this.m.getAllNeighborsMap());
 
- @Test public void testGetNeighbors() {
-  ArrayList<String> lst = this.room.getNeighbors("Locke");
-  Assert.assertEquals("Hume", lst.get(0));
- }
+  }
 
- @Test public void testDisplayRoomInfo() {
-  String ans = this.room.displayRoomInfo("Locke");
-  Assert.assertEquals(
-      "Room name: Locke. Items in this room: some candles. The room's neighbors: Hume.", ans);
- }
+  @Test
+  public void testGetRoomIndex() {
+    int index = this.room.getRoomIndex("The Garden of Eden");
+    Assert.assertEquals(0L, (long) index);
+  }
+
+  @Test
+  public void testGetNeighbors() {
+    ArrayList<String> lst = this.room.getNeighbors("Locke");
+    Assert.assertEquals("Hume", lst.get(0));
+  }
+
+  @Test
+  public void testDisplayRoomInfo() {
+    String ans = this.room.displayRoomInfo("Locke");
+    Assert.assertEquals(
+        "Room name: Locke. Items in this room: some candles. The room's neighbors: Hume.", ans);
+  }
 }

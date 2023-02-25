@@ -1,38 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="world:jar" />
+    </artifacts-to-build>
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="9ad33201-6778-4d61-ad39-becfec3d47e0" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/world/test/PlayerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/world_jar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/world/META-INF/MANIFEST.MF" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/world/RoomTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/world/TargetTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/world/test/ControllerTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/world/test/ControllerTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/world/world/Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/world/world/Controller.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/world/world/ControllerMock.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/world/world/ControllerMock.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/world/world/Mansion.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/world/world/Mansion.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/world/world/MansionBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/world/world/MansionBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/world/world/MansionMockModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/world/world/MansionMockModel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/world/world/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/world/world/Player.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/world/world/Room.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/world/world/Room.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/world/world/Target.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/world/world/Target.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/world/world/controllerDriver.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/world/world/controllerDriver.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/src/world/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/src/world/ControllerMock.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/ControllerMock.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/src/world/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/Item.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/src/world/Mansion.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/Mansion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/src/world/MansionBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/MansionBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/src/world/MansionDriver.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/MansionDriver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/src/world/MansionMockModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/MansionMockModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/src/world/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/src/world/PlayerBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/PlayerBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/src/world/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/Room.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/src/world/Target.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/Target.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/src/world/controllerDriver.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/controllerDriver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/test/ControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/test/ControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/test/ItemTest.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/world/test/MansionTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/test/MansionTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/test/RoomTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/test/RoomTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/test/TargetTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/test/TargetTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,12 +86,12 @@
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4" value="" />
     <property name="create.test.in.the.same.root" value="true" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/world/test" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/PDP cs5010/eclipse-formatter.xml" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="settings.editor.selected.configurable" value="EclipseFormatter" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
