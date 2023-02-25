@@ -1,21 +1,24 @@
 package world;
 
+import java.awt.BorderLayout; //for display Jframe
+import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.awt.Graphics;
 import java.io.File;
 import java.io.IOException;
+import javax.imageio.ImageIO;
 import java.nio.CharBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.awt.image.BufferedImage;
-import java.awt.Graphics;
-import javax.imageio.ImageIO;
+import java.util.HashMap;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.WindowConstants;
-import java.awt.BorderLayout; //for display Jframe
-import java.awt.Color;
-import java.util.HashMap;
 
+/**
+ * this is the model class.
+ */
 public class Mansion implements MansionBuilder {
   /**
    * private fields & private objects
@@ -27,8 +30,8 @@ public class Mansion implements MansionBuilder {
   private int targetLocation;
   /* room attributes */
   private ArrayList<String> allRoomsNamesLst;
-  private ArrayList<ArrayList<ArrayList<Integer>>> listOfRoomCoordinates; // room Coords store in
-                                                                          // arraylist.
+  private ArrayList<ArrayList<ArrayList<Integer>>> listOfRoomCoordinates;
+
   private HashMap<String, Integer> roomNameIndexMap; // <room name, room Index>
   private int totalRooms;
   /* item attributes */
@@ -46,7 +49,6 @@ public class Mansion implements MansionBuilder {
   private HashMap<String, String> playersTargetNameRoomMap; // update each time the players/target
                                                             // move
   private HashMap<String, ArrayList<String>> playersItemsMap; // *just 'put' new items into this
-                                                              // arrlst.
   private HashMap<String, Integer> turnsMap; // defaults are true -> 1.
   private ArrayList<Player> allPlayers;
 
@@ -73,7 +75,7 @@ public class Mansion implements MansionBuilder {
     this.room = new Room(this.itemsRoomMap, this.roomNameIndexMap, this.listOfRoomCoordinates,
         this.allRoomsNamesLst, this.allNeighborsMap);
     /* info needs to be updated constantly (maps) */
-    this.playersTargetNameRoomMap = new HashMap<>();// update each time the players/target move
+    this.playersTargetNameRoomMap = new HashMap<>(); // update each time the players/target move
     // related maps below (update first, need to change the second map)
     this.playersItemsMap = new HashMap<>(); // *just 'put' new items into this arrlst.
     // *remove the items in this hashmap once the player pick it.
@@ -110,7 +112,7 @@ public class Mansion implements MansionBuilder {
     // initialize the world's name.
     worldName = eachLineStringBuilder.toString(); /// assign 'worldName' to 'Sophie's World'.
     eachLineStringBuilder.setLength(0); /// reset the stringbuilder.
-    eachLine = lines[1].toString().split(" ");/// parse 2nd line: 100 Albert Knag
+    eachLine = lines[1].toString().split(" "); // parse 2nd line: 100 Albert Knag
     targetHealth = Integer.parseInt(eachLine[0]); /// 100
     target.setTargetHealth(targetHealth);
     for (int i = 1; i < eachLine.length; i++) {
@@ -129,7 +131,7 @@ public class Mansion implements MansionBuilder {
     /// start reading from the 4th line: (room information)
     for (int i = 0; i < totalRooms; i++) { // totalRooms
       ArrayList<Integer> coordinateLeftTop = new ArrayList<>(); /// (x1,y1) upper left.
-      ArrayList<Integer> coordinateRightBot = new ArrayList<>();/// (x2, y2) lower right.
+      ArrayList<Integer> coordinateRightBot = new ArrayList<>(); // (x2, y2) lower right.
       ArrayList<ArrayList<Integer>> singleRoomCoordinates = new ArrayList<ArrayList<Integer>>();
       /// parse and add (x1,y1) into 'singleRoomCoordinates':
       eachLine = lines[i].toString().split(" ");
@@ -137,7 +139,7 @@ public class Mansion implements MansionBuilder {
       int y1 = Integer.parseInt(eachLine[1]);
       coordinateLeftTop.add(x1);
       coordinateLeftTop.add(y1);
-      singleRoomCoordinates.add(coordinateLeftTop);/// now singleRoomCoordinates is: {x1, y1}
+      singleRoomCoordinates.add(coordinateLeftTop); // now singleRoomCoordinates is: {x1, y1}
       /// parse and add(x2,y2) into 'singleRoomCoordinates':
       int x2 = Integer.parseInt(eachLine[2]);
       int y2 = Integer.parseInt(eachLine[3]);
@@ -152,7 +154,7 @@ public class Mansion implements MansionBuilder {
         eachLineStringBuilder.append(eachLine[j]).append(" ");
       }
       String strRoomName = eachLineStringBuilder.toString().trim();
-      eachLineStringBuilder.setLength(0);// reset the stringbuilder.
+      eachLineStringBuilder.setLength(0); // reset the stringbuilder.
       /// add to the final arraylist: 'roomNames'
       this.roomNameIndexMap.put(strRoomName, i);
       this.allRoomsNamesLst.add(strRoomName);
@@ -212,7 +214,7 @@ public class Mansion implements MansionBuilder {
       graph.setColor(Color.black);
       graph.drawRect(x1 * 30, y1 * 30, width * 30, height * 30);
       graph.setColor(Color.red);
-      graph.drawString(name, x1 * 30, y1 * 30 + 30);// (height * 30 / 2) + y2);
+      graph.drawString(name, x1 * 30, y1 * 30 + 30); // (height * 30 / 2) + y2);
     }
     // JFrame for display the image created above.
     JFrame editorFrame = new JFrame(worldName);
