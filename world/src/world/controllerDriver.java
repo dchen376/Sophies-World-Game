@@ -9,10 +9,15 @@ import java.io.InputStreamReader;
  */
 public class controllerDriver {
 
-  // "C:\\Users\\dongpingchen\\Documents\\GitHub\\PDP---Milestone-Mansion-Game-\\world.txt";
-  // //windows
-  // "/Users/dongping/Documents/GitHub/PDP---Milestone-Mansion-Game-/world.txt";
-  // //mac
+  /*jar command line*/
+  // java -jar "C:\Users\dongpingchen\Documents\GitHub\PDP---Milestone-Mansion-Game-\out\artifacts\world_jar\world.jar"
+
+  /*windows*/
+  // C:\\Users\\dongpingchen\\Documents\\GitHub\\PDP---Milestone-Mansion-Game-\\world.txt
+
+  /*mac*/
+  // /Users/dongping/Documents/GitHub/PDP---Milestone-Mansion-Game-/world.txt
+
   public static void main(String[] args) throws IOException {
     Mansion mansion = new Mansion(); // model
     System.out.println("please enter the file path to read: \n");

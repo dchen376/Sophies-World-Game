@@ -63,6 +63,7 @@ public class Controller {
     // 1. first line: an integer N (declaring how many players for this game).
     /// for example, 2
     ArrayList<Player> allPlayers = m.getAllPlayers();
+    System.out.println("please input the total number of players for this game: \n");
     String totalPlayersStr = scanController.nextLine(); // READ 1ST LINE: 2
     int totalPlayers = Integer.parseInt(totalPlayersStr);
     out.append(totalPlayersStr + '\n');
@@ -70,14 +71,18 @@ public class Controller {
     /// line1(x4): h playerA, The Top Hat, 5(total items allowed)
     /// line2 (x4) : c(if it's just a pc) computerA, 3(room), 3(total items allowed)
     for (int i = 0; i < totalPlayers; i++) { // next N lines for players info.
+      System.out.println("Is this a human player or maybe a computer?\n");
       String typeStr = scanController.nextLine();
       out.append("ComputerORHuman: " + typeStr);
 
+      System.out.println("Please give this player a name: \n");
       String playerNameStr = scanController.nextLine();
       out.append("PlayerName: " + playerNameStr);
+      System.out.println("Please input the name of the room to first drop the player:\n");
       String roomNameStr = scanController.nextLine();
       out.append("Player initial room: " + roomNameStr);
-
+      System.out
+          .println("please input the total amount items allowed for this player to possess: ");
       String itemsAmountAllowedStr = scanController.nextLine();
       out.append("Total items allowed for this player: " + itemsAmountAllowedStr + '\n');
       // *note: assume the players not poccessing items when first dropped into the
@@ -98,12 +103,19 @@ public class Controller {
 
     String input = "";
     boolean exit = false;
+    int round = 1;
+    String playerEndGame = "";
     while (!exit) { /// from here the scan.next should only have 'move actions'
       for (int i = 0; i < totalPlayers; i++) { // start iterating over each readline()
         Player currPlayer = allPlayers.get(i);
         if (currPlayer.getPlayerTurn()) { // if his turn is -> true.
           while (currPlayer.getPlayerTurn()) {
             if (currPlayer.getComputerOrHuman().equals("human")) { // a human player
+              System.out.println(
+                  String.format("%s, this is your turn now !\n", currPlayer.getPlayerName()));
+              System.out.println(
+                  "please pick one of these options to execute: 'move', 'pick', look around', 'display'\n");
+              System.out.println("or if you want to quit the game, simply enter 'quit'");
               input = scanController.nextLine(); // for example， move
               switch (input) {
                 // ===================Methods Cost a turn:
@@ -123,23 +135,21 @@ public class Controller {
                   // flip its boolean turn value:
                   currPlayer.flipTurn(); // now val is false.
                   currPlayer.setPlayerTurn(false); // now val is false.
-
                   break;
                 case "look around": /* String lookAround(String playerName) */
-                  input = scanController.nextLine();
-                  currPlayer.lookAround(input, m.getAllNeighborsMap());
+                  System.out.println(currPlayer.lookAround(currPlayer.getPlayerName(), m.getAllNeighborsMap()));
                   this.out.append(String.format("%s is looking around on another player.\n",
                       currPlayer.getPlayerName()));
                   // flip its boolean turn value:
                   currPlayer.flipTurn(); // now val is false.
                   currPlayer.setPlayerTurn(false); // now val is false.
-
                   break;
 
                 // =========Methods Dont cost a turn:
                 case "display": /* String displayPlayerInfo(String playerName) */
+                  System.out.println("please input the player name you want to 'display':\n");
                   input = scanController.nextLine();
-                  currPlayer.displayPlayerInfo(input);
+                  System.out.println(currPlayer.displayPlayerInfo(input));
                   this.out.append(String.format("%s is trying to pick up an item.\n",
                       currPlayer.getPlayerName()));
                   break;
@@ -151,6 +161,7 @@ public class Controller {
                   this.out.append("Game has been Ended!");
                   exit = true;
                   i = totalPlayers; // to prevent computer player for running another round.
+                  playerEndGame = currPlayer.getPlayerName();
                   break;
               }
             } else if (currPlayer.getComputerOrHuman().equals("computer")) { // a PC player
@@ -159,8 +170,12 @@ public class Controller {
                * lookAround() -> costs Turn!
                */
 
+              System.out.println("the computer player, " + currPlayer.getPlayerName()
+                  +", is having its turn and picking a move now!\n");
               int move = this.helperRandNum(2);
               input = this.helperGetComputerMove(move);
+              System.out.println(
+                  "computer player, " + currPlayer.getPlayerName() + ", chose to " + input);
               switch (input) { // for a computer
                 case "move": /* int movePlayer() */
                   currPlayer.movePlayer(m.getAllNeighborsMap());
@@ -171,13 +186,15 @@ public class Controller {
                   currPlayer.setPlayerTurn(false); // now val is false.
                   break;
                 case "pick": /* String pickUp() */
+                  currPlayer.pickUp();
                   this.out.append(String.format("%s is trying to pick up an item. \n",
                       currPlayer.getPlayerName()));
                   // flip its boolean turn value:
                   currPlayer.flipTurn(); // now val is false.
                   currPlayer.setPlayerTurn(false); // now val is false.
                   break;
-                case "look around": /* String lookAround(String playerName) */
+                case "look around": /*look around the space they are occupying*/
+                  System.out.println(currPlayer.lookAround(currPlayer.getPlayerName(), m.getAllNeighborsMap()));
                   this.out.append(String.format("%s is looking around on another player.\n",
                       currPlayer.getPlayerName()));
                   // flip its boolean turn value:
@@ -195,6 +212,28 @@ public class Controller {
         allPlayers.get(j).flipTurn(); // flip them all back to true.
         allPlayers.get(j).setPlayerTurn(true);
       }
+
+      if (!(input.equals("quit"))){
+        System.out.println(round + " round(s) of game has been just finished :-))");
+      } else{
+        System.out.println("game has been ended earlier by player: " + playerEndGame + "! :)))");
+      }
+//      if (round % 5 == 0){
+//        System.out.println("y'all have finished " + round + " rounds of game already!! Do y'all want to stop this game and taking a break maybe?");
+//        System.out.println("Y/N ?");
+//        input = scanController.nextLine();
+//        if (input.equals("Y")){
+//
+//          this.out.append("Current player, " + currPlayer.getPlayerName()
+//              + ", chose to close this game. :)))\n");
+//          currPlayer.setPlayerTurn(false);
+//          this.out.append("Game has been Ended!");
+//          exit = true;
+//          break;
+//
+//          break;
+//        }
+//      }
       this.out.append("Just finished one round.");
     } // end of while(true) loop.
   } // end of playGame().
