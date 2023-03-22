@@ -1,8 +1,9 @@
 package world;
 
-import java.io.IOException;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
@@ -13,18 +14,18 @@ import java.util.Scanner;
  */
 public class ControllerMock {
   /**
-   * declare fields & mansion, player objects
+   * declare fields & mansion, player objects.
    */
+  MansionMockModel m;
+  Player playerMock1Sam;
+  Player playerMock2Amy;
+  Player playerMockComputer1;
   private final Readable in;
   private final Appendable out;
-  MansionMockModel m;
-  Player playerMock1_Sam;
-  Player playerMock2_Amy;
-  Player playerMock_Computer1;
   private ArrayList<Player> allPlayersLst;
   // private ArrayList<String> moves_player1;
   // private ArrayList<String> moves_player2;
-  private ArrayList<String> moves_lst;
+  private ArrayList<String> movesLst;
   private ArrayList<String> namesLookAroundLst;
 
   /**
@@ -45,33 +46,33 @@ public class ControllerMock {
     this.m = new MansionMockModel();
 
     /* assigning players moves: move, pick, look around, display(don't cost turn) */
-    this.moves_lst = new ArrayList<>();
-    moves_lst.add("move"); // sam
-    moves_lst.add("move"); // amy
-    moves_lst.add("pick"); // sam
-    moves_lst.add("look around"); // amy -> Sam
-    moves_lst.add("display"); // Sam -> computer1
-    moves_lst.add("move"); // Sam
-    moves_lst.add("pick"); // amy
-    moves_lst.add("look around"); // sam -> amy
-    moves_lst.add("move"); // amy
-    moves_lst.add("pick"); // sam
-    moves_lst.add("look around"); // amy -> computer1
-    moves_lst.add("move"); // sam
-    moves_lst.add("move"); // amy
-    moves_lst.add("pick"); // sam
-    moves_lst.add("pick"); // amy
-    moves_lst.add("move"); // sam
-    moves_lst.add("move"); // amy
-    moves_lst.add("pick"); // sam
-    moves_lst.add("pick"); // amy
-    moves_lst.add("pick"); // sam
-    moves_lst.add("pick"); // amy
-    moves_lst.add("pick"); // sam
-    moves_lst.add("move"); // amy
-    moves_lst.add("pick"); // Sam
-    moves_lst.add("move"); // amy
-    moves_lst.add("quit"); // Sam calls to quit the game.
+    this.movesLst = new ArrayList<>();
+    movesLst.add("move"); // sam
+    movesLst.add("move"); // amy
+    movesLst.add("pick"); // sam
+    movesLst.add("look around"); // amy -> Sam
+    movesLst.add("display"); // Sam -> computer1
+    movesLst.add("move"); // Sam
+    movesLst.add("pick"); // amy
+    movesLst.add("look around"); // sam -> amy
+    movesLst.add("move"); // amy
+    movesLst.add("pick"); // sam
+    movesLst.add("look around"); // amy -> computer1
+    movesLst.add("move"); // sam
+    movesLst.add("move"); // amy
+    movesLst.add("pick"); // sam
+    movesLst.add("pick"); // amy
+    movesLst.add("move"); // sam
+    movesLst.add("move"); // amy
+    movesLst.add("pick"); // sam
+    movesLst.add("pick"); // amy
+    movesLst.add("pick"); // sam
+    movesLst.add("pick"); // amy
+    movesLst.add("pick"); // sam
+    movesLst.add("move"); // amy
+    movesLst.add("pick"); // Sam
+    movesLst.add("move"); // amy
+    movesLst.add("quit"); // Sam calls to quit the game.
 
     /* names list for look around option */
     this.namesLookAroundLst = new ArrayList<>();
@@ -93,7 +94,8 @@ public class ControllerMock {
 
     /* first, init. Mansion */
     out.append("playgame() started.\n");
-    String worldInput = "C:\\Users\\dongpingchen\\Documents\\GitHub\\PDP---Milestone-Mansion-Game-\\world.txt";
+    String worldInput = "C:\\Users\\dongpingchen\\Documents\\GitHub"
+        + "\\PDP---Milestone-Mansion-Game-\\world.txt";
     File file = new File(worldInput);
     out.append("File path entered correctly.\n");
     try {
@@ -103,7 +105,7 @@ public class ControllerMock {
       m.readFile(input);
       out.append("Mock model read this file\n");
       input.close();
-    } catch (Exception e) {
+    } catch (FileNotFoundException e) {
       e.getStackTrace();
     }
     m.drawWorld();
@@ -111,24 +113,24 @@ public class ControllerMock {
 
     /* initialize mock players */
     this.allPlayersLst = m.getAllPlayers();
-    this.playerMock1_Sam = new Player(m.getRoomNameIndexMap(), m.getTotalItemsAllowedMap(),
+    this.playerMock1Sam = new Player(m.getRoomNameIndexMap(), m.getTotalItemsAllowedMap(),
         m.getItemsDamageMap(), m.getTargetHealth(), m.getTargetLocation(), true, "human", "Sam",
         "Fate", 5, new ArrayList<>(), this.m.getPlayersTargetNameRoomMap(),
         this.m.getPlayersItemsMap(), this.m.getItemsRoomMap(), this.m.getTurnsMap());
-    this.allPlayersLst.add(playerMock1_Sam);
+    this.allPlayersLst.add(playerMock1Sam);
 
-    this.playerMock2_Amy = new Player(m.getRoomNameIndexMap(), m.getTotalItemsAllowedMap(),
+    this.playerMock2Amy = new Player(m.getRoomNameIndexMap(), m.getTotalItemsAllowedMap(),
         m.getItemsDamageMap(), m.getTargetHealth(), m.getTargetLocation(), true, "human", "Amy",
         "The Enlightenment", 4, new ArrayList<>(), this.m.getPlayersTargetNameRoomMap(),
         this.m.getPlayersItemsMap(), this.m.getItemsRoomMap(), this.m.getTurnsMap());
-    this.allPlayersLst.add(playerMock2_Amy);
+    this.allPlayersLst.add(playerMock2Amy);
 
-    this.playerMock_Computer1 = new Player(m.getRoomNameIndexMap(), m.getTotalItemsAllowedMap(),
+    this.playerMockComputer1 = new Player(m.getRoomNameIndexMap(), m.getTotalItemsAllowedMap(),
         m.getItemsDamageMap(), m.getTargetHealth(), m.getTargetLocation(), true, "computer",
         "computer_player_1", "The Myths", 10, new ArrayList<>(),
         this.m.getPlayersTargetNameRoomMap(), this.m.getPlayersItemsMap(), this.m.getItemsRoomMap(),
         this.m.getTurnsMap());
-    this.allPlayersLst.add(playerMock_Computer1);
+    this.allPlayersLst.add(playerMockComputer1);
 
     out.append("Finished initializing all the players in this game.\n");
 
@@ -159,8 +161,8 @@ public class ControllerMock {
     } // end of for loop.
 
     String input = "";
-    int track_moves = 0;
-    int track_names = 0;
+    int trackMoves = 0;
+    int trackNames = 0;
     boolean exit = false;
     while (!exit) { /// from here the scan.next should only have 'move actions'
       for (int i = 0; i < totalPlayers; i++) { // start iterating over each readline()
@@ -169,12 +171,12 @@ public class ControllerMock {
           if (currPlayer.getComputerOrHuman().equals("human")) { // a human player
             out.append("Human Player, " + currPlayer.getPlayerName()
                 + ", is having this turn and picking the move.\n");
-            if (track_moves == moves_lst.size()) {
+            if (trackMoves == movesLst.size()) {
               exit = true;
               out.append("Players running out of moves. GAME IS ENDED!!!");
               break;
             }
-            input = moves_lst.get(track_moves++); // for example， move
+            input = movesLst.get(trackMoves++); // for example， move
             switch (input) {
               // ===================Methods Cost a turn:
               case "move": /* int movePlayer() */
@@ -198,7 +200,7 @@ public class ControllerMock {
                 break;
 
               case "look around": /* String lookAround(String playerName) */
-                currPlayer.lookAround(this.namesLookAroundLst.get(track_names++),
+                currPlayer.lookAround(this.namesLookAroundLst.get(trackNames++),
                     m.getAllNeighborsMap());
                 this.out.append(String.format("%s is 'looking around' on another player.\n",
                     currPlayer.getPlayerName()));
@@ -209,7 +211,7 @@ public class ControllerMock {
 
               // =========Methods Dont cost a turn:
               case "display": /* String displayPlayerInfo(String playerName) */
-                currPlayer.displayPlayerInfo(this.namesLookAroundLst.get(track_names++));
+                currPlayer.displayPlayerInfo(this.namesLookAroundLst.get(trackNames++));
                 this.out.append(String.format("%s is trying to 'pick up' an item.\n",
                     currPlayer.getPlayerName()));
                 break;
@@ -223,11 +225,15 @@ public class ControllerMock {
                 i = totalPlayers; // to prevent computer player for running another round.
                 break;
 
+              default:
+                break;
+
             }
 
           } else if (currPlayer.getComputerOrHuman().equals("computer")) { // a PC player
             out.append("Computer Player, " + currPlayer.getPlayerName()
-                + " ,is having the turn and picking the move. And this is a random move that the compuer player will pick.\n");
+                + " ,is having the turn and picking the move. "
+                + "And this is a random move that the compuer player will pick.\n");
             int move = this.helperRandNum(2);
             input = this.helperGetComputerMove(move);
             switch (input) { // for a computer
@@ -258,6 +264,9 @@ public class ControllerMock {
                 currPlayer.flipTurn(); // now val is false.
                 currPlayer.setPlayerTurn(false); // now val is false.
                 break;
+
+              default:
+                break;
             }
           }
 
@@ -280,7 +289,7 @@ public class ControllerMock {
   // functions====================================
 
   /**
-   * helper function: generate a random integer value from 0 to 'j'
+   * helper function: generate a random integer value from 0 to 'j'.
    *
    * @param j the upper limit of the value generated.
    */
@@ -297,12 +306,15 @@ public class ControllerMock {
    * @return String the move a player executed.
    */
   private String helperGetComputerMove(int j) {
-    if (j == 0)
+    if (j == 0) {
       return "move";
-    if (j == 1)
+    }
+    if (j == 1) {
       return "pick";
-    if (j == 2)
+    }
+    if (j == 2) {
       return "look";
+    }
     return "wrong answer";
   }
 } // end of HumanController!

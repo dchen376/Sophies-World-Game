@@ -1,27 +1,27 @@
 package world;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.CharBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.awt.image.BufferedImage;
-import java.awt.Graphics;
+import java.util.HashMap;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.WindowConstants;
-import java.awt.BorderLayout; //for display Jframe
-import java.awt.Color;
-import java.util.HashMap;
 
 /**
  * this is the mock model.
  */
 public class MansionMockModel implements MansionBuilder {
+  private static final int BUFFER_SIZE = 4096;
   /**
-   * private fields & private objects
+   * private fields & private objects.
    */
   private HashMap<String, ArrayList<String>> allNeighborsMap;
   private String worldName;
@@ -31,7 +31,6 @@ public class MansionMockModel implements MansionBuilder {
   /* room attributes */
   private ArrayList<String> allRoomsNamesLst;
   private ArrayList<ArrayList<ArrayList<Integer>>> listOfRoomCoordinates; // room Coords store in
-                                                                          // arraylist.
   private HashMap<String, Integer> roomNameIndexMap; // <room name, room Index>
   private int totalRooms;
   /* item attributes */
@@ -41,20 +40,17 @@ public class MansionMockModel implements MansionBuilder {
   private HashMap<String, Integer> itemsRoomMap; // <Item, room index>
   /* graph info */
   private Graphics graph;
-  private static final int BUFFER_SIZE = 4096;
   /* objects info */
   private Item item;
   private Room room;
   private Target target;
   private HashMap<String, String> playersTargetNameRoomMap; // update each time the players/target
-                                                            // move
   private HashMap<String, ArrayList<String>> playersItemsMap; // *just 'put' new items into this
-                                                              // arrlst.
   private HashMap<String, Integer> turnsMap; // defaults are true -> 1.
   private ArrayList<Player> allPlayers;
 
   /**
-   * Constructor
+   * Constructor.
    */
   public MansionMockModel() {
     this.allNeighborsMap = new HashMap<>();
@@ -76,15 +72,15 @@ public class MansionMockModel implements MansionBuilder {
     this.room = new Room(this.itemsRoomMap, this.roomNameIndexMap, this.listOfRoomCoordinates,
         this.allRoomsNamesLst, this.allNeighborsMap);
     /* info needs to be updated constantly (maps) */
-    this.playersTargetNameRoomMap = new HashMap<>();// update each time the players/target move
+    this.playersTargetNameRoomMap = new HashMap<>(); // update each time the players/target move
     // related maps below (update first, need to change the second map)
     this.playersItemsMap = new HashMap<>(); // *just 'put' new items into this arrlst.
     // *remove the items in this hashmap once the player pick it.
     this.turnsMap = new HashMap<>();
-  }// end of the constructor
+  } // end of the constructor
 
   /**
-   * Read the text file
+   * Read the text file.
    */
   public void readFile(Readable readable) {
     StringBuilder text = new StringBuilder();
@@ -105,15 +101,13 @@ public class MansionMockModel implements MansionBuilder {
     totalItems = Integer.parseInt(eachLine[1]); /// read 1st line info: int total items
     StringBuilder eachLineStringBuilder = new StringBuilder();
     for (int i = 2; i < eachLine.length; i++) { /// parsing the first line info after '35 36 ':
-                                                /// Sophie's World.
       eachLineStringBuilder.append(eachLine[i]).append(" ");
     }
     eachLineStringBuilder.deleteCharAt(eachLine.length - 1); /// deleting the last appended val: "
-                                                             /// ".
     // initialize the world's name.
     worldName = eachLineStringBuilder.toString(); /// assign 'worldName' to 'Sophie's World'.
     eachLineStringBuilder.setLength(0); /// reset the stringbuilder.
-    eachLine = lines[1].toString().split(" ");/// parse 2nd line: 100 Albert Knag
+    eachLine = lines[1].toString().split(" "); /// parse 2nd line: 100 Albert Knag
     targetHealth = Integer.parseInt(eachLine[0]); /// 100
     target.setTargetHealth(targetHealth);
     for (int i = 1; i < eachLine.length; i++) {
@@ -132,7 +126,7 @@ public class MansionMockModel implements MansionBuilder {
     /// start reading from th 4th line: (room information)
     for (int i = 0; i < totalRooms; i++) { // totalRooms
       ArrayList<Integer> coordinateLeftTop = new ArrayList<>(); /// (x1,y1) upper left.
-      ArrayList<Integer> coordinateRightBot = new ArrayList<>();/// (x2, y2) lower right.
+      ArrayList<Integer> coordinateRightBot = new ArrayList<>(); /// (x2, y2) lower right.
       ArrayList<ArrayList<Integer>> singleRoomCoordinates = new ArrayList<ArrayList<Integer>>();
       /// parse and add (x1,y1) into 'singleRoomCoordinates':
       eachLine = lines[i].toString().split(" ");
@@ -140,14 +134,13 @@ public class MansionMockModel implements MansionBuilder {
       int y1 = Integer.parseInt(eachLine[1]);
       coordinateLeftTop.add(x1);
       coordinateLeftTop.add(y1);
-      singleRoomCoordinates.add(coordinateLeftTop);/// now singleRoomCoordinates is: {x1, y1}
+      singleRoomCoordinates.add(coordinateLeftTop); /// now singleRoomCoordinates is: {x1, y1}
       /// parse and add(x2,y2) into 'singleRoomCoordinates':
       int x2 = Integer.parseInt(eachLine[2]);
       int y2 = Integer.parseInt(eachLine[3]);
       coordinateRightBot.add(x2);
       coordinateRightBot.add(y2);
       singleRoomCoordinates.add(coordinateRightBot); // now singleRoomCoordinates is:
-                                                     // {{x1,y1},{x2,y2}}
       /// add to the final list: 'listOfRoomCoordinates'
       listOfRoomCoordinates.add(singleRoomCoordinates); /// { {{x1,y1},{x2,y2}}, ..., ... }
       /// parsing the final string names of rooms:
@@ -155,8 +148,7 @@ public class MansionMockModel implements MansionBuilder {
         eachLineStringBuilder.append(eachLine[j]).append(" ");
       }
       String strRoomName = eachLineStringBuilder.toString().trim();
-      eachLineStringBuilder.setLength(0);// reset the stringbuilder.
-      /// add to the final arraylist: 'roomNames'
+      eachLineStringBuilder.setLength(0); // reset the stringbuilder.
       this.roomNameIndexMap.put(strRoomName, i);
       this.allRoomsNamesLst.add(strRoomName);
     }
@@ -173,7 +165,6 @@ public class MansionMockModel implements MansionBuilder {
       int itemDamage = Integer.parseInt(eachLine[1]); /// parse the damage done by item as String.
       for (int j = 2; j < eachLine.length; j++) {
         eachLineStringBuilder.append(eachLine[j]).append(" "); /// parse the rest as String: the
-                                                               /// item name.
       }
       String strItemName = eachLineStringBuilder.toString().trim();
       eachLineStringBuilder.setLength(0); /// reset the string.
@@ -215,15 +206,15 @@ public class MansionMockModel implements MansionBuilder {
       graph.setColor(Color.black);
       graph.drawRect(x1 * 30, y1 * 30, width * 30, height * 30);
       graph.setColor(Color.red);
-      graph.drawString(name, x1 * 30, y1 * 30 + 30);// (height * 30 / 2) + y2);
+      graph.drawString(name, x1 * 30, y1 * 30 + 30); // (height * 30 / 2) + y2);
     }
     // JFrame for display the image created above.
     JFrame editorFrame = new JFrame(worldName);
-    editorFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    editorFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     ImageIcon imageIcon = new ImageIcon(img);
-    JLabel jLabel = new JLabel();
-    jLabel.setIcon(imageIcon);
-    editorFrame.getContentPane().add(jLabel, BorderLayout.CENTER);
+    JLabel label = new JLabel();
+    label.setIcon(imageIcon);
+    editorFrame.getContentPane().add(label, BorderLayout.CENTER);
     editorFrame.pack();
     editorFrame.setLocationRelativeTo(null);
     editorFrame.setVisible(true);
@@ -238,102 +229,178 @@ public class MansionMockModel implements MansionBuilder {
   }
 
   /**
-   * all the getter methods below are below:
+   * all the getter methods below are below.
    */
   public ArrayList<Player> getAllPlayers() {
     return allPlayers;
   }
 
+  /**
+   * getter.
+   * @return hashmap
+   */
   public HashMap<String, Integer> getTotalItemsAllowedMap() {
     // return this.getAllPlayers().get(0).getTotalItemsAllowedMap();
     return totalItemsAllowedMap;
   }
 
+  /**
+   * getter.
+   * @return graphics for the graph
+   */
   public Graphics getGraph() {
     return graph;
   }
 
-  public static int getBufferSize() {
-    return BUFFER_SIZE;
-  }
-
+  /**
+   * getter.
+   * @return total items
+   */
   public int getTotalItems() {
     return totalItems;
   }
 
+  /**
+   * getter.
+   * @return total rooms
+   */
   public int getTotalRooms() {
     return totalRooms;
   }
 
+  /**
+   * getter.
+   * @return item
+   */
   public Item getItem() {
     return item;
   }
 
+  /**
+   * getter.
+   * @return room
+   */
   public Room getRoom() {
     return room;
   }
 
+  /**
+   * getter.
+   * @return name of the world
+   */
   public String getWorldName() {
     return worldName;
   }
 
+  /**
+   * getter.
+   * @return get target location
+   */
   public Target getTarget() {
     return target;
   }
 
+  /**
+   * getter.
+   * @return arraylist
+   */
   public ArrayList<String> getAllRoomsNamesLst() {
     return allRoomsNamesLst;
   }
 
+  /**
+   * getter.
+   * @return hashmap
+   */
   public HashMap<String, String> getPlayersTargetNameRoomMap() {
     return playersTargetNameRoomMap;
   }
 
+  /**
+   * getter.
+   * @return hashmap
+   */
   public HashMap<String, ArrayList<String>> getPlayersItemsMap() {
     return playersItemsMap;
   }
 
+  /**
+   * getter.
+   * @return hashmap
+   */
   public HashMap<String, Integer> getTurnsMap() {
     return turnsMap;
   }
 
+  /**
+   * getter.
+   * @return arraylist for all the rooms' coordinates
+   */
   @Override
   public ArrayList<ArrayList<ArrayList<Integer>>> getListOfRoomCoordinates() {
     return listOfRoomCoordinates;
   }
 
+  /**
+   * getter.
+   * @return hashmap
+   */
   @Override
   public HashMap<String, ArrayList<String>> getAllNeighborsMap() {
     return allNeighborsMap;
   }
 
+  /**
+   * getter.
+   * @return target's health
+   */
   @Override
   public int getTargetHealth() {
     return targetHealth;
   }
 
+  /**
+   * getter.
+   * @return target location
+   */
   @Override
   public int getTargetLocation() {
     return targetLocation;
   }
 
+  /**
+   * getter.
+   * @return target name
+   */
   @Override
   public String getTargetName() {
     return this.targetName;
   }
 
+  /**
+   * getter.
+   * @return hashmap
+   */
   @Override
   public HashMap<String, Integer> getRoomNameIndexMap() {
     return this.roomNameIndexMap;
   }
 
+  /**
+   * getter.
+   * @return hashmap
+   */
   @Override
-  public HashMap<String, Integer> getItemsRoomMap() {///
+  public HashMap<String, Integer> getItemsRoomMap() {
     return this.itemsRoomMap;
   }
 
+  /**
+   * getter.
+   * @return hashmap
+   */
   @Override
-  public HashMap<String, Integer> getItemsDamageMap() {///
+  public HashMap<String, Integer> getItemsDamageMap() {
     return this.itemsDamageMap;
   }
-}// end of Mansion class.
+} // end of Mansion class.

@@ -1,6 +1,9 @@
 package world;
+
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -9,6 +12,11 @@ import java.util.Scanner;
  * this is the driver for milestone 1.
  */
 public class MansionDriver {
+  /**
+   * the main() driver class.
+   * 
+   * @param args the system's arguments.
+   */
   public static void main(String[] args) {
 
     ArrayList<String> playersRoomNames = new ArrayList<String>(
@@ -24,7 +32,8 @@ public class MansionDriver {
     // first, to drive the Mansion object:
     System.out.println("First, we will test the Mansion class!!");
     System.out.println("Please enter the text file path to read: ");
-    String userInput = "C:\\Users\\dongpingchen\\Documents\\GitHub\\milestone-2---controller\\world.txt";
+    String userInput = "C:\\Users\\dongpingchen\\Documents"
+        + "\\GitHub\\milestone-2---controller\\world.txt";
     // String userInput = myObj.nextLine();
     File file = new File(userInput);
     try {
@@ -34,8 +43,10 @@ public class MansionDriver {
       ms.readFile(input);
       // Closes the reader
       input.close();
-    } catch (Exception e) {
+    } catch (FileNotFoundException e) {
       e.getStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
     }
     ms.drawWorld();
     System.out.println("All the room names are: " + ms.getAllRoomsNamesLst());

@@ -12,7 +12,14 @@ public class Target {
   private HashMap<String, Integer> itemRoomMap;
   private HashMap<String, Integer> itemDamageMap;
 
-  // constructor (good)
+  /**
+   * constructor.
+   * @param targetName target name
+   * @param targetHealth target health
+   * @param targetLocation target location
+   * @param itemRoomMap hashmap of items and rooms
+   * @param itemDamageMap hashmap for items and damages
+   */
   public Target(String targetName, int targetHealth, int targetLocation,
       HashMap<String, Integer> itemRoomMap, HashMap<String, Integer> itemDamageMap) {
     this.targetName = targetName;
@@ -22,19 +29,25 @@ public class Target {
     this.itemDamageMap = itemDamageMap;
   }
 
+  /**
+   * getter.
+   * @return target health
+   */
   public int getTargetHealth() {
     return targetHealth;
   }
 
   /**
-   * this method moves the target one index at a time to a different room in the
-   * world.
-   * <p>
-   * Notes-to-myself: More implementations would probably be needed such as throw
-   * exceptions when the index if out of the range, but I'll await for more
-   * information before fully implementing this method.
-   *
-   * @return the current room index.
+   * setter.
+   * @param targetHealth target health
+   */
+  public void setTargetHealth(int targetHealth) {
+    this.targetHealth = targetHealth;
+  }
+
+  /**
+   * move the target character.
+   * @return the room index moved to
    */
   public int moveTarget() {
     // room0's items' damgages?
@@ -61,20 +74,26 @@ public class Target {
     return targetLocation;
   }
 
-  // setters:
-
-  public void setTargetName(String targetName) {
-    this.targetName = targetName;
-  }
-
-  public void setTargetHealth(int targetHealth) {
-    this.targetHealth = targetHealth;
-  }
-
+  /**
+   * get the target's name.
+   * @return the target's name
+   */
   public String getTargetName() {
     return targetName;
   }
 
+  /**
+   * setter.
+   * @param targetName set target's name
+   */
+  public void setTargetName(String targetName) {
+    this.targetName = targetName;
+  }
+
+  /**
+   * getter.
+   * @return get target's location
+   */
   public int getTargetLocation() {
     return targetLocation;
   }

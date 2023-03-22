@@ -1,45 +1,38 @@
 package test;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import org.junit.Assert;
-import org.junit.Test;
 import org.junit.Before;
+import org.junit.Test;
 import world.Mansion;
 import world.Room;
-import java.io.File;
-import java.io.FileReader;
-import java.util.ArrayList;
 
 /**
- * Room Tester.
- *
- * @author <Authors name>
- * @version 1.0
- * @since
- * 
- *        <pre>
- * Feb 17, 2023
- *        </pre>
+ * Test class for Room class.
  */
 public class RoomTest {
   private Room room;
   private Mansion m;
 
-  public RoomTest() {
-  }
-
   @Before
   public void setup() {
     this.m = new Mansion();
-    File file = new File(
-        "C:\\Users\\dongpingchen\\Documents\\GitHub\\PDP---Milestone-Mansion-Game-\\world.txt");
+    File file = new File("C:\\Users\\dongpingchen" + "\\Documents\\GitHub\\"
+        + "PDP---Milestone-Mansion-Game-\\world.txt");
 
     try {
       FileReader input = new FileReader(file);
       this.m.readFile(input);
       input.close();
-    } catch (Exception var3) {
+    } catch (FileNotFoundException var3) {
       var3.getStackTrace();
       Assert.fail("failed! Exception was thrown.");
+    } catch (IOException e) {
+      e.printStackTrace();
     }
 
     this.room = new Room(this.m.getItemsRoomMap(), this.m.getRoomNameIndexMap(),

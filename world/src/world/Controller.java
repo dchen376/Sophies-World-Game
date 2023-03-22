@@ -1,8 +1,9 @@
 package world;
 
-import java.io.IOException;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
@@ -15,12 +16,12 @@ public class Controller {
   /**
    * declare fields.
    */
+  Mansion m;
   private final Readable in;
   private final Appendable out;
-  Mansion m;
 
   /**
-   * Constructor
+   * Constructor.
    *
    * @param in  an InputStream prompts inputs from user.
    * @param out an OutputStream that appends game logs.
@@ -54,7 +55,7 @@ public class Controller {
       m.readFile(input);
       // Closes the reader
       input.close();
-    } catch (Exception e) {
+    } catch (FileNotFoundException e) {
       e.getStackTrace();
     }
     m.drawWorld();
@@ -113,9 +114,10 @@ public class Controller {
             if (currPlayer.getComputerOrHuman().equals("human")) { // a human player
               System.out.println(
                   String.format("%s, this is your turn now !\n", currPlayer.getPlayerName()));
-              System.out.println(
-                  "please pick one of these options to execute: 'move', 'pick', look around', 'display'\n");
-              System.out.println("or if you want to quit the game, simply enter 'quit'");
+              System.out.println("please pick one of these options to execute: 'move', "
+                  + "'pick', look around', 'display'\n");
+              System.out.println("or if you want to quit the game,"
+                  + " simply enter 'quit'");
               input = scanController.nextLine(); // for example， move
               switch (input) {
                 // ===================Methods Cost a turn:
@@ -137,7 +139,8 @@ public class Controller {
                   currPlayer.setPlayerTurn(false); // now val is false.
                   break;
                 case "look around": /* String lookAround(String playerName) */
-                  System.out.println(currPlayer.lookAround(currPlayer.getPlayerName(), m.getAllNeighborsMap()));
+                  System.out.println(
+                      currPlayer.lookAround(currPlayer.getPlayerName(), m.getAllNeighborsMap()));
                   this.out.append(String.format("%s is looking around on another player.\n",
                       currPlayer.getPlayerName()));
                   // flip its boolean turn value:
@@ -163,6 +166,9 @@ public class Controller {
                   i = totalPlayers; // to prevent computer player for running another round.
                   playerEndGame = currPlayer.getPlayerName();
                   break;
+
+                default:
+                  break;
               }
             } else if (currPlayer.getComputerOrHuman().equals("computer")) { // a PC player
               /*
@@ -171,7 +177,7 @@ public class Controller {
                */
 
               System.out.println("the computer player, " + currPlayer.getPlayerName()
-                  +", is having its turn and picking a move now!\n");
+                  + ", is having its turn and picking a move now!\n");
               int move = this.helperRandNum(2);
               input = this.helperGetComputerMove(move);
               System.out.println(
@@ -193,13 +199,16 @@ public class Controller {
                   currPlayer.flipTurn(); // now val is false.
                   currPlayer.setPlayerTurn(false); // now val is false.
                   break;
-                case "look around": /*look around the space they are occupying*/
-                  System.out.println(currPlayer.lookAround(currPlayer.getPlayerName(), m.getAllNeighborsMap()));
+                case "look around": /* look around the space they are occupying */
+                  System.out.println(
+                      currPlayer.lookAround(currPlayer.getPlayerName(), m.getAllNeighborsMap()));
                   this.out.append(String.format("%s is looking around on another player.\n",
                       currPlayer.getPlayerName()));
                   // flip its boolean turn value:
                   currPlayer.flipTurn(); // now val is false.
                   currPlayer.setPlayerTurn(false); // now val is false.
+                  break;
+                default:
                   break;
               }
             }
@@ -213,27 +222,12 @@ public class Controller {
         allPlayers.get(j).setPlayerTurn(true);
       }
 
-      if (!(input.equals("quit"))){
+      if (!("quit".equals(input))) {
         System.out.println(round + " round(s) of game has been just finished :-))");
-      } else{
+      } else {
         System.out.println("game has been ended earlier by player: " + playerEndGame + "! :)))");
       }
-//      if (round % 5 == 0){
-//        System.out.println("y'all have finished " + round + " rounds of game already!! Do y'all want to stop this game and taking a break maybe?");
-//        System.out.println("Y/N ?");
-//        input = scanController.nextLine();
-//        if (input.equals("Y")){
-//
-//          this.out.append("Current player, " + currPlayer.getPlayerName()
-//              + ", chose to close this game. :)))\n");
-//          currPlayer.setPlayerTurn(false);
-//          this.out.append("Game has been Ended!");
-//          exit = true;
-//          break;
-//
-//          break;
-//        }
-//      }
+
       this.out.append("Just finished one round.");
     } // end of while(true) loop.
   } // end of playGame().
@@ -242,7 +236,7 @@ public class Controller {
   // functions====================================
 
   /**
-   * helper function: generate a random integer value from 0 to 'j'
+   * helper function: generate a random integer value from 0 to 'j'.
    *
    * @param j the upper limit of the value generated.
    */
@@ -259,12 +253,15 @@ public class Controller {
    * @return String the move a player executed.
    */
   private String helperGetComputerMove(int j) {
-    if (j == 0)
+    if (j == 0) {
       return "move";
-    if (j == 1)
+    }
+    if (j == 1) {
       return "pick";
-    if (j == 2)
+    }
+    if (j == 2) {
       return "look";
+    }
     return "wrong answer";
   }
 } // end of HumanController!

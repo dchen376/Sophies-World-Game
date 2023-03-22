@@ -25,20 +25,31 @@ public class Player {
   private int playerTotalAllowedItem;
   private HashMap<String, Integer> totalItemsAllowedMap; // <room name, the total number alloed
 
-  // private ArrayList<String> totalItemsLst; //{all items in mansion put in this
-  // list.
   private ArrayList<String> playerItemsLst; // each this list represent a player's all items.
-  private HashMap<String, ArrayList<String>> playersItemsMap; // *just 'put' new items into this
-                                                              // arrlst.
+  private HashMap<String, ArrayList<String>> playersItemsMap;
 
-  private HashMap<String, String> playersTargetNameRoomMap; // update each time the players/target
-                                                            // move
-  private HashMap<String, Integer> itemsRoomMap; // *remove the items in this hashmap once the
-                                                 // player pick it.
+  private HashMap<String, String> playersTargetNameRoomMap;
+  private HashMap<String, Integer> itemsRoomMap;
   private HashMap<String, Integer> turnsMap; // defaults are true -> 1. //TODO turns map
 
-  // Constructor
-
+  /**
+   * constructor.
+   * @param roomNameIndexMap hashmap for room names
+   * @param totalItemsAllowedMap hashmap for items
+   * @param itemsDamageMap hashmap for damages
+   * @param targetHealth target's health
+   * @param targetLocation target location
+   * @param playerTurn player turn as a boolean
+   * @param computerOrHuman computer or a human as a string
+   * @param playerName player's name
+   * @param playerRoom player's room
+   * @param playerTotalAllowedItem total items for the player
+   * @param playerItemsLst the items list for the player
+   * @param playersTargetNameRoomMap player's room hashmap
+   * @param playersItemsMap player's item hashmap
+   * @param itemsRoomMap items and rooms hashmap
+   * @param turnsMap turns hashmap for all player
+   */
   public Player(HashMap<String, Integer> roomNameIndexMap,
       HashMap<String, Integer> totalItemsAllowedMap, HashMap<String, Integer> itemsDamageMap,
       int targetHealth, int targetLocation, boolean playerTurn, String computerOrHuman,
@@ -71,24 +82,56 @@ public class Player {
     this.turnsMap.put(this.playerName, 1); // default is 1 for true
   }
 
+  /**
+   * hashmap for items.
+   * @return the hashmap for items
+   */
   public HashMap<String, Integer> getTotalItemsAllowedMap() {
     return totalItemsAllowedMap;
   }
 
+  /**
+   * setter.
+   * @param totalItemsAllowedMap hashmap
+   */
+  public void setTotalItemsAllowedMap(HashMap<String, Integer> totalItemsAllowedMap) {
+    this.totalItemsAllowedMap = totalItemsAllowedMap;
+  }
+
+  /**
+   * getter.
+   * @return the hashmap
+   */
   public HashMap<String, String> getPlayersTargetNameRoomMap() {
     return playersTargetNameRoomMap;
   }
 
+  /**
+   * getter.
+   * @return the hashmap
+   */
   public HashMap<String, ArrayList<String>> getPlayersItemsMap() {
     return playersItemsMap;
   }
 
+  /**
+   * getter.
+   * @return the hashmap
+   */
   public HashMap<String, Integer> getItemsRoomMap() {
     return itemsRoomMap;
   }
 
   /**
-   * check if the turnsMap returns 1 (true) or 0(false) for the current player
+   * setter.
+   * @return the hashmap
+   */
+  public void setItemsRoomMap(HashMap<String, Integer> itemsRoomMap) {
+    this.itemsRoomMap = itemsRoomMap;
+  }
+
+  /**
+   * check if the turnsMap returns 1 (true) or 0(false) for the current player.
    *
    * @return boolean
    */
@@ -102,109 +145,131 @@ public class Player {
   }
 
   /**
-   * getters & setters
+   * getter.
+   * @return the array list
    */
-
-  public void setPlayerTotalAllowedItem(int playerTotalAllowedItem) {
-    this.playerTotalAllowedItem = playerTotalAllowedItem;
-  }
-
-  public void setTotalItemsAllowedMap(HashMap<String, Integer> totalItemsAllowedMap) {
-    this.totalItemsAllowedMap = totalItemsAllowedMap;
-  }
-
   public ArrayList<String> getPlayerItemsLst() {
     return playerItemsLst;
   }
 
+  /**
+   * setter.
+   * @param playerItemsLst the player's current item-list.
+   */
   public void setPlayerItemsLst(ArrayList<String> playerItemsLst) {
     this.playerItemsLst = playerItemsLst;
   }
 
-  // ------------------------------------------------------------ getters (x10)
-  // ---------------------------------------------------//
+  /**
+   * getter.
+   * @return the total number of players
+   */
   public int getPlayerTotalAllowedItem() {
     return playerTotalAllowedItem;
   }
 
+  /**
+   * setter.
+   */
+  public void setPlayerTotalAllowedItem(int playerTotalAllowedItem) {
+    this.playerTotalAllowedItem = playerTotalAllowedItem;
+  }
+
+  /**
+   * getter.
+   * @return the player's turn
+   */
   public boolean getPlayerTurn() {
     return this.playerTurn;
   }
 
-  public String getComputerOrHuman() {
-    return computerOrHuman;
-  }
-
-  public void setComputerOrHuman(String computerOrHuman) {
-    this.computerOrHuman = computerOrHuman;
-  }
-
-  public String getPlayerRoom() {
-    return playerRoom;
-  }
-
-  public String getPlayerName() {
-    return playerName;
-  }
-
+  /**
+   * setter.
+   */
   public void setPlayerTurn(boolean playerTurn) {
     this.playerTurn = playerTurn;
   }
 
+  /**
+   * getter.
+   * @return a human or a computer as a String.
+   */
+  public String getComputerOrHuman() {
+    return computerOrHuman;
+  }
+
+  /**
+   * getter.
+   * @return string type of player's room
+   */
+  public String getPlayerRoom() {
+    return playerRoom;
+  }
+
+  /**
+   * getter.
+   * @return the player's name
+   */
+  public String getPlayerName() {
+    return playerName;
+  }
+
+  /**
+   * getter.
+   * @return hashmap
+   */
   public HashMap<String, Integer> getRoomNameIndexMap() {
     return roomNameIndexMap;
   }
 
+  /**
+   * setter.
+   * @param roomNameIndexMap hashmap
+   */
   public void setRoomNameIndexMap(HashMap<String, Integer> roomNameIndexMap) {
     this.roomNameIndexMap = roomNameIndexMap;
   }
 
-  public void setItemsRoomMap(HashMap<String, Integer> itemsRoomMap) {
-    this.itemsRoomMap = itemsRoomMap;
-  }
-
+  /**
+   * getter.
+   * @return hashmap
+   */
   public HashMap<String, Integer> getTurnsMap() {
     return turnsMap;
   }
 
+  /**
+   * getter.
+   * @return hashmap
+   */
   public HashMap<String, Integer> getItemsDamageMap() {
     return itemsDamageMap;
   }
 
-  // 0getters:
-
+  /**
+   * getter.
+   * @return target location
+   */
   public int getTargetLocation() {
     return targetLocation;
   }
 
+  /**
+   * getter.
+   * @return target health.
+   */
   public int getTargetHealth() {
     return targetHealth;
   }
 
-  // public ArrayList<String> getPlayerItemsLst() {
-  // return playerItemsLst;
-  // }
-
   /**
-   * Main methods:
-   */
-
-  // --------s3 - movePlayer(done.) ------------------------------------//
-
-  /**
-   * move a player to his neighboring room (if there is one & player can still
-   * carry more items): what happend when a player moved: 1. pick items in current
-   * room if any. 2.CHANGE the HASHMAP for items info. 3. update player's current
-   * damage. 4.update what he carrying now. 5.check if the TARGET in this room:
-   * -if IN: ->fight the target by inflicing damage to target ->update target's
-   * health. - *this COST A TURN!
-   *
-   * @return Integer (the moved room's index)
+   * move the player.
+   * @param allNeighborsMap the hashmap
+   * @return the index room the player moved to.
    */
   public int movePlayer(HashMap<String, ArrayList<String>> allNeighborsMap) {
     /* costing a TURN */
     this.turnsMap.put(this.playerName, 0);
-
     ArrayList<String> playerNeighbors = allNeighborsMap.get(this.playerRoom);
     int size = playerNeighbors.size();
     int index = 0;
@@ -212,29 +277,20 @@ public class Player {
       index = this.helperRandNum(size - 1);
     }
     // player move to a random index:
-    String neighborRoom = playerNeighbors.get(index); // got the name of the room the player is
-                                                      // supposed to move to.
+    String neighborRoom = playerNeighbors.get(index);
     // update hashmaps:
     int neighborIndex = this.roomNameIndexMap.get(neighborRoom);
     this.playerRoom = this.helperIndexGetRoomName(neighborIndex); // to update player's current room
-    // this.pickUp(); //player performing the pickup() action(updaing items hashmap
-    // happening inside this function).
     this.updatePlayerRoomInfo(playerRoom);
-
     this.setPlayerTurn(false);
     // return the moved to room index?
     this.autoMoveTarget();
     return neighborIndex;
   }
 
-  // --------s4 - pickUp(done.)------------------------------------//
-
   /**
-   * a player pick up an item in his room condition1: if there are items in the
-   * rom. condition2: if the player hasn't reaching its picking limit. - *this
-   * COST A TURN!
-   *
-   * @return Item (the player just picked)
+   * pick up an item.
+   * @return the picked item.
    */
   public String pickUp() {
     /* costing a TURN */
@@ -249,27 +305,24 @@ public class Player {
     /// can he pick it up?
     if (!allItems.isEmpty()
         && (totalItemsAllowedMap.get(this.playerName) - playerItemsLst.size()) > 0) {
-      /// - if so, update this room items info: player pick, mansion deduct this item.
-      playerItemsLst.add(allItems.get(0));// (get the first item in the list) player's added the
-                                          // item.
+      playerItemsLst.add(allItems.get(0)); // (get the first item in the list) player's added the
       this.itemsRoomMap.remove(allItems.get(0)); // room's removed the item.
       this.playersItemsMap.put(this.playerName, playerItemsLst); // add it to hashmap:
-                                                                 // playerItemsMap
     }
 
     this.autoMoveTarget();
     // return the picked up item?
-    if (allItems.isEmpty())
+    if (allItems.isEmpty()) {
       return null; // if no items in the current room.
+    }
     this.setPlayerTurn(false);
-
     return allItems.get(0); // null means no items left in room.
   }
 
   /**
    * a player LOOK AROUND to check a specific player's information: -what room's
    * the specific player is at -what neighboring rooms the player can reach -
-   * *this COST A TURN!
+   * *this COST A TURN.
    *
    * @param playerName String
    * @return String (the checked player's information)
@@ -299,7 +352,7 @@ public class Player {
   // done.)------------------------------//
 
   /**
-   * modify: to include players in the room
+   * modify: to include players in the room.
    *
    * @param roomName Integer
    */
@@ -313,7 +366,7 @@ public class Player {
    * Display a description of a specific player(from GOD's View) including:
    * 1.where the player's at (which room) 2.what items his carrying.
    *
-   * @param playerName
+   * @param playerName the name of the player
    * @return String (the specific player's information)
    */
   public String displayPlayerInfo(String playerName) {
@@ -338,7 +391,6 @@ public class Player {
    * @return Integer (the room's index the TARGET just moved to)
    */
   public int autoMoveTarget() { // this method probably wil be called from any methods that
-                                // consuming a TURN.
     // return 1;
 
     // TARGET TARGET MOVE!!! EVERY TURN!!!! OF THE GAME!
@@ -355,7 +407,7 @@ public class Player {
     String roomStr = this.helperIndexGetRoomName(roomIndex);
     /// items in this room?
     ArrayList<String> allItemsLst = this.helperRoomGetItems(roomStr);
-    String itemsStr = this.helperArrayListToString(allItemsLst);// 2.
+    String itemsStr = this.helperArrayListToString(allItemsLst); // 2.
 
     /// 3. target taking damge:
     for (String playerName : this.playersTargetNameRoomMap.keySet()) {
@@ -363,8 +415,9 @@ public class Player {
         // items the each player has:
         ArrayList<String> itemsLst = this.playersItemsMap.get(playerName);
 
-        if (itemsLst == null)
+        if (itemsLst == null) {
           return targetLocation; // if no items for the player simply return.
+        }
         if (!itemsLst.isEmpty()) {
           for (String eachItem : itemsLst) {
             int damage = this.itemsDamageMap.get(eachItem);
@@ -396,7 +449,7 @@ public class Player {
   }
 
   /**
-   * flip the turns: 1 -> 0 0 -> 1
+   * flip the turns: 1 -> 0 0 -> 1.
    *
    * @return an integer representation as true (1) or false (0)
    */
@@ -418,7 +471,7 @@ public class Player {
   /**
    * to generate a random number between 1 and (i).
    *
-   * @param i
+   * @param i the upper limit of the random number.
    */
   private int helperRandNum(int i) {
     // random generator:
@@ -430,7 +483,7 @@ public class Player {
   /**
    * get room name from room index from hashmap.
    *
-   * @return
+   * @return the string representation
    */
   private String helperIndexGetRoomName(int index) {
     for (String str : this.roomNameIndexMap.keySet()) {
@@ -442,14 +495,15 @@ public class Player {
   }
 
   /**
-   * get items in the room from hashmap
+   * get items in the room from hashmap.
    *
-   * @return
-   */ // TODO: fix this method for: []
+   * @return all items in the room
+   */
   private ArrayList<String> helperRoomGetItems(String room) { // room get items
     ArrayList<String> arrLst = new ArrayList<>();
-    if (room == null)
+    if (room == null) {
       return null; // if the room doesn't exist.
+    }
     int roomIndex = this.roomNameIndexMap.get(room);
     for (String item : this.itemsRoomMap.keySet()) {
       if (roomIndex == this.itemsRoomMap.get(item)) {
@@ -460,8 +514,9 @@ public class Player {
   }
 
   private String helperArrayListToString(ArrayList<String> arrLst) {
-    if (arrLst == null || arrLst.isEmpty())
+    if (arrLst == null || arrLst.isEmpty()) {
       return null; // if the arrLst is null just return null.
+    }
     StringBuffer sb = new StringBuffer();
     for (String str : arrLst) {
       sb.append(str);

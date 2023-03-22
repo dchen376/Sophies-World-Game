@@ -7,17 +7,24 @@ import java.io.InputStreamReader;
 /**
  * this is the dirver for milestone 2.
  */
-public class controllerDriver {
+public class ControllerDriver {
 
-  /*jar command line*/
-  // java -jar "C:\Users\dongpingchen\Documents\GitHub\PDP---Milestone-Mansion-Game-\out\artifacts\world_jar\world.jar"
+  /* jar command line */
+  // java -jar
+  // "C:\Users\dongpingchen\Documents\GitHub\
+  // PDP---Milestone-Mansion-Game-\out\artifacts\world_jar\world.jar"
 
-  /*windows*/
+  /* windows */
   // C:\\Users\\dongpingchen\\Documents\\GitHub\\PDP---Milestone-Mansion-Game-\\world.txt
 
-  /*mac*/
+  /* mac */
   // /Users/dongping/Documents/GitHub/PDP---Milestone-Mansion-Game-/world.txt
 
+  /**
+   * the main() method for driver.
+   * @param args the system arguments.
+   * @throws IOException if is the wrong file.
+   */
   public static void main(String[] args) throws IOException {
     Mansion mansion = new Mansion(); // model
     System.out.println("please enter the file path to read: \n");

@@ -1,30 +1,25 @@
 package test;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.io.File;
-import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import world.Mansion;
 
 /**
- * Mansion Tester.
- *
- * @author <Authors name>
- * @version 1.0
- * @since
- * 
- *        <pre>
- * Feb 17, 2023
- *        </pre>
+ * test class for Mansion class.
  */
 public class MansionTest {
   private Mansion ms;
 
+  /**
+   * constructor.
+   */
   public MansionTest() {
   }
 
@@ -41,9 +36,11 @@ public class MansionTest {
       FileReader input = new FileReader(file);
       this.ms.readFile(input);
       input.close();
-    } catch (Exception var3) {
-      var3.getStackTrace();
+    } catch (FileNotFoundException exception) {
+      exception.getStackTrace();
       Assert.fail("failed! Exception was thrown.");
+    } catch (IOException e) {
+      e.printStackTrace();
     }
 
   }
@@ -57,9 +54,11 @@ public class MansionTest {
       FileReader input = new FileReader(file);
       this.ms.readFile(input);
       input.close();
-    } catch (Exception var3) {
+    } catch (FileNotFoundException var3) {
       var3.getStackTrace();
       Assert.fail("failed! Exception was thrown.");
+    } catch (IOException e) {
+      e.printStackTrace();
     }
 
   }
@@ -77,9 +76,15 @@ public class MansionTest {
   }
 
   @Test
-  public void testGetRoomNameIndexMap() throws Exception {
+  public void testGetRoomNameIndexMap() {
     Assert.assertEquals(ms.getRoomNameIndexMap().toString(),
-        "{The Postcards=12, The Middle Ages=14, Kierkegaard=27, Freud=30, Bjerkely=22, Berkeley=21, The Natural Philosophers=3, Spinoza=18, Counterpoint=33, Darwin=29, Two Cultures=13, Locke=19, The Garden Party=32, Plato=8, The Big Bang=34, Marx=28, Aristotle=10, The Enlightenment=23, Kant=24, The Renaissance=15, Democritus=4, The Major's Cabin=9, Hume=20, Our Own Time=31, Athens=7, Fate=5, Descartes=17, The Myths=2, The Top Hat=1, The Baroque=16, The Garden of Eden=0, Socrates=6, Romanticism=25, Hegel=26, Hellenism=11}");
+        "{The Postcards=12, The Middle Ages=14, Kierkegaard=27, Freud=30, "
+            + "Bjerkely=22, Berkeley=21, The Natural Philosophers=3, Spinoza=18, "
+            + "Counterpoint=33, Darwin=29, Two Cultures=13, Locke=19, The Garden Party=32, "
+            + "Plato=8, The Big Bang=34, Marx=28, Aristotle=10, The Enlightenment=23, Kant=24, "
+            + "The Renaissance=15, Democritus=4, The Major's Cabin=9, Hume=20, Our Own Time=31, "
+            + "Athens=7, Fate=5, Descartes=17, The Myths=2, The Top Hat=1, The Baroque=16, "
+            + "The Garden of Eden=0, Socrates=6, Romanticism=25, Hegel=26, Hellenism=11}");
   }
 
   @Test
@@ -118,7 +123,16 @@ public class MansionTest {
   @Test
   public void testGetItemsDamage() {
     HashMap<String, Integer> ans = this.ms.getItemsDamageMap();
-    Assert.assertEquals(ans.toString(),
-        "{glues=4, atomic theory book=4, physics book=6, a music book=21, A diary in French=4, A half smoked Cigar=1, an old, dirty, broken glasses=3, an antique cup=6, a painting of a lake=16, apple=3, Sacred history book=7, A broken dagger=2, cat=0, A pair of leather boots=3, daisy flower=7, some pothos plants=4, some fire matches=3, beer=9, A math book of Trigonometry=21, A book titled The Communist Manifesto=4, some Rocks seems collected near beaches=26, crystall ball=2, morning dress=8, A teapot=7, A germany map=2, Luther rose=9, book about Florence=1, plato's dialogues=4, A bottle of Scotch whisky=11, Eve=4, fish=8, some candles=32, Cross of Mathilde=67, A later modern period history book=2, A glass of Irish Whisky=3, A moldy Cheese=12}");
+    Assert.assertEquals(ans.toString(), "{glues=4, atomic theory book=4, physics book=6, "
+        + "a music book=21, A diary in French=4, A half smoked Cigar=1, "
+        + "an old, dirty, broken glasses=3, an antique cup=6, a painting of a lake=16, "
+        + "apple=3, Sacred history book=7, A broken dagger=2, cat=0, A pair of leather boots=3,"
+        + " daisy flower=7, some pothos plants=4, some fire matches=3, beer=9,"
+        + " A math book of Trigonometry=21, A book titled The Communist Manifesto=4, "
+        + "some Rocks seems collected near beaches=26, crystall ball=2, morning dress=8,"
+        + " A teapot=7, A germany map=2, Luther rose=9, "
+        + "book about Florence=1, plato's dialogues=4, "
+        + "A bottle of Scotch whisky=11, Eve=4, fish=8, some candles=32, Cross of Mathilde=67,"
+        + " A later modern period history book=2, A glass of Irish Whisky=3, A moldy Cheese=12}");
   }
 }
