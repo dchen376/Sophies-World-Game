@@ -29,21 +29,8 @@ public class Target {
     this.itemDamageMap = itemDamageMap;
   }
 
-  /**
-   * getter.
-   * @return target health
-   */
-  public int getTargetHealth() {
-    return targetHealth;
-  }
 
-  /**
-   * setter.
-   * @param targetHealth target health
-   */
-  public void setTargetHealth(int targetHealth) {
-    this.targetHealth = targetHealth;
-  }
+
 
   /**
    * move the target character.
@@ -72,6 +59,30 @@ public class Target {
     }
 
     return targetLocation;
+  }
+
+
+
+  /*below are all getters & setters.*/
+
+  public void setTargetLocation(int targetLocation) {
+    this.targetLocation = targetLocation;
+  }
+
+  /**
+   * getter.
+   * @return target health
+   */
+  public int getTargetHealth() {
+    return targetHealth;
+  }
+
+  /**
+   * setter.
+   * @param targetHealth target health
+   */
+  public void setTargetHealth(int targetHealth) {
+    this.targetHealth = targetHealth;
   }
 
   /**

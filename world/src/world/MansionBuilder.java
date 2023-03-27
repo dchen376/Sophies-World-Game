@@ -2,11 +2,14 @@ package world;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * MansionBuilder Interface.
  */
 public interface MansionBuilder {
+
+
 
   /**
    * read the provided .txt file.

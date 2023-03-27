@@ -33,6 +33,63 @@ public class Room {
     this.allNeighborsMap = allNeighborsMap;
   }
 
+
+
+  /**
+   * display the room's information.
+   * 
+   * @param roomName the name of the room
+   * @return return a string representation
+   */
+  public String displayRoomInfo(String roomName) {
+    /// 1. get the name: roomName.
+    String roomNameStr = roomName;
+    int roomIndex = roomNamesMap.get(roomName);
+    int totalRooms = roomNamesMap.size();
+
+    /// (2) get the items in this room index:
+    StringBuilder itemsSb = new StringBuilder();
+    for (String str : this.itemsRoomMap.keySet()) {
+      if (this.itemsRoomMap.get(str) == roomIndex) {
+        itemsSb.append(str);
+        itemsSb.append(", ");
+      }
+    }
+    String itemsStr = itemsSb.toString();
+    itemsStr = itemsStr.substring(0, itemsStr.length() - 2);
+
+    // 3. get the neighbors.
+    ArrayList<String> neighbors = this.getNeighbors(roomName);
+
+    String neighborsStr = this.helperArrayListToString(neighbors);
+
+    String ans = String.format("Room name: %s. Items in this room: %s. The room's neighbors: %s.",
+        roomNameStr, itemsStr, neighborsStr);
+
+    return ans;
+  }
+
+  /*helper method below.*/
+
+  /**
+   * helper method to convert array list to String.
+   * 
+   * @param arrLst an array list
+   * @return a string
+   */
+  public String helperArrayListToString(ArrayList<String> arrLst) {
+    StringBuffer sb = new StringBuffer();
+    for (String str : arrLst) {
+      sb.append(str);
+      sb.append(",");
+    }
+    String str = sb.toString();
+    str = str.substring(0, str.length() - 1); // deleting the last ','
+    return str;
+  }
+
+  /*getters below:*/
+
   /**
    * get the room index of the room.
    *
@@ -124,7 +181,7 @@ public class Room {
 
   /**
    * hashmap for all the neighbors of the player's current room.
-   * 
+   *
    * @return hashmap
    */
   public HashMap<String, ArrayList<String>> getAllNeighborsMap() {
@@ -133,57 +190,4 @@ public class Room {
     }
     return this.allNeighborsMap;
   }
-
-  /**
-   * display the room's information.
-   * 
-   * @param roomName the name of the room
-   * @return return a string representation
-   */
-  public String displayRoomInfo(String roomName) {
-
-    /// 1. get the name: roomName.
-    String roomNameStr = roomName;
-    int roomIndex = roomNamesMap.get(roomName);
-    int totalRooms = roomNamesMap.size();
-
-    /// (2) get the items in this room index:
-    StringBuilder itemsSb = new StringBuilder();
-    for (String str : this.itemsRoomMap.keySet()) {
-      if (this.itemsRoomMap.get(str) == roomIndex) {
-        itemsSb.append(str);
-        itemsSb.append(", ");
-      }
-    }
-    String itemsStr = itemsSb.toString();
-    itemsStr = itemsStr.substring(0, itemsStr.length() - 2);
-
-    // 3. get the neighbors.
-    ArrayList<String> neighbors = this.getNeighbors(roomName);
-
-    String neighborsStr = this.helperArrayListToString(neighbors);
-
-    String ans = String.format("Room name: %s. Items in this room: %s. The room's neighbors: %s.",
-        roomNameStr, itemsStr, neighborsStr);
-
-    return ans;
-  }
-
-  /**
-   * helper method to convert array list to String.
-   * 
-   * @param arrLst an array list
-   * @return a string
-   */
-  public String helperArrayListToString(ArrayList<String> arrLst) {
-    StringBuffer sb = new StringBuffer();
-    for (String str : arrLst) {
-      sb.append(str);
-      sb.append(",");
-    }
-    String str = sb.toString();
-    str = str.substring(0, str.length() - 1); // deleting the last ','
-    return str;
-  }
-
 }

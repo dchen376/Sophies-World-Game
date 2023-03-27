@@ -7,9 +7,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.CharBuffer;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.*;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -20,11 +18,22 @@ import javax.swing.JLabel;
  */
 public class Mansion implements MansionBuilder {
   private static final int BUFFER_SIZE = 4096;
+
+
+
   /**
    * private fields & private objects.
    */
+  /*TODO: add an evidence list to store used items*/
+  Set<String> evidenceSet = new HashSet<String>();
+
+
   private HashMap<String, ArrayList<String>> allNeighborsMap;
   private String worldName;
+  /* pet attributes */
+  private String petName;
+  private int petLocation;
+  /* target attributes */
   private String targetName;
   private int targetHealth;
   private int targetLocation;
@@ -41,13 +50,14 @@ public class Mansion implements MansionBuilder {
   /* graph info */
   private Graphics graph;
   /* objects info */
+  private Pet pet;
   private Item item;
   private Room room;
   private Target target;
+  private ArrayList<Player> allPlayers;
   private HashMap<String, String> playersTargetNameRoomMap; // update each time the players/target
   private HashMap<String, ArrayList<String>> playersItemsMap; // *just 'put' new items into this
   private HashMap<String, Integer> turnsMap; // defaults are true -> 1.
-  private ArrayList<Player> allPlayers;
 
   /**
    * Constructor.
@@ -58,7 +68,7 @@ public class Mansion implements MansionBuilder {
     this.allPlayers = new ArrayList<>();
     this.totalItemsAllowedMap = new HashMap<>();
     this.roomNameIndexMap = new HashMap<>();
-    this.targetHealth = targetHealth;
+    this.targetHealth = -100; //just a default value for error checking.
     this.targetLocation = 0;
     this.itemsDamageMap = new HashMap<>();
     this.listOfRoomCoordinates = new ArrayList<ArrayList<ArrayList<Integer>>>();
@@ -66,9 +76,11 @@ public class Mansion implements MansionBuilder {
     this.itemsRoomMap = new HashMap<>();
     this.allRoomsNamesLst = new ArrayList<>(); // for room attributes.
     // initialize objects: (x5)
-    this.item = new Item(this.getItemsDamageMap(), this.getItemsRoomMap());
-    this.target = new Target(targetName, targetHealth, targetLocation, itemsRoomMap,
+    this.petLocation = targetLocation;
+    this.pet = new Pet(this.petName, this.petLocation, this.itemsRoomMap);
+    this.target = new Target(this.targetName, this.targetHealth, this.targetLocation, this.itemsRoomMap,
         this.itemsDamageMap);
+    this.item = new Item(this.getItemsDamageMap(), this.getItemsRoomMap());
     this.room = new Room(this.itemsRoomMap, this.roomNameIndexMap, this.listOfRoomCoordinates,
         this.allRoomsNamesLst, this.allNeighborsMap);
     /* info needs to be updated constantly (maps) */
@@ -90,11 +102,19 @@ public class Mansion implements MansionBuilder {
     } catch (IOException e) {
       e.printStackTrace();
     }
+    /*makes a buffer ready for re-reading the data that it already contains:
+     It leaves the limit unchanged and sets the position to zero.*/
     buffer.flip();
     text.append(buffer.toString()); // this gives the stringBuilder 'text'.
+
     /*
-     * 1st part: parse first 3 line: 35 36 Sophie's World 100 Albert Knag 35
+     * 1st part: parse first 4 line:
+     * 35 36 Sophie's World
+     * 100 Albert Knag
+     * the Mysterious cat
+     * 35
      */
+    /*1st line parsing*/
     String[] lines = text.toString().split("\n"); /// split the text by lines.
     String[] eachLine = lines[0].toString().split(" "); /// put each line into an arraylist.
     totalRooms = Integer.parseInt(eachLine[0]); /// read 1st line info: int total rooms
@@ -106,6 +126,7 @@ public class Mansion implements MansionBuilder {
     eachLineStringBuilder.deleteCharAt(eachLine.length - 1); /// deleting the last appended val: "
     worldName = eachLineStringBuilder.toString(); /// assign 'worldName' to 'Sophie's World'.
     eachLineStringBuilder.setLength(0); /// reset the stringbuilder.
+    /*2nd line parsing*/
     eachLine = lines[1].toString().split(" "); // parse 2nd line: 100 Albert Knag
     targetHealth = Integer.parseInt(eachLine[0]); /// 100
     target.setTargetHealth(targetHealth);
@@ -117,11 +138,16 @@ public class Mansion implements MansionBuilder {
     eachLineStringBuilder.setLength(0); // reset the stringbuilder.
     target.setTargetName(targetName);
 
+    /*3rd line parsing*/
+    String parsePet = lines[2].toString().trim();
+    this.petName = parsePet;
+    this.pet.setPetName(this.petName);
+
     /*
      * 2nd part: parse room information
      */
-    /// cut the first 3 lines of the text as they already been parsed:
-    lines = Arrays.copyOfRange(lines, 3, lines.length);
+    /// cut the first 4 lines of the text as they already been parsed:
+    lines = Arrays.copyOfRange(lines, 4, lines.length);
     /// start reading from the 4th line: (room information)
     for (int i = 0; i < totalRooms; i++) { // totalRooms
       ArrayList<Integer> coordinateLeftTop = new ArrayList<>(); /// (x1,y1) upper left.
@@ -228,8 +254,14 @@ public class Mansion implements MansionBuilder {
   }
 
 
+
+
+
+  /* below are only getters methods.*/
+
+
   /**
-   * all the getter methods below are below.
+   * get all the players.
    */
   public ArrayList<Player> getAllPlayers() {
     return allPlayers;
@@ -403,4 +435,29 @@ public class Mansion implements MansionBuilder {
   public HashMap<String, Integer> getItemsDamageMap() {
     return this.itemsDamageMap;
   }
-} // end of Mansion class.
+
+  public String getPetName() {
+    return petName;
+  }
+
+  public void setPetName(String petName) {
+    this.petName = petName;
+  }
+
+  public int getPetLocation() {
+    return petLocation;
+  }
+
+  public void setPetLocation(int petLocation) {
+    this.petLocation = petLocation;
+  }
+
+
+  public Pet getPet() {
+    return pet;
+  }
+
+  public Set<String> getEvidenceSet() {
+    return evidenceSet;
+  }
+} // end of Mansion.java

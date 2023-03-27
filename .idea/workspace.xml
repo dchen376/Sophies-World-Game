@@ -7,29 +7,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9ad33201-6778-4d61-ad39-becfec3d47e0" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/junitgenerator-prj-settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/world/src.zip" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/eclipseCodeFormatter.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/eclipseCodeFormatter.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/world/src/world/Pet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/junitgenerator-prj-settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/junitgenerator-prj-settings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/world/META-INF/MANIFEST.MF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/world/milestone2 - checkstyle.zip" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/world/src/world/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/Controller.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/world/src/world/ControllerMock.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/ControllerMock.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/world/src/world/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/Item.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/world/src/world/Mansion.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/Mansion.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/world/src/world/MansionBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/MansionBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/src/world/MansionDriver.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/MansionDriver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/src/world/MansionMockModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/MansionMockModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/world/src/world/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/world/src/world/PlayerBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/PlayerBuilder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/world/src/world/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/Room.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/world/src/world/Target.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/Target.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/src/world/controllerDriver.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/ControllerDriver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/test/ControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/test/ControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/test/MansionTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/test/MansionTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/world/test/PlayerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/test/PlayerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/test/RoomTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/test/RoomTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/test/TargetTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/test/TargetTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,7 +94,7 @@
     <property name="create.test.in.the.same.root" value="true" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/world/test" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../lab6 - sentences" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Problems" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="restartRequiresConfirmation" value="false" />
@@ -198,10 +190,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="JAR Application.world.jar" />
-        <item itemvalue="Application.ControllerDriver" />
-        <item itemvalue="JUnit.ControllerTest" />
         <item itemvalue="JUnit.RoomTest" />
         <item itemvalue="JUnit.MansionTest" />
+        <item itemvalue="JUnit.ControllerTest" />
+        <item itemvalue="Application.ControllerDriver" />
       </list>
     </recent_temporary>
   </component>

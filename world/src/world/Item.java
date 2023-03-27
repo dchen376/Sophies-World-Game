@@ -1,6 +1,8 @@
 package world;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * this is the item class.
@@ -9,6 +11,8 @@ public class Item {
   // private fields:
   private HashMap<String, Integer> itemsDamageMap;
   private HashMap<String, Integer> itemsRoomMap;
+
+
 
   /**
    * constructor.
