@@ -7,32 +7,16 @@ import java.util.HashMap;
  * this is the room class.
  */
 public class Room {
-  private HashMap<String, Integer> itemsRoomMap;
-  private HashMap<String, Integer> roomNamesMap; // <room name, room Index>
-  private ArrayList<ArrayList<ArrayList<Integer>>> listOfRoomCoordinates; // room Coords store in
-  private ArrayList<String> roomNames;
-  private HashMap<String, ArrayList<String>> allNeighborsMap;
+  private Mansion mansion;
 
   /**
    * Constructor.
    * 
-   * @param itemsRoomMap          hashmap
-   * @param roomNamesMap          hashmap
-   * @param listOfRoomCoordinates hashmap
-   * @param roomNames             arraylist
-   * @param allNeighborsMap       hashmap
+   * @param mansion the main object of the game.
    */
-  public Room(HashMap<String, Integer> itemsRoomMap, HashMap<String, Integer> roomNamesMap,
-      ArrayList<ArrayList<ArrayList<Integer>>> listOfRoomCoordinates, ArrayList<String> roomNames,
-      HashMap<String, ArrayList<String>> allNeighborsMap) {
-
-    this.itemsRoomMap = itemsRoomMap;
-    this.roomNamesMap = roomNamesMap;
-    this.listOfRoomCoordinates = listOfRoomCoordinates;
-    this.roomNames = roomNames;
-    this.allNeighborsMap = allNeighborsMap;
+  public Room(Mansion mansion) {
+    this.mansion = mansion;
   }
-
 
 
   /**
@@ -44,13 +28,13 @@ public class Room {
   public String displayRoomInfo(String roomName) {
     /// 1. get the name: roomName.
     String roomNameStr = roomName;
-    int roomIndex = roomNamesMap.get(roomName);
-    int totalRooms = roomNamesMap.size();
+    int roomIndex = this.mansion.getRoomNameIndexMap().get(roomName);
+    int totalRooms = this.mansion.getRoomNameIndexMap().size();
 
     /// (2) get the items in this room index:
     StringBuilder itemsSb = new StringBuilder();
-    for (String str : this.itemsRoomMap.keySet()) {
-      if (this.itemsRoomMap.get(str) == roomIndex) {
+    for (String str : this.mansion.getItemsRoomMap().keySet()) {
+      if (this.mansion.getItemsRoomMap().get(str) == roomIndex) {
         itemsSb.append(str);
         itemsSb.append(", ");
       }
@@ -60,12 +44,9 @@ public class Room {
 
     // 3. get the neighbors.
     ArrayList<String> neighbors = this.getNeighbors(roomName);
-
     String neighborsStr = this.helperArrayListToString(neighbors);
-
     String ans = String.format("Room name: %s. Items in this room: %s. The room's neighbors: %s.",
         roomNameStr, itemsStr, neighborsStr);
-
     return ans;
   }
 
@@ -91,16 +72,6 @@ public class Room {
   /*getters below:*/
 
   /**
-   * get the room index of the room.
-   *
-   * @param roomName the name of room
-   * @return index of room as an int
-   */
-  public int getRoomIndex(String roomName) {
-    return roomNamesMap.get(roomName);
-  }
-
-  /**
    * this method finds the other rooms that share a common wall with the given
    * room as neighbors. I, however, assume that by sharing a single coordinate
    * will be not considered as a "shared wall" scenario.
@@ -109,9 +80,9 @@ public class Room {
    * @return all the neighbors of the current room as a String arrayList.
    */
   public ArrayList<String> getNeighbors(String roomName) {
-    int roomIndex = roomNamesMap.get(roomName);
+    int roomIndex = this.mansion.getRoomNameIndexMap().get(roomName);
     ArrayList<ArrayList<Integer>> coordinates =
-        listOfRoomCoordinates.get(roomIndex); // gets
+        this.mansion.getListOfRoomCoordinates().get(roomIndex); // gets
     int x1 = coordinates.get(0).get(0);
     int y1 = coordinates.get(0).get(1);
     int x2 = coordinates.get(1).get(0);
@@ -119,13 +90,13 @@ public class Room {
     int width = x2 - x1;
     int height = y2 - y1;
     ArrayList<Integer> roomIndexes = new ArrayList<>();
-    ArrayList<String> rooms = roomNames; // gets all room names.
+    ArrayList<String> rooms = this.mansion.getAllRoomsNamesLst(); // gets all room names.
     for (int i = 0; i < rooms.size(); i++) {
       if (i == roomIndex) {
         continue; // if it's the current room that is checking, skip it.
       }
 
-      ArrayList<ArrayList<Integer>> checkedCoords = listOfRoomCoordinates.get(i);
+      ArrayList<ArrayList<Integer>> checkedCoords = this.mansion.getListOfRoomCoordinates().get(i);
       int a1 = checkedCoords.get(0).get(0);
       int b1 = checkedCoords.get(0).get(1);
       int a2 = checkedCoords.get(1).get(0);
@@ -171,7 +142,7 @@ public class Room {
       }
     } // end of the loop to put all the neighboring rooms' indexes
     // into this Integer array-list: roomIndexes
-    ArrayList<String> allRooms = roomNames;
+    ArrayList<String> allRooms = rooms;
     ArrayList<String> neighbors = new ArrayList<String>();
     for (Integer num : roomIndexes) {
       neighbors.add(allRooms.get(num)); // the name of that neighbor room.
@@ -185,9 +156,9 @@ public class Room {
    * @return hashmap
    */
   public HashMap<String, ArrayList<String>> getAllNeighborsMap() {
-    for (int i = 0; i < roomNamesMap.size(); i++) {
-      this.allNeighborsMap.put(roomNames.get(i), this.getNeighbors(roomNames.get(i)));
+    for (int i = 0; i < this.mansion.getRoomNameIndexMap().size(); i++) {
+      this.mansion.getAllNeighborsMap().put(this.mansion.getAllRoomsNamesLst().get(i), this.getNeighbors(this.mansion.getAllRoomsNamesLst().get(i)));
     }
-    return this.allNeighborsMap;
+    return this.mansion.getAllNeighborsMap();
   }
 }

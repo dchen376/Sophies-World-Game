@@ -6,17 +6,17 @@ import java.util.HashMap;
  * this is the pet class.
  */
 public class Pet {
+ private Mansion mansion;
  private String petName;
  private int petLocation;
- private HashMap<String, Integer> roomNameIndexMap;
 
  /**
   * constructor.
   */
- public Pet(String petName, int petLocation, HashMap<String, Integer> roomNameIndexMap) {
+ public Pet(Mansion mansion, String petName, int petLocation) {
+  this.mansion = mansion;
   this.petName = petName;
   this.petLocation = petLocation;
-  this.roomNameIndexMap = roomNameIndexMap;
  }
 
 

@@ -9,28 +9,27 @@ import java.util.Set;
  * this is the player class.
  */
 public class Player implements PlayerBuilder {
+  /*objects*/
   private Mansion mansion;
-  /* for fixed value map (no need for update) */ /*
-                                                  * porb. need to be parsed in from mansion after
-                                                  * calling playGame() from controller
-                                                  */
-  private HashMap<String, Integer> roomNameIndexMap; // <room name, room Index>
-  private HashMap<String, Integer> itemsDamageMap; // <item, damage>
-  // private fields: (x6)
   private Pet pet;
-  Set<String> evidenceSet;
   private Target target;
+
+  /*attributes*/
   private boolean playerTurn;
+  private int playerTotalAllowedItem;
   private String computerOrHuman;
   private String playerName;
   private String playerRoom; // the room the player's currently at
-  private int playerTotalAllowedItem;
-  private HashMap<String, Integer> totalItemsAllowedMap; // <room name, the total number alloed
   private ArrayList<String> playerItemsLst; // each this list represent a player's all items.
-  private HashMap<String, ArrayList<String>> playersItemsMap;
-  private HashMap<String, String> playersTargetNameRoomMap;
-  private HashMap<String, Integer> itemsRoomMap;
-  private HashMap<String, Integer> turnsMap; // defaults are true -> 1.
+  private Set<String> evidenceSet; //to store the evidence.
+//  private HashMap<String, Integer> turnsMap; // defaults are true -> 1.
+
+//  private HashMap<String, Integer> itemsDamageMap; // <item, damage>
+//  private HashMap<String, Integer> roomNameIndexMap; // <room name, room Index>
+//  private HashMap<String, Integer> totalItemsAllowedMap; // <room name, the total number alloed
+//  private HashMap<String, ArrayList<String>> playersItemsMap;
+//  private HashMap<String, String> playersTargetNameRoomMap;
+//  private HashMap<String, Integer> itemsRoomMap;
 
   /* a list for storing evidence (items) */
 
@@ -48,8 +47,6 @@ public class Player implements PlayerBuilder {
     this.evidenceSet = this.mansion.getEvidenceSet();
     this.target = this.mansion.getTarget();
     // inputs from mansion:
-    this.roomNameIndexMap = this.mansion.getRoomNameIndexMap();
-    this.itemsDamageMap = this.mansion.getItemsDamageMap();
     this.playerTurn = false; // default is false. //TODO: double check!
     // inputs from controller:
     this.computerOrHuman = computerOrHuman;
@@ -57,16 +54,10 @@ public class Player implements PlayerBuilder {
     this.playerRoom = playerRoom;
     this.playerTotalAllowedItem = playerTotalAllowedItem;
     // below inputs from mansion:
-    this.playerItemsLst = new ArrayList<>();
-    this.playersItemsMap = this.mansion.getPlayersItemsMap();
-    this.itemsRoomMap = this.mansion.getItemsRoomMap();
     // update maps:
-    this.totalItemsAllowedMap = this.mansion.getTotalItemsAllowedMap();
-    this.totalItemsAllowedMap.put(this.playerName, this.playerTotalAllowedItem);
-    this.playersTargetNameRoomMap = this.mansion.getPlayersTargetNameRoomMap();
-    this.playersTargetNameRoomMap.put(this.playerName, this.playerRoom);
-    this.turnsMap = this.mansion.getTurnsMap();
-    this.turnsMap.put(this.playerName, 1); // default is 1 for true
+    this.mansion.getTotalItemsAllowedMap().put(this.playerName, this.playerTotalAllowedItem);
+    this.mansion.getPlayersTargetNameRoomMap().put(this.playerName, this.playerRoom);
+    this.mansion.getTurnsMap().put(this.playerName, 1); // default is 1 for true
   }
 
   /* methods added for milestone3: gameplay */
@@ -79,7 +70,7 @@ public class Player implements PlayerBuilder {
   }
 
   @Override public boolean seenPlayer() {
-    this.
+//    this.
 
     return false;
   }
@@ -97,7 +88,7 @@ public class Player implements PlayerBuilder {
      * when costing a turn: 1. the target will move() TODO: dfs() move for the pet
      * each turn 2. the pet will move()
      */
-    this.turnsMap.put(this.playerName, 0);
+    this.mansion.getTurnsMap().put(this.playerName, 0);
 
     int maxDamage = 1; // if the player doesn't have items(weapons), then poke.
     String currItem = null;
@@ -105,7 +96,7 @@ public class Player implements PlayerBuilder {
     /* find item with the max damage the player had. */
     for (int i = 0; i < this.playerItemsLst.size(); i++) {
       currItem = this.playerItemsLst.get(i);
-      currDamage = this.itemsRoomMap.get(currItem);
+      currDamage = this.mansion.getItemsRoomMap().get(currItem);
       if (currDamage > maxDamage) {
         maxDamage = currDamage;
       }
@@ -143,7 +134,7 @@ public class Player implements PlayerBuilder {
      * when costing a turn: 1. the target will move() TODO: dfs() move for the pet
      * each turn 2. the pet will move()
      */
-    this.turnsMap.put(this.playerName, 0);
+    this.mansion.getTurnsMap().put(this.playerName, 0);
 
     int maxDamage = 1; // if the player doesn't have items(weapons), then poke.
     String currItem = null;
@@ -183,7 +174,7 @@ public class Player implements PlayerBuilder {
    */
   @Override
   public void updatePlayerRoomInfo(String roomName) {
-    this.playersTargetNameRoomMap.put(playerName, roomName);
+    this.mansion.getPlayersTargetNameRoomMap().put(playerName, roomName);
   }
 
   /**
@@ -195,9 +186,9 @@ public class Player implements PlayerBuilder {
   public String pickUp() {
     /* costing a TURN */
 
-    this.turnsMap.put(this.playerName, 0);
+    this.mansion.getTurnsMap().put(this.playerName, 0);
     /// which room player at?
-    int roomIndex = this.roomNameIndexMap.get(playerRoom);
+    int roomIndex = this.mansion.getRoomNameIndexMap().get(playerRoom);
     /// what items in this room?
     String roomName = this.helperIndexGetRoomName(roomIndex);
     // TODO: fix the null roomName
@@ -205,10 +196,10 @@ public class Player implements PlayerBuilder {
         .helperRoomGetItems(roomName); /* here will get the items list for the room */
     /// can he pick it up?
     if (!allItems.isEmpty()
-        && (totalItemsAllowedMap.get(this.playerName) - playerItemsLst.size()) > 0) {
+        && (this.mansion.getTotalItemsAllowedMap().get(this.playerName) - playerItemsLst.size()) > 0) {
       playerItemsLst.add(allItems.get(0)); // always picked the 1st item in the list.
-      this.itemsRoomMap.remove(allItems.get(0)); // room's removed the item.
-      this.playersItemsMap.put(this.playerName, playerItemsLst); // add it to hashmap:
+      this.mansion.getItemsRoomMap().remove(allItems.get(0)); // room's removed the item.
+      this.mansion.getPlayersItemsMap().put(this.playerName, playerItemsLst); // add it to hashmap:
     }
 
     this.autoMoveTarget();
@@ -233,8 +224,8 @@ public class Player implements PlayerBuilder {
   public String lookAround(String playerName, HashMap<String, ArrayList<String>> allNeighborsMap) {
 
     /* costing a TURN */
-    this.turnsMap.put(this.playerName, 0);
-    String currRoom = this.playersTargetNameRoomMap.get(playerName);
+    this.mansion.getTurnsMap().put(this.playerName, 0);
+    String currRoom = this.mansion.getPlayersTargetNameRoomMap().get(playerName);
     // 2. get its neighboring rooms:
     ArrayList<String> allNeighbors = allNeighborsMap.get(currRoom);
     String strNeighbors = this.helperArrayListToString(allNeighbors);
@@ -261,7 +252,7 @@ public class Player implements PlayerBuilder {
   public int movePlayer(HashMap<String, ArrayList<String>> allNeighborsMap) {
     // TODO: player be moved to a specific room, not a random room.
     /* costing a TURN */
-    this.turnsMap.put(this.playerName, 0);
+    this.mansion.getTurnsMap().put(this.playerName, 0);
     ArrayList<String> playerNeighbors = allNeighborsMap.get(this.playerRoom);
     int size = playerNeighbors.size();
     int index = 0;
@@ -271,7 +262,7 @@ public class Player implements PlayerBuilder {
     // player move to a random index:
     String neighborRoom = playerNeighbors.get(index);
     // update hashmaps:
-    int neighborIndex = this.roomNameIndexMap.get(neighborRoom);
+    int neighborIndex = this.mansion.getRoomNameIndexMap().get(neighborRoom);
     this.playerRoom = this.helperIndexGetRoomName(neighborIndex); // to update player's current room
     this.updatePlayerRoomInfo(playerRoom);
     this.setPlayerTurn(false);
@@ -293,7 +284,7 @@ public class Player implements PlayerBuilder {
   public String displayPlayerInfo(String playerName) {
     // this doesn't cost a turn.
     // know the player's room (where they are) 1.
-    String roomStr = this.playersTargetNameRoomMap.get(playerName);
+    String roomStr = this.mansion.getPlayersTargetNameRoomMap().get(playerName);
     // what they carry 2.
     // TODO: fix null input roomStr
     ArrayList<String> allTheItems = this.helperRoomGetItems(roomStr);
@@ -316,7 +307,7 @@ public class Player implements PlayerBuilder {
 
     // TARGET TARGET MOVE!!! EVERY TURN!!!! OF THE GAME!
 
-    int totalRooms = this.itemsRoomMap.size();
+    int totalRooms = this.mansion.getItemsRoomMap().size();
     int targetLocation = this.target.getTargetLocation();
     if (targetLocation + 1 != totalRooms) {
       targetLocation += 1;
@@ -365,7 +356,7 @@ public class Player implements PlayerBuilder {
    */
   @Override
   public int pickMoreItems() {
-    int total = this.totalItemsAllowedMap.get(this.playerName);
+    int total = this.mansion.getTotalItemsAllowedMap().get(this.playerName);
     int size = this.playerItemsLst.size();
     return total - size;
   }
@@ -407,8 +398,8 @@ public class Player implements PlayerBuilder {
    * @return the string representation
    */
   private String helperIndexGetRoomName(int index) {
-    for (String str : this.roomNameIndexMap.keySet()) {
-      if (this.roomNameIndexMap.get(str) == index) {
+    for (String str : this.mansion.getRoomNameIndexMap().keySet()) {
+      if (this.mansion.getRoomNameIndexMap().get(str) == index) {
         return str;
       }
     }
@@ -425,9 +416,9 @@ public class Player implements PlayerBuilder {
     if (room == null) {
       return null; // if the room doesn't exist.
     }
-    int roomIndex = this.roomNameIndexMap.get(room);
-    for (String item : this.itemsRoomMap.keySet()) {
-      if (roomIndex == this.itemsRoomMap.get(item)) {
+    int roomIndex = this.mansion.getRoomNameIndexMap().get(room);
+    for (String item : this.mansion.getItemsRoomMap().keySet()) {
+      if (roomIndex == this.mansion.getItemsRoomMap().get(item)) {
         arrLst.add(item);
       }
     }
@@ -448,60 +439,6 @@ public class Player implements PlayerBuilder {
     return str;
   }
 
-  /* below are all getters & setters. */
-  /**
-   * getter.
-   * 
-   * @return the hashmap for items
-   */
-  public HashMap<String, Integer> getTotalItemsAllowedMap() {
-    return totalItemsAllowedMap;
-  }
-
-  /**
-   * setter.
-   * 
-   * @param totalItemsAllowedMap hashmap
-   */
-  public void setTotalItemsAllowedMap(HashMap<String, Integer> totalItemsAllowedMap) {
-    this.totalItemsAllowedMap = totalItemsAllowedMap;
-  }
-
-  /**
-   * getter.
-   * 
-   * @return the hashmap
-   */
-  public HashMap<String, String> getPlayersTargetNameRoomMap() {
-    return playersTargetNameRoomMap;
-  }
-
-  /**
-   * getter.
-   * 
-   * @return the hashmap
-   */
-  public HashMap<String, ArrayList<String>> getPlayersItemsMap() {
-    return playersItemsMap;
-  }
-
-  /**
-   * getter.
-   * 
-   * @return the hashmap
-   */
-  public HashMap<String, Integer> getItemsRoomMap() {
-    return itemsRoomMap;
-  }
-
-  /**
-   * setter.
-   * 
-   * @return the hashmap
-   */
-  public void setItemsRoomMap(HashMap<String, Integer> itemsRoomMap) {
-    this.itemsRoomMap = itemsRoomMap;
-  }
 
   /**
    * check if the turnsMap returns 1 (true) or 0(false) for the current player.
@@ -509,47 +446,14 @@ public class Player implements PlayerBuilder {
    * @return boolean
    */
   public boolean checkTurnsMap() {
-    if (this.turnsMap.get(this.playerName) == 1) {
+    if (this.mansion.getTurnsMap().get(this.playerName) == 1) {
       return true;
-    } else if (this.turnsMap.get(this.playerName) == 0) {
+    } else if (this.mansion.getTurnsMap().get(this.playerName) == 0) {
       return false;
     }
     return false;
   }
 
-  /**
-   * getter.
-   * 
-   * @return the array list
-   */
-  public ArrayList<String> getPlayerItemsLst() {
-    return playerItemsLst;
-  }
-
-  /**
-   * setter.
-   * 
-   * @param playerItemsLst the player's current item-list.
-   */
-  public void setPlayerItemsLst(ArrayList<String> playerItemsLst) {
-    this.playerItemsLst = playerItemsLst;
-  }
-
-  /**
-   * getter.
-   * 
-   * @return the total number of players
-   */
-  public int getPlayerTotalAllowedItem() {
-    return playerTotalAllowedItem;
-  }
-
-  /**
-   * setter.
-   */
-  public void setPlayerTotalAllowedItem(int playerTotalAllowedItem) {
-    this.playerTotalAllowedItem = playerTotalAllowedItem;
-  }
 
   /**
    * getter.
@@ -579,55 +483,11 @@ public class Player implements PlayerBuilder {
   /**
    * getter.
    * 
-   * @return string type of player's room
-   */
-  public String getPlayerRoom() {
-    return playerRoom;
-  }
-
-  /**
-   * getter.
-   * 
    * @return the player's name
    */
   public String getPlayerName() {
     return playerName;
   }
 
-  /**
-   * getter.
-   * 
-   * @return hashmap
-   */
-  public HashMap<String, Integer> getRoomNameIndexMap() {
-    return roomNameIndexMap;
-  }
-
-  /**
-   * setter.
-   * 
-   * @param roomNameIndexMap hashmap
-   */
-  public void setRoomNameIndexMap(HashMap<String, Integer> roomNameIndexMap) {
-    this.roomNameIndexMap = roomNameIndexMap;
-  }
-
-  /**
-   * getter.
-   * 
-   * @return hashmap
-   */
-  public HashMap<String, Integer> getTurnsMap() {
-    return turnsMap;
-  }
-
-  /**
-   * getter.
-   * 
-   * @return hashmap
-   */
-  public HashMap<String, Integer> getItemsDamageMap() {
-    return itemsDamageMap;
-  }
 
 } // end of Player.java

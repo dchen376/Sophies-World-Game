@@ -77,12 +77,10 @@ public class Mansion implements MansionBuilder {
     this.allRoomsNamesLst = new ArrayList<>(); // for room attributes.
     // initialize objects: (x5)
     this.petLocation = targetLocation;
-    this.pet = new Pet(this.petName, this.petLocation, this.itemsRoomMap);
-    this.target = new Target(this.targetName, this.targetHealth, this.targetLocation, this.itemsRoomMap,
-        this.itemsDamageMap);
-    this.item = new Item(this.getItemsDamageMap(), this.getItemsRoomMap());
-    this.room = new Room(this.itemsRoomMap, this.roomNameIndexMap, this.listOfRoomCoordinates,
-        this.allRoomsNamesLst, this.allNeighborsMap);
+    this.pet = new Pet(this, this.petName, this.petLocation);
+    this.target = new Target(this, this.targetName, this.targetHealth, this.targetLocation);
+    this.item = new Item(this);
+    this.room = new Room(this);
     /* info needs to be updated constantly (maps) */
     this.playersTargetNameRoomMap = new HashMap<>(); // update each time the players/target move
     // related maps below (update first, need to change the second map)
@@ -460,4 +458,7 @@ public class Mansion implements MansionBuilder {
   public Set<String> getEvidenceSet() {
     return evidenceSet;
   }
+
+
+
 } // end of Mansion.java

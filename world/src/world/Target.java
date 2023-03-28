@@ -6,6 +6,7 @@ import java.util.HashMap;
  * this is the target class.
  */
 public class Target {
+  private Mansion mansion;
   private String targetName;
   private int targetHealth;
   private int targetLocation;
@@ -17,16 +18,11 @@ public class Target {
    * @param targetName target name
    * @param targetHealth target health
    * @param targetLocation target location
-   * @param itemRoomMap hashmap of items and rooms
-   * @param itemDamageMap hashmap for items and damages
    */
-  public Target(String targetName, int targetHealth, int targetLocation,
-      HashMap<String, Integer> itemRoomMap, HashMap<String, Integer> itemDamageMap) {
+  public Target(Mansion mansion, String targetName, int targetHealth, int targetLocation) {
     this.targetName = targetName;
     this.targetHealth = targetHealth;
     this.targetLocation = targetLocation;
-    this.itemRoomMap = itemRoomMap;
-    this.itemDamageMap = itemDamageMap;
   }
 
 

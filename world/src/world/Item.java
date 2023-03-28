@@ -9,19 +9,15 @@ import java.util.List;
  */
 public class Item {
   // private fields:
-  private HashMap<String, Integer> itemsDamageMap;
-  private HashMap<String, Integer> itemsRoomMap;
-
+  private Mansion mansion;
 
 
   /**
    * constructor.
-   * @param itemsDamageMap hashmap for items and damages
-   * @param itemRoomMap hashmap for item and room
+   * @param mansion the main object for the game
    */
-  public Item(HashMap<String, Integer> itemsDamageMap, HashMap<String, Integer> itemRoomMap) {
-    this.itemsDamageMap = itemsDamageMap;
-    this.itemsRoomMap = itemRoomMap;
+  public Item(Mansion mansion) {
+    this.mansion = mansion;
   }
 
   /**
@@ -30,7 +26,7 @@ public class Item {
    * @return the damage of the item
    */
   public int getDamageAmount(String itemName) {
-    return itemsDamageMap.get(itemName);
+    return this.mansion.getItemsDamageMap().get(itemName);
   }
 
   /**
@@ -39,7 +35,7 @@ public class Item {
    * @return the location of the item as int.
    */
   public int getItemLocation(String itemName) {
-    return itemsRoomMap.get(itemName);
+    return this.mansion.getItemsRoomMap().get(itemName);
   }
 
 }
