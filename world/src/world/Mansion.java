@@ -17,14 +17,16 @@ import javax.swing.JLabel;
  * this is the model class.
  */
 public class Mansion implements MansionBuilder {
+  /*attributes*/
+  private HashMap<Player,Boolean> petBlessings;
+  private HashMap<Integer, Boolean> dfsCheckMap;
   private static final int BUFFER_SIZE = 4096;
-
 
 
   /**
    * private fields & private objects.
    */
-  /*TODO: add an evidence list to store used items*/
+  /*: add an evidence list to store used items*/
   Set<String> evidenceSet = new HashSet<String>();
 
 
@@ -55,7 +57,7 @@ public class Mansion implements MansionBuilder {
   private Room room;
   private Target target;
   private ArrayList<Player> allPlayers;
-  private HashMap<String, String> playersTargetNameRoomMap; // update each time the players/target
+  private final HashMap<String, String> playersNameRoomMap; // update each time the players/target
   private HashMap<String, ArrayList<String>> playersItemsMap; // *just 'put' new items into this
   private HashMap<String, Integer> turnsMap; // defaults are true -> 1.
 
@@ -82,11 +84,13 @@ public class Mansion implements MansionBuilder {
     this.item = new Item(this);
     this.room = new Room(this);
     /* info needs to be updated constantly (maps) */
-    this.playersTargetNameRoomMap = new HashMap<>(); // update each time the players/target move
+    this.playersNameRoomMap = new HashMap<>(); // update each time the players/target move
     // related maps below (update first, need to change the second map)
     this.playersItemsMap = new HashMap<>(); // *just 'put' new items into this arrlst.
     // *remove the items in this hashmap once the player pick it.
     this.turnsMap = new HashMap<>();
+    this.dfsCheckMap = new HashMap<>();//return false if not checked, so default are all false.
+    this.petBlessings = new HashMap<>();
   } // end of the constructor
 
   /**
@@ -138,8 +142,16 @@ public class Mansion implements MansionBuilder {
 
     /*3rd line parsing*/
     String parsePet = lines[2].toString().trim();
+
     this.petName = parsePet;
     this.pet.setPetName(this.petName);
+
+    /*parse the 4th line: 35 (rooms) */
+    String totalRoomStr = lines[3].toString().trim();
+    int totalRoom = Integer.parseInt(totalRoomStr);
+    for (int i = 0; i < totalRoom; i++){
+      this.dfsCheckMap.put(i, false); //false means not checke.d
+    }
 
     /*
      * 2nd part: parse room information
@@ -251,12 +263,47 @@ public class Mansion implements MansionBuilder {
     }
   }
 
+  public ArrayList<String> welcomeMessage(){
+    ArrayList<String> welcome = new ArrayList<>();
+//    welcome.add("Welcome!!!");
+//    welcome.add("Welcome to the game: " + this.worldName);
+    welcome.add(String.format("There are %d rooms in this game", this.getTotalRooms()));
+    welcome.add(String.format("The rooms are: "));
+    welcome.add(this.getAllRoomsNamesLst().toString());
+//
+//    welcome.add(String.format("Our target for this game is: %s :)))))", this.getTargetName()));
+//    welcome.add(String.format("Our magic pet is: %s :)) hoooorayyyyy!!!", this.getPetName()));
+    welcome.add("Welcome :)");
+    welcome.add("Now please follow the steps below to join the players in the game! CANT WAIT!! :)");
+
+    return welcome;
+
+  }
 
 
+  public ArrayList<String> beforeGameMessage(int turns){
+    ArrayList<String> welcome = new ArrayList<>();
+    welcome.add(String.format("Welcome to the game: %s", this.worldName));
+    welcome.add(String.format("There are %d players in this game!", this.allPlayers.size()));
+    welcome.add(String.format("Target and Pet both starting at the first starting room: %s", this.allRoomsNamesLst.get(0)));
+    for (Player player : this.getAllPlayers()){
+      welcome.add(String.format("Player, %s, chose to start at room: %s", player.getPlayerName(), player.getPlayerRoom()));
+    }
+    welcome.add(String.format("there are %d turns for this game! GOOD LUCK!!!", turns));
+    welcome.add("Game is starting NOW!");
+    return welcome;
+  }
 
 
   /* below are only getters methods.*/
 
+  public HashMap<Player, Boolean> getPetBlessings() {
+    return petBlessings;
+  }
+
+  public HashMap<Integer, Boolean> getDfsCheckMap() {
+    return dfsCheckMap;
+  }
 
   /**
    * get all the players.
@@ -342,8 +389,8 @@ public class Mansion implements MansionBuilder {
    * getter.
    * @return hashmap
    */
-  public HashMap<String, String> getPlayersTargetNameRoomMap() {
-    return playersTargetNameRoomMap;
+  public HashMap<String, String> getPlayersNameRoomMap() {
+    return playersNameRoomMap;
   }
 
   /**

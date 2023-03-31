@@ -273,7 +273,7 @@
 //        } // end while(current players turn).
 //      } // end for() -> finished one round.
 //
-//      // TODO: 2nd part (get players to play)
+//      // : 2nd part (get players to play)
 //      /* flip turns all back to 'true' after each round fnishing. */
 //      for (int j = 0; j < totalPlayers; j++) {
 //        this.allPlayersLst.get(j).flipTurn(); // flip them all back to true.

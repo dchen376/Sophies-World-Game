@@ -39,6 +39,9 @@ public class Controller {
    * @throws IOException for file handles.
    */
   public void playGame(Mansion m) throws IOException {
+    //: the user is provided with some limited information about where they are in the world at the start of their turn.
+    // This should not be the same information as the information providing by looking around.
+
     Objects.requireNonNull(m);
     this.mansion = m;
     Scanner scanner = new Scanner(in);
@@ -58,6 +61,8 @@ public class Controller {
     }
     this.mansion.drawWorld(); // drawWorld()
 
+    System.out.println(this.mansion.welcomeMessage().toString());
+
     /* second, add total_turns, and parse the players */
     // 1. first line: an integer N (declaring how many players for this game).
     /// for example, 2
@@ -68,7 +73,7 @@ public class Controller {
     int totalTurns = Integer.parseInt(totalTurnsStr);
     out.append(totalTurnsStr + '\n');
     /* total players for the game */
-    System.out.println("please input the total number of players for this game: \n");
+    System.out.println("Please input the total number of players for this game: \n");
     String totalPlayersStr = scanner.nextLine(); // READ 1ST LINE: 2
     int totalPlayers = Integer.parseInt(totalPlayersStr);
     out.append(totalPlayersStr + '\n');
@@ -99,7 +104,15 @@ public class Controller {
       allPlayers.add(player); // add one player to the 'allPlayers' list.
       out.append(String.format("%s is successfully added to this Mansion.", playerNameStr));
 
+      /*populate hashmap: petBlessings*/
+      this.mansion.getPetBlessings().put(player, false);
+
     } // end of for loop; finished adding all the Players.
+
+
+    //: a welcome message
+    String welcomer = this.mansion.beforeGameMessage(totalTurns).toString();
+//    System.out.println(welcomer);
 
     /* third, the actual game play. */
     String input = "";
@@ -116,8 +129,10 @@ public class Controller {
         this.out.append("Target escaped.");
         break;
       }
+      
+    
 
-      /* check whoever's turn it is, and let it make the move */
+      /* check whoever turn it is, and let it make the move */
       /* via switch() statements */
       for (int i = 0; i < totalPlayers; i++) {
         Player currPlayer = allPlayers.get(i);
@@ -132,45 +147,49 @@ public class Controller {
               input = scanner.nextLine(); // for example， move
               switch (input) {
                 // ===================Methods Cost a turn:
-
-                // TODO: move the pet
+                // : move the pet
                 case "move pet":
                   System.out.println(String.format(
                       "Please enter the location you would like to move this pet: %s \n",
                       this.mansion.getPetName()));
                   input = scanner.nextLine();
                   int locIndex = this.mansion.getRoomNameIndexMap().get(input);
-                  currPlayer.movePet(locIndex, this.mansion.getPet());
+                  currPlayer.movePet();
                   this.out.append(String.format("%s is trying to move the pet to a new location.\n",
                       currPlayer.getPlayerName()));
-                  // flip its boolean turn value:
-                  currPlayer.flipTurn(); // now val is false.
-                  currPlayer.setPlayerTurn(false); // now val is false.
-                  maxTurns--;
-                  System.out.println("the pet moved to room: " + input);
-                  break;
 
-                // TODO: attempt on target from a player
                 case "attempt":
-
-                  ArrayList<String> itemsLst = this.mansion.getPlayersItemsMap().get(currPlayer);
-                  int sizeLst = itemsLst.size();
-                  if (sizeLst != 0) {
-                    System.out
-                        .println("You have the following items that you can choose: " + itemsLst);
+                  // flip its boolean turn value:4
+                  // : print out player items it has:
+                  System.out.println(
+                      "Emmm... Let me see what items you currently holding! Hold on One Sec!");
+                  if (currPlayer.getPlayerItemsLst().size() != 0) {
                     System.out.println(
-                        "please choose one item you would like to use to attempt on the target: ");
+                        "You have the below items at you disposal, pick one to use please: ");
+                    System.out.println(currPlayer.getItemsDamagesLst().toString());
+
                     input = scanner.nextLine();
-                    // TODO: to avoid invalid inputs may be use switch:
-                    currPlayer.attemptTarget(m.getTarget(), input);
+                    // : to avoid invalid inputs may be use switch:
+
+                    while (!currPlayer.checkValidItem(input)) {
+                      System.out.println("Sorry this is not a valid item to use!!");
+                      System.out.println("Please use a valid item in your item's bag :))");
+                      input = scanner.nextLine();
+                    }
+
+                    currPlayer.attemptTarget(input);
+                    this.out.append(String.format("%s is trying to attempt on the target's life.\n",
+                        currPlayer.getPlayerName()));
                   } else {
                     // if players got no items:
                     System.out.println(
-                        "You got no items to use, but you can always Poke. Now... you've just POKED...");
-                    currPlayer.pcAttemptTarget(m.getTarget()); // since no attempts here this method
-                                                               // will just poke.
+                        "Ohhhhh you got no items at your disposal! But! You can always poke...");
+                    currPlayer.pcAttemptTarget(); // since no attempts here this method will just
+                                                  // poke.
+                    this.out.append(String.format("%s is trying to poke the target.\n",
+                        currPlayer.getPlayerName()));
                   }
-//                  int locIndex = this.mansion.getRoomNameIndexMap().get(input);
+                  // int locIndex = this.mansion.getRoomNameIndexMap().get(input);
                   this.out.append(String.format("%s is trying to attempt on Target's life.\n",
                       currPlayer.getPlayerName()));
                   // flip its boolean turn value:
@@ -195,8 +214,20 @@ public class Controller {
                   System.out.println();
                   break;
 
-                case "move": /* int movePlayer() */
-                  currPlayer.movePlayer(this.mansion.getAllNeighborsMap());
+                case "move": // to move the player.
+                  // : to print out the rooms first?
+                  System.out.println("You are currently in room: " + currPlayer.getPlayerRoom());
+                  System.out.println(
+                      "You have the below neighboring rooms that you could pick and move to:");
+                  System.out.println(currPlayer.helperNeighborRooms().toString());
+                  System.out.println("Please pick a room you would like to move to:");
+                  input = scanner.nextLine();
+                  while (!currPlayer.checkValidRoom(input)) {
+                    System.out.println("Sorry this is not a valid room to move to!!");
+                    System.out.println("Please pick a valid room you would like to move to :))");
+                    input = scanner.nextLine();
+                  }
+                  currPlayer.movePlayer(input);
                   this.out.append(String.format("%s is trying to move to another room.\n",
                       currPlayer.getPlayerName()));
                   // flip its boolean turn value:
@@ -214,8 +245,7 @@ public class Controller {
                   maxTurns--;
                   break;
                 case "look around": /* String lookAround(String playerName) */
-                  System.out.println(currPlayer.lookAround(currPlayer.getPlayerName(),
-                      this.mansion.getAllNeighborsMap()));
+                  System.out.println(currPlayer.lookAround());
                   this.out.append(String.format("%s is looking around on another player.\n",
                       currPlayer.getPlayerName()));
                   // flip its boolean turn value:
@@ -255,22 +285,79 @@ public class Controller {
 
               System.out.println("the computer player, " + currPlayer.getPlayerName()
                   + ", is having its turn and picking a move now!\n");
-              int move = this.helperRandNum(2);
+              int move = this.helperRandNum(3); //TODO if pc lookaround: change 2 to 3.
               input = this.helperGetComputerMove(move);
               System.out.println(
                   "computer player, " + currPlayer.getPlayerName() + ", chose to " + input);
               switch (input) { // for a computer
 
-                // TODO: attempt on target
+                // : attempt on target
 
                 /*
-                 * TODO: Computer-controlled players always chooses to make an attempt on the
+                 * : Computer-controlled players always choose to make an attempt on the
                  * target character's life (if they cannot be seen by others) using the item in
                  * their inventory that does the most damage.
                  */
+                case "attempt":
+                  // flip its boolean turn value:4
+                  // : print out player items it has:
+                  /*System.out.println(
+                      String.format("Computer player %s is attempting on the Target's life",
+                          currPlayer.getPlayerName()))*/;
+//                  if (currPlayer.getPlayerItemsLst().size() != 0) {
+//                    System.out.println(currPlayer.getItemsDamagesLst().toString());
+//                    // : to avoid invalid inputs may be use switch:
+////                    while (!currPlayer.checkValidItem(input)){
+////                      System.out.println("Sorry this is not a valid item to use!!");
+////                      System.out.println("Please use a valid item in your item's bag :))");
+////                      input = scanner.nextLine();
+////                    }
+//
+//
+//                    currPlayer.attemptTarget(input);
+//                    this.out.append(String.format("%s is trying to attempt on the target's life.\n",
+//                        currPlayer.getPlayerName()));
+//                  } else {
+                  // if players got no items:
+//                    System.out.println("Ohhhhh you got no items at your disposal! But! You can always poke...");
+                  currPlayer.pcAttemptTarget(); // since no attempts here this method will just
+                  // poke.
+                  this.out
+                      .append(String.format("Computer player %s is attempting on the Target's life",
+                          currPlayer.getPlayerName()));
+//                  }
+                  // int locIndex = this.mansion.getRoomNameIndexMap().get(input);
 
-                case "move": /* int movePlayer() */
-                  currPlayer.movePlayer(this.mansion.getAllNeighborsMap());
+                  // flip its boolean turn value:
+                  currPlayer.flipTurn(); // now val is false.
+                  currPlayer.setPlayerTurn(false); // now val is false.
+                  maxTurns--;
+
+                  // end game if target killed
+                  int currHealth = this.mansion.getTargetHealth();
+                  if (currHealth <= 0) {
+                    this.out.append("Target killed by player: " + currPlayer.getPlayerName()
+                        + "!!! Game ended :)))\n");
+                    currPlayer.setPlayerTurn(false);
+                    this.out.append("Game has been Ended!");
+                    exit = true;
+                    i = totalPlayers; // to prevent computer player for running another round.
+                    playerEndGame = currPlayer.getPlayerName();
+                    break;
+                  }
+
+                  // TODO: succeed or failed?
+                  System.out.println();
+                  break;
+
+                case "move": // to move the computer.
+                  // : let computer move to a random room.
+//                  this.mansion
+                  ArrayList<String> neighborRooms = currPlayer.helperNeighborRooms();
+                  int roomsize = neighborRooms.size();
+                  int randNum = this.helperRandNum(roomsize - 1);
+                  String randRoom = neighborRooms.get(randNum); //pc will pick a random move.
+                  currPlayer.movePlayer(randRoom);
                   this.out.append(String.format("%s is trying to move to another room.\n",
                       currPlayer.getPlayerName()));
                   // flip its boolean turn value:
@@ -287,9 +374,8 @@ public class Controller {
                   currPlayer.setPlayerTurn(false); // now val is false.
                   maxTurns--;
                   break;
-                case "look around": /* look around the space they are occupying */
-                  System.out.println(currPlayer.lookAround(currPlayer.getPlayerName(),
-                      this.mansion.getAllNeighborsMap()));
+                case "look around": //TODO: check! does computer look around too?
+                  System.out.println(currPlayer.lookAround());
                   this.out.append(String.format("%s is looking around on another player.\n",
                       currPlayer.getPlayerName()));
                   // flip its boolean turn value:
@@ -303,23 +389,27 @@ public class Controller {
               }
             }
             if (i + 1 == totalPlayers) { // just finished a round .
+              for (Player player : this.mansion.getAllPlayers()){
+                this.mansion.getPetBlessings().put(player, false);
+              } //after each round, the blessings will all be gone and have to be regained.
+              System.out.println("One round of game has just been finished :)))");
             } // finished of round checking.
           } // end if: check if it's a certain player's turn.
+        } // end for().
+
+        for (int j = 0; j < totalPlayers; j++) {
+          allPlayers.get(j).flipTurn(); // flip them all back to true.
+          allPlayers.get(j).setPlayerTurn(true);
         }
-      } // end for().
 
-      for (int j = 0; j < totalPlayers; j++) {
-        allPlayers.get(j).flipTurn(); // flip them all back to true.
-        allPlayers.get(j).setPlayerTurn(true);
+        if (!("quit".equals(input))) {
+          System.out.println(round + " round(s) of game has been just finished :-))");
+        } else {
+          System.out.println("game has been ended earlier by player: " + playerEndGame + "! :)))");
+        }
+
+        this.out.append("Just finished one round.");
       }
-
-      if (!("quit".equals(input))) {
-        System.out.println(round + " round(s) of game has been just finished :-))");
-      } else {
-        System.out.println("game has been ended earlier by player: " + playerEndGame + "! :)))");
-      }
-
-      this.out.append("Just finished one round.");
     } // end of while(true) loop.
   } // end of playGame().
 
@@ -343,15 +433,18 @@ public class Controller {
    * @param j upper limit of the random value.
    * @return String the move a player executed.
    */
-  private String helperGetComputerMove(int j) {
+  private String helperGetComputerMove(int j) { // : update this helper method.
     if (j == 0) {
-      return "move";
+      return "attempt";
     }
     if (j == 1) {
-      return "pick";
+      return "move";
     }
     if (j == 2) {
-      return "look";
+      return "pick";
+    }
+    if (j == 3) {
+      return "look around";
     }
     return "wrong answer";
   }

@@ -115,7 +115,7 @@ public interface MansionBuilder {
    * getter.
    * @return hashmap for rooms and players(and target)
    */
-  HashMap<String, String> getPlayersTargetNameRoomMap();
+  HashMap<String, String> getPlayersNameRoomMap();
 
   /**
    * getter.

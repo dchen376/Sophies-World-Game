@@ -10,34 +10,48 @@ import java.util.List;
 public interface PlayerBuilder {
 
   /**
+   * this is mainly a helper function for movePlayer().
+   * to check if the room is a valid neighboring room.
+   * @param checkedRoom the room to be checked
+   * @return true if it is one of the neighboring room.
+   */
+  boolean checkValidRoom(String checkedRoom);
+
+
+
+  // helper method for granting a player's invisibility for
+
+  /**
+   * check if a player has the blessings from the pet.
+   * @return true if the player has the pet's blessings.
+   */
+  boolean checkBlessings();
+
+  /**
    * check if any other players are in the same room or neighboring rooms.
    * @return true if yes, false if no neighboring players.
    */
   boolean seenPlayer();
 
   /**
-   * move the pet to a specific room
-   * @param roomIndex the room index it is about to be moved to
-   * @param pet to be moved.
+   * move the pet to whoever the player is calling this method; to the player's room.
    * @return the room name it moved to.
    */
-  String movePet(int roomIndex, Pet pet);
+  String movePet();
 
   /**
    * newly added methods for milestone 3: gamePlay. players tries to attempt on
    * the target's life to kill it.
-   * @param target be attempted
    * @param itemUsed item used for the attack
    * @return the target's final health
    */
-  int attemptTarget(Target target, String itemUsed);
+  int attemptTarget(String itemUsed);
 
   /**
    * the computer's attempt on the target if not seen.
-   * @param target be attempted
    * @return the target's final health.
    */
-  int pcAttemptTarget(Target target);
+  int pcAttemptTarget();
 
 
 
@@ -63,15 +77,15 @@ public interface PlayerBuilder {
    * @param playerName the name of the player performing the action.
    * @return the lookAround result, as a type of String.
    */
-  String lookAround(String playerName, HashMap<String, ArrayList<String>> allNeighborsMap);
+  String lookAround();
 
   /**
    * move the player.
    * 
-   * @param allNeighborsMap
+   * @param roomPicked
    * @return
    */
-  int movePlayer(HashMap<String, ArrayList<String>> allNeighborsMap);
+  int movePlayer(String roomPicked);
 
   /**
    * Display the player's information.
