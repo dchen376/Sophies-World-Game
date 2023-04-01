@@ -7,35 +7,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9ad33201-6778-4d61-ad39-becfec3d47e0" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/world/src/world/ItemMock.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/world/src/world/MansionBuilderMock.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/world/src/world/PetMock.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/world/src/world/PlayerBuilderMock.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/world/src/world/PlayerMock.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/world/src/world/RoomMock.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/world/src/world/TargetMock.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/world/test/MansionTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/world/test/MansionTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/world/test/PlayerTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/world/test/PlayerTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/world/test/RoomTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/world/test/RoomTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/world/test/TargetTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/world/test/TargetTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/world/world/Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/world/world/Controller.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/world_jar/world.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/world_jar/world.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/world/world/ControllerDriver.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/world/world/ControllerDriver.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/world/world/Mansion.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/world/world/Mansion.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/world/world/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/world/world/Player.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/saved.png" beforeDir="false" afterPath="$PROJECT_DIR$/saved.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/src/world/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/src/world/ControllerDriver.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/ControllerDriver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/src/world/ControllerMock.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/ControllerMock.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/src/world/Mansion.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/Mansion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/src/world/MansionMockModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/MansionMockModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/src/world/Pet.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/Pet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/src/world/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/test/ControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/test/ControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/test/MansionTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/test/MansionTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/test/PlayerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/test/PlayerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/test/RoomTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/test/RoomTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/test/TargetTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/test/TargetTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,7 +82,7 @@
     <property name="create.test.in.the.same.root" value="true" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/world/test" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../lab6 - sentences" />
-    <property name="project.structure.last.edited" value="Problems" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="restartRequiresConfirmation" value="false" />
