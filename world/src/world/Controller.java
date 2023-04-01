@@ -83,13 +83,34 @@ public class Controller {
     for (int i = 0; i < totalPlayers; i++) { // next N lines for players info.
       System.out.println("Is this a human player or maybe a computer?\n");
       String typeStr = scanner.nextLine();
+      while (!(typeStr.equals("human") || typeStr.equals("computer"))){
+        System.out.println("Wrong input! Please re-enter: ");
+        typeStr = scanner.nextLine();
+      }
       out.append("ComputerORHuman: " + typeStr);
 
       System.out.println("Please give this player a name: \n");
       String playerNameStr = scanner.nextLine();
       out.append("PlayerName: " + playerNameStr);
       System.out.println("Please input the name of the room to first drop the player:\n");
+
+      boolean checkRoom = true;
       String roomNameStr = scanner.nextLine();
+      while (checkRoom){
+        for (String room : this.mansion.getAllRoomsNamesLst()){
+          if (roomNameStr.equals(room)){
+            checkRoom = false;
+            break;
+          }
+        }
+        if (checkRoom){
+          System.out.println("Wrong input! Please re-enter: ");
+          roomNameStr = scanner.nextLine();
+        }
+      }
+
+
+
       out.append("Player initial room: " + roomNameStr);
       System.out
           .println("please input the total amount items allowed for this player to possess: ");
@@ -122,22 +143,26 @@ public class Controller {
     String playerEndGame = ""; // a statement telling whoever ends this game.
     while (!exit) { /// from here the scan.next should only have 'move actions'
       /* condition check when max turns reached; need to end the game */
-      if (maxTurns == 0) {
-        exit = true;
-        System.out
-            .println("Maximum turns reached ! Target just run away !! Maybe another day ... ");
-        this.out.append("Target escaped.");
-        break;
-      }
-      
-    
+
 
       /* check whoever turn it is, and let it make the move */
       /* via switch() statements */
       for (int i = 0; i < totalPlayers; i++) {
+
+        if (maxTurns == 0) { //: check max turns before proceeding.
+          exit = true;
+          System.out
+                  .println("Maximum turns reached ! Target just run away !! Maybe another day ... ");
+          this.out.append("Target escaped.");
+          break;
+        }
+
+        /*the current player.*/
         Player currPlayer = allPlayers.get(i);
-        if (currPlayer.getPlayerTurn()) { // if his turn is -> true.
-          while (currPlayer.getPlayerTurn()) {
+
+
+//        if (currPlayer.getPlayerTurn()) { // if his turn is -> true.
+          while (currPlayer.getPlayerTurn()) { //while still this player's turn
             if (currPlayer.getComputerOrHuman().equals("human")) { // a human player
               System.out.println(
                   String.format("%s, this is your turn now !\n", currPlayer.getPlayerName()));
@@ -268,6 +293,8 @@ public class Controller {
                       + ", chose to close this game. :)))\n");
                   currPlayer.setPlayerTurn(false);
                   this.out.append("Game has been Ended!");
+                  System.out.println("game has been ended earlier by player: " + playerEndGame + "! :)))");
+
                   exit = true;
                   i = totalPlayers; // to prevent computer player for running another round.
                   playerEndGame = currPlayer.getPlayerName();
@@ -277,7 +304,9 @@ public class Controller {
                   System.out.println("Input error !!");
                   break;
               }
-            } else if (currPlayer.getComputerOrHuman().equals("computer")) { // a PC player
+            }
+
+            else if (currPlayer.getComputerOrHuman().equals("computer")) { // a PC player
               /*
                * moves for PC: 1. move() -> costs Turn! 2. pickup() -> costs Turn! 3.
                * lookAround() -> costs Turn!
@@ -388,28 +417,31 @@ public class Controller {
                   break;
               }
             }
-            if (i + 1 == totalPlayers) { // just finished a round .
-              for (Player player : this.mansion.getAllPlayers()){
-                this.mansion.getPetBlessings().put(player, false);
-              } //after each round, the blessings will all be gone and have to be regained.
-              System.out.println("One round of game has just been finished :)))");
-            } // finished of round checking.
-          } // end if: check if it's a certain player's turn.
-        } // end for().
 
-        for (int j = 0; j < totalPlayers; j++) {
-          allPlayers.get(j).flipTurn(); // flip them all back to true.
-          allPlayers.get(j).setPlayerTurn(true);
-        }
+          } // end  while (currPlayer.getPlayerTurn()); because some actions don't cost a turn.
+//        } // end for().
 
-        if (!("quit".equals(input))) {
-          System.out.println(round + " round(s) of game has been just finished :-))");
-        } else {
-          System.out.println("game has been ended earlier by player: " + playerEndGame + "! :)))");
-        }
 
-        this.out.append("Just finished one round.");
-      }
+//        if (("quit".equals(input))) {//: add the quit option
+//          System.out.println("game has been ended earlier by player: " + playerEndGame + "! :)))");
+//
+//        }
+
+        if (i + 1  == totalPlayers) { // once one round reached:
+          //1. reset blessings.
+          for (Player player : this.mansion.getAllPlayers()){
+            this.mansion.getPetBlessings().put(player, false);
+          } //after each round, the blessings will all be gone and have to be regained.
+          //2. reset player turns map.
+          for (int j = 0; j < totalPlayers; j++) {
+            allPlayers.get(j).flipTurn(); // flip them all back to true.
+            allPlayers.get(j).setPlayerTurn(true);
+          }
+          System.out.println("One round of game has just been finished :)))");
+          this.out.append("Just finished one round.");
+        } // finished of round checking.
+
+      } //end of for loop; (and nothing between this loop and the while loop).
     } // end of while(true) loop.
   } // end of playGame().
 

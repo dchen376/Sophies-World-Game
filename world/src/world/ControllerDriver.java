@@ -20,6 +20,8 @@ public class ControllerDriver {
   /* mac */
   // /Users/dongping/Documents/GitHub/PDP---Milestone-Mansion-Game-/world.txt
 
+
+
   /**
    * the main() method for driver.
    * @param args the system arguments.
@@ -32,6 +34,9 @@ public class ControllerDriver {
     StringBuilder strb = new StringBuilder();
     Controller controller = new Controller(bf, strb); // controller
     controller.playGame(mansion);
+
+    //mac: /Users/dongping/Desktop/milestone 3/world.txt
+
   } // end of main()
 
 }
