@@ -1,35 +1,29 @@
 package world;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.CharBuffer;
 import java.util.*;
+
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
+import javax.swing.*;
 
 /**
  * this is the model class.
  */
 public class Mansion implements MansionBuilder {
-  /*attributes*/
-  private HashMap<Player,Boolean> petBlessings;
+  /* attributes */
+  private HashMap<Player, Boolean> petBlessings;
   private HashMap<Integer, Boolean> dfsCheckMap;
   private static final int BUFFER_SIZE = 4096;
-
 
   /**
    * private fields & private objects.
    */
-  /*: add an evidence list to store used items*/
+  /* : add an evidence list to store used items */
   Set<String> evidenceSet = new HashSet<String>();
-
-
   private HashMap<String, ArrayList<String>> allNeighborsMap;
   private String worldName;
   /* pet attributes */
@@ -70,7 +64,7 @@ public class Mansion implements MansionBuilder {
     this.allPlayers = new ArrayList<>();
     this.totalItemsAllowedMap = new HashMap<>();
     this.roomNameIndexMap = new HashMap<>();
-    this.targetHealth = -100; //just a default value for error checking.
+    this.targetHealth = -100; // just a default value for error checking.
     this.targetLocation = 0;
     this.itemsDamageMap = new HashMap<>();
     this.listOfRoomCoordinates = new ArrayList<ArrayList<ArrayList<Integer>>>();
@@ -89,7 +83,7 @@ public class Mansion implements MansionBuilder {
     this.playersItemsMap = new HashMap<>(); // *just 'put' new items into this arrlst.
     // *remove the items in this hashmap once the player pick it.
     this.turnsMap = new HashMap<>();
-    this.dfsCheckMap = new HashMap<>();//return false if not checked, so default are all false.
+    this.dfsCheckMap = new HashMap<>();// return false if not checked, so default are all false.
     this.petBlessings = new HashMap<>();
   } // end of the constructor
 
@@ -104,19 +98,18 @@ public class Mansion implements MansionBuilder {
     } catch (IOException e) {
       e.printStackTrace();
     }
-    /*makes a buffer ready for re-reading the data that it already contains:
-     It leaves the limit unchanged and sets the position to zero.*/
+    /*
+     * makes a buffer ready for re-reading the data that it already contains: It
+     * leaves the limit unchanged and sets the position to zero.
+     */
     buffer.flip();
     text.append(buffer.toString()); // this gives the stringBuilder 'text'.
 
     /*
-     * 1st part: parse first 4 line:
-     * 35 36 Sophie's World
-     * 100 Albert Knag
-     * the Mysterious cat
-     * 35
+     * 1st part: parse first 4 line: 35 36 Sophie's World 100 Albert Knag the
+     * Mysterious cat 35
      */
-    /*1st line parsing*/
+    /* 1st line parsing */
     String[] lines = text.toString().split("\n"); /// split the text by lines.
     String[] eachLine = lines[0].toString().split(" "); /// put each line into an arraylist.
     totalRooms = Integer.parseInt(eachLine[0]); /// read 1st line info: int total rooms
@@ -128,7 +121,7 @@ public class Mansion implements MansionBuilder {
     eachLineStringBuilder.deleteCharAt(eachLine.length - 1); /// deleting the last appended val: "
     worldName = eachLineStringBuilder.toString(); /// assign 'worldName' to 'Sophie's World'.
     eachLineStringBuilder.setLength(0); /// reset the stringbuilder.
-    /*2nd line parsing*/
+    /* 2nd line parsing */
     eachLine = lines[1].toString().split(" "); // parse 2nd line: 100 Albert Knag
     targetHealth = Integer.parseInt(eachLine[0]); /// 100
     target.setTargetHealth(targetHealth);
@@ -138,19 +131,20 @@ public class Mansion implements MansionBuilder {
     eachLineStringBuilder.deleteCharAt(eachLine.length - 1); /// Albert Knag
     targetName = eachLineStringBuilder.toString(); /// assign 'targetName' to 'Albert Knag'.
     eachLineStringBuilder.setLength(0); // reset the stringbuilder.
+//    System.out.println("target nameee is: " + targetName);
     target.setTargetName(targetName);
 
-    /*3rd line parsing*/
+    /* 3rd line parsing */
     String parsePet = lines[2].toString().trim();
 
     this.petName = parsePet;
     this.pet.setPetName(this.petName);
 
-    /*parse the 4th line: 35 (rooms) */
+    /* parse the 4th line: 35 (rooms) */
     String totalRoomStr = lines[3].toString().trim();
     int totalRoom = Integer.parseInt(totalRoomStr);
-    for (int i = 0; i < totalRoom; i++){
-      this.dfsCheckMap.put(i, false); //false means not checke.d
+    for (int i = 0; i < totalRoom; i++) {
+      this.dfsCheckMap.put(i, false); // false means not checke.d
     }
 
     /*
@@ -262,40 +256,53 @@ public class Mansion implements MansionBuilder {
       // handle exception
     }
   }
-
-  public ArrayList<String> welcomeMessage(){
-    ArrayList<String> welcome = new ArrayList<>();
+//
+//  public ArrayList<String> preGameMessage(){
+//    ArrayList<String> welcome = new ArrayList<>();
 //    welcome.add("Welcome!!!");
 //    welcome.add("Welcome to the game: " + this.worldName);
-    welcome.add(String.format("There are %d rooms in this game", this.getTotalRooms()));
-    welcome.add(String.format("The rooms are: "));
-    welcome.add(this.getAllRoomsNamesLst().toString());
+//    return welcome;
 //
+//  }
+
+//  public ArrayList<String> welcomeMessage() {
+//    ArrayList<String> welcome = new ArrayList<>();
+//    welcome.add(String.format("There are %d rooms in this game", this.getTotalRooms()));
+//    welcome.add(String.format("Welcome to the game: %s. The rooms are: ", this.worldName));
+//    welcome.add(this.getAllRoomsNamesLst().toString());
+//
+//    return welcome;
+//  }
+
+//  public ArrayList<String> welcomeAfter(){
+//    ArrayList<String> welcome = new ArrayList<>();
 //    welcome.add(String.format("Our target for this game is: %s :)))))", this.getTargetName()));
 //    welcome.add(String.format("Our magic pet is: %s :)) hoooorayyyyy!!!", this.getPetName()));
-    welcome.add("Welcome :)");
-    welcome.add("Now please follow the steps below to join the players in the game! CANT WAIT!! :)");
+//    welcome.add("Welcome :)");
+//    welcome.add("Now please follow the steps below to join the players in the game! CANT WAIT!! :)");
+//
+//
+//    return welcome;
+//
+//
+//  }
 
-    return welcome;
-
-  }
-
-
-  public ArrayList<String> beforeGameMessage(int turns){
+  public ArrayList<String> beforeGameMessage(int turns) {
     ArrayList<String> welcome = new ArrayList<>();
     welcome.add(String.format("Welcome to the game: %s", this.worldName));
     welcome.add(String.format("There are %d players in this game!", this.allPlayers.size()));
-    welcome.add(String.format("Target and Pet both starting at the first starting room: %s", this.allRoomsNamesLst.get(0)));
-    for (Player player : this.getAllPlayers()){
-      welcome.add(String.format("Player, %s, chose to start at room: %s", player.getPlayerName(), player.getPlayerRoom()));
+    welcome.add(String.format("Target and Pet both starting at the first starting room: %s",
+        this.allRoomsNamesLst.get(0)));
+    for (Player player : this.getAllPlayers()) {
+      welcome.add(String.format("Player, %s, chose to start at room: %s", player.getPlayerName(),
+          player.getPlayerRoom()));
     }
     welcome.add(String.format("there are %d turns for this game! GOOD LUCK!!!", turns));
     welcome.add("Game is starting NOW!");
     return welcome;
   }
 
-
-  /* below are only getters methods.*/
+  /* below are only getters methods. */
 
   public HashMap<Player, Boolean> getPetBlessings() {
     return petBlessings;
@@ -314,6 +321,7 @@ public class Mansion implements MansionBuilder {
 
   /**
    * getter.
+   * 
    * @return hashmap
    */
   public HashMap<String, Integer> getTotalItemsAllowedMap() {
@@ -323,6 +331,7 @@ public class Mansion implements MansionBuilder {
 
   /**
    * getter.
+   * 
    * @return graphics for the graph
    */
   public Graphics getGraph() {
@@ -331,6 +340,7 @@ public class Mansion implements MansionBuilder {
 
   /**
    * getter.
+   * 
    * @return total items
    */
   public int getTotalItems() {
@@ -339,6 +349,7 @@ public class Mansion implements MansionBuilder {
 
   /**
    * getter.
+   * 
    * @return total rooms
    */
   public int getTotalRooms() {
@@ -347,6 +358,7 @@ public class Mansion implements MansionBuilder {
 
   /**
    * getter.
+   * 
    * @return item
    */
   public Item getItem() {
@@ -355,6 +367,7 @@ public class Mansion implements MansionBuilder {
 
   /**
    * getter.
+   * 
    * @return room
    */
   public Room getRoom() {
@@ -363,6 +376,7 @@ public class Mansion implements MansionBuilder {
 
   /**
    * getter.
+   * 
    * @return name of the world
    */
   public String getWorldName() {
@@ -371,6 +385,7 @@ public class Mansion implements MansionBuilder {
 
   /**
    * getter.
+   * 
    * @return get target location
    */
   public Target getTarget() {
@@ -379,6 +394,7 @@ public class Mansion implements MansionBuilder {
 
   /**
    * getter.
+   * 
    * @return arraylist
    */
   public ArrayList<String> getAllRoomsNamesLst() {
@@ -387,6 +403,7 @@ public class Mansion implements MansionBuilder {
 
   /**
    * getter.
+   * 
    * @return hashmap
    */
   public HashMap<String, String> getPlayersNameRoomMap() {
@@ -395,6 +412,7 @@ public class Mansion implements MansionBuilder {
 
   /**
    * getter.
+   * 
    * @return hashmap
    */
   public HashMap<String, ArrayList<String>> getPlayersItemsMap() {
@@ -403,6 +421,7 @@ public class Mansion implements MansionBuilder {
 
   /**
    * getter.
+   * 
    * @return hashmap
    */
   public HashMap<String, Integer> getTurnsMap() {
@@ -411,6 +430,7 @@ public class Mansion implements MansionBuilder {
 
   /**
    * getter.
+   * 
    * @return arraylist for all the rooms' coordinates
    */
   @Override
@@ -420,6 +440,7 @@ public class Mansion implements MansionBuilder {
 
   /**
    * getter.
+   * 
    * @return hashmap
    */
   @Override
@@ -429,6 +450,7 @@ public class Mansion implements MansionBuilder {
 
   /**
    * getter.
+   * 
    * @return target's health
    */
   @Override
@@ -438,6 +460,7 @@ public class Mansion implements MansionBuilder {
 
   /**
    * getter.
+   * 
    * @return target location
    */
   @Override
@@ -447,6 +470,7 @@ public class Mansion implements MansionBuilder {
 
   /**
    * getter.
+   * 
    * @return target name
    */
   @Override
@@ -456,6 +480,7 @@ public class Mansion implements MansionBuilder {
 
   /**
    * getter.
+   * 
    * @return hashmap
    */
   @Override
@@ -465,6 +490,7 @@ public class Mansion implements MansionBuilder {
 
   /**
    * getter.
+   * 
    * @return hashmap
    */
   @Override
@@ -474,6 +500,7 @@ public class Mansion implements MansionBuilder {
 
   /**
    * getter.
+   * 
    * @return hashmap
    */
   @Override
@@ -497,7 +524,6 @@ public class Mansion implements MansionBuilder {
     this.petLocation = petLocation;
   }
 
-
   public Pet getPet() {
     return pet;
   }
@@ -505,7 +531,5 @@ public class Mansion implements MansionBuilder {
   public Set<String> getEvidenceSet() {
     return evidenceSet;
   }
-
-
 
 } // end of Mansion.java

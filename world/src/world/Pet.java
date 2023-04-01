@@ -77,7 +77,7 @@ public class Pet {
     /*1. build the tree*/
     NaryTreeNode root = this.helperPopulateTree();
 
-    // TODO: finish the dfsMove() & show it explicitly in the test run.
+    // : finish the dfsMove() & show it explicitly in the test run.
 
     /*2. get the dfs results in a list for later parsing*/
     ArrayList<Integer> res = this.getDfsResult(root);

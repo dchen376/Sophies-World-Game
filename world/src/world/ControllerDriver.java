@@ -15,7 +15,7 @@ public class ControllerDriver {
   // PDP---Milestone-Mansion-Game-\out\artifacts\world_jar\world.jar"
 
   /* windows */
-  // C:\\Users\\dongpingchen\\Documents\\GitHub\\PDP---Milestone-Mansion-Game-\\world.txt
+//   C:\\Users\\dongpingchen\\Documents\\GitHub\\PDP---Milestone-Mansion-Game-\\world.txt
 
   /* mac */
   // /Users/dongping/Documents/GitHub/PDP---Milestone-Mansion-Game-/world.txt
@@ -34,6 +34,7 @@ public class ControllerDriver {
     StringBuilder strb = new StringBuilder();
     Controller controller = new Controller(bf, strb); // controller
     controller.playGame(mansion);
+
 
     //mac: /Users/dongping/Desktop/milestone 3/world.txt
 

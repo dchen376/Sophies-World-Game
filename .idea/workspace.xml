@@ -7,16 +7,33 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9ad33201-6778-4d61-ad39-becfec3d47e0" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/world/src/world/ItemMock.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/world/src/world/MansionBuilderMock.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/world/src/world/PetMock.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/world/src/world/PlayerBuilderMock.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/world/src/world/PlayerMock.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/world/src/world/RoomMock.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/world/src/world/TargetMock.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/src/world/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/Item.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/world/test/MansionTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/world/test/MansionTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/world/test/PlayerTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/world/test/PlayerTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/world/test/RoomTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/world/test/RoomTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/world/test/TargetTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/world/test/TargetTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/world/world/Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/world/world/Controller.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/world/world/ControllerDriver.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/world/world/ControllerDriver.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/world/world/Mansion.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/world/world/Mansion.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/world/world/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/world/world/Player.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/saved.png" beforeDir="false" afterPath="$PROJECT_DIR$/saved.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/world/src/world/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/world/src/world/ControllerDriver.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/ControllerDriver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/world/src/world/ControllerMock.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/ControllerMock.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/world/src/world/Mansion.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/Mansion.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/world/src/world/MansionMockModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/MansionMockModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/world/src/world/Pet.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/Pet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/world/src/world/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/src/world/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/Room.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/src/world/Target.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/world/Target.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/world/test/ControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/test/ControllerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/world/test/MansionTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/test/MansionTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/world/test/PlayerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/test/PlayerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/world/test/RoomTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/test/RoomTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/world/test/TargetTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/test/TargetTest.java" afterDir="false" />
     </list>
@@ -116,20 +133,7 @@
       <recent name="world" />
     </key>
   </component>
-  <component name="RunManager" selected="JAR Application.world.jar">
-    <configuration name="ControllerDriver" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="world.ControllerDriver" />
-      <module name="world" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="world.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="JUnit.ControllerTest">
     <configuration name="ControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="world" />
       <extension name="coverage">
@@ -160,18 +164,50 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="RoomTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="PlayerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="world" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="RoomTest" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="test" />
+      <option name="MAIN_CLASS_NAME" value="test.PlayerTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="world.jar" type="JarApplication" temporary="true">
-      <option name="JAR_PATH" value="$PROJECT_DIR$/out/artifacts/world_jar/world.jar" />
-      <method v="2" />
+    <configuration name="RoomTest (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="world" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="test" />
+      <option name="MAIN_CLASS_NAME" value="test.RoomTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TargetTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="world" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="test" />
+      <option name="MAIN_CLASS_NAME" value="test.TargetTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <method v="2">
@@ -186,11 +222,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JAR Application.world.jar" />
-        <item itemvalue="JUnit.RoomTest" />
-        <item itemvalue="JUnit.MansionTest" />
         <item itemvalue="JUnit.ControllerTest" />
-        <item itemvalue="Application.ControllerDriver" />
+        <item itemvalue="JUnit.PlayerTest" />
+        <item itemvalue="JUnit.MansionTest" />
+        <item itemvalue="JUnit.RoomTest (1)" />
+        <item itemvalue="JUnit.TargetTest" />
       </list>
     </recent_temporary>
   </component>
@@ -227,6 +263,16 @@
           <properties class="java.lang.NullPointerException" package="java.lang" />
           <option name="timeStamp" value="124" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/world/src/world/Controller.java</url>
+          <line>63</line>
+          <option name="timeStamp" value="125" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/world/src/world/Player.java</url>
+          <line>90</line>
+          <option name="timeStamp" value="129" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <pin-to-top-manager>

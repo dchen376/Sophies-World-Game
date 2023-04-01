@@ -61,7 +61,36 @@ public class Controller {
     }
     this.mansion.drawWorld(); // drawWorld()
 
-    System.out.println(this.mansion.welcomeMessage().toString());
+//    System.out.println(this.mansion.welcomeMessage().toString());
+
+//
+//    System.out.println(this.mansion.getPet().dfsMove());
+//    System.out.println(this.mansion.getPet().dfsMove());
+//    System.out.println(this.mansion.getPet().dfsMove());
+//    System.out.println(this.mansion.getPet().dfsMove());
+//    System.out.println(this.mansion.getPet().dfsMove());
+//    System.out.println(this.mansion.getPet().dfsMove());
+//    System.out.println(this.mansion.getPet().dfsMove());
+//    System.out.println(this.mansion.getPet().dfsMove());
+//    System.out.println(this.mansion.getPet().dfsMove());
+//    System.out.println(this.mansion.getPet().dfsMove());
+//    System.out.println(this.mansion.getPet().dfsMove());
+//    System.out.println(this.mansion.getPet().dfsMove());
+//    System.out.println(this.mansion.getPet().dfsMove());
+//    System.out.println(this.mansion.getPet().dfsMove());
+//    System.out.println(this.mansion.getPet().dfsMove());
+//    System.out.println(this.mansion.getPet().dfsMove());
+//    System.out.println(this.mansion.getPet().dfsMove());
+
+
+
+    System.out.println("Welcome!!");
+//    System.out.println("Welcome to the game: " + this.mansion.getWorldName());
+    System.out.println(String.format("There are %d rooms in this game: ", this.mansion.getTotalRooms()));
+    System.out.println(this.mansion.getAllRoomsNamesLst().toString());
+    System.out.println("Please follow the instructions below in order to add the players: ");
+//    System.out.println("The target is: " + this.mansion.getTargetName());
+//    System.out.println("The magic pet is: " + this.mansion.getPetName() + ". HOORAYYY!!!");
 
     /* second, add total_turns, and parse the players */
     // 1. first line: an integer N (declaring how many players for this game).
@@ -131,14 +160,14 @@ public class Controller {
     } // end of for loop; finished adding all the Players.
 
 
-    //: a welcome message
-    String welcomer = this.mansion.beforeGameMessage(totalTurns).toString();
-//    System.out.println(welcomer);
+
+
+    System.out.println("GAME STARTING SOON!!");
 
     /* third, the actual game play. */
     String input = "";
     boolean exit = false;
-    int round = 1;
+//    int round = 1;
     int maxTurns = totalTurns; // the max turns reached will stop the game.
     String playerEndGame = ""; // a statement telling whoever ends this game.
     while (!exit) { /// from here the scan.next should only have 'move actions'
@@ -149,13 +178,6 @@ public class Controller {
       /* via switch() statements */
       for (int i = 0; i < totalPlayers; i++) {
 
-        if (maxTurns == 0) { //: check max turns before proceeding.
-          exit = true;
-          System.out
-                  .println("Maximum turns reached ! Target just run away !! Maybe another day ... ");
-          this.out.append("Target escaped.");
-          break;
-        }
 
         /*the current player.*/
         Player currPlayer = allPlayers.get(i);
@@ -174,11 +196,8 @@ public class Controller {
                 // ===================Methods Cost a turn:
                 // : move the pet
                 case "move pet":
-                  System.out.println(String.format(
-                      "Please enter the location you would like to move this pet: %s \n",
-                      this.mansion.getPetName()));
-                  input = scanner.nextLine();
-                  int locIndex = this.mansion.getRoomNameIndexMap().get(input);
+                  System.out.println(String.format("The pet is about to move to your location for some blessings!!"));
+
                   currPlayer.movePet();
                   this.out.append(String.format("%s is trying to move the pet to a new location.\n",
                       currPlayer.getPlayerName()));
@@ -220,8 +239,6 @@ public class Controller {
                   // flip its boolean turn value:
                   currPlayer.flipTurn(); // now val is false.
                   currPlayer.setPlayerTurn(false); // now val is false.
-                  maxTurns--;
-
                   // end game if target killed
                   int currHealth = this.mansion.getTargetHealth();
                   if (currHealth <= 0) {
@@ -234,9 +251,7 @@ public class Controller {
                     playerEndGame = currPlayer.getPlayerName();
                     break;
                   }
-
-                  // TODO: succeed or failed?
-                  System.out.println();
+                  System.out.println("The pet DFS moved to room: " + this.mansion.getPet().getPetLocation());
                   break;
 
                 case "move": // to move the player.
@@ -258,7 +273,7 @@ public class Controller {
                   // flip its boolean turn value:
                   currPlayer.flipTurn(); // now val is false.
                   currPlayer.setPlayerTurn(false); // now val is false.
-                  maxTurns--;
+                  System.out.println("The pet DFS moved to room: " + this.mansion.getPet().getPetLocation());
                   break;
                 case "pick": /* String pickUp() */
                   currPlayer.pickUp();
@@ -267,7 +282,7 @@ public class Controller {
                   // flip its boolean turn value:
                   currPlayer.flipTurn(); // now val is false.
                   currPlayer.setPlayerTurn(false); // now val is false.
-                  maxTurns--;
+                  System.out.println("The pet DFS moved to room: " + this.mansion.getPet().getPetLocation());
                   break;
                 case "look around": /* String lookAround(String playerName) */
                   System.out.println(currPlayer.lookAround());
@@ -276,7 +291,7 @@ public class Controller {
                   // flip its boolean turn value:
                   currPlayer.flipTurn(); // now val is false.
                   currPlayer.setPlayerTurn(false); // now val is false.
-                  maxTurns--;
+                  System.out.println("The pet DFS moved to room: " + this.mansion.getPet().getPetLocation());
                   break;
 
                 // =========Methods Dont cost a turn:
@@ -305,7 +320,6 @@ public class Controller {
                   break;
               }
             }
-
             else if (currPlayer.getComputerOrHuman().equals("computer")) { // a PC player
               /*
                * moves for PC: 1. move() -> costs Turn! 2. pickup() -> costs Turn! 3.
@@ -328,27 +342,7 @@ public class Controller {
                  * their inventory that does the most damage.
                  */
                 case "attempt":
-                  // flip its boolean turn value:4
-                  // : print out player items it has:
-                  /*System.out.println(
-                      String.format("Computer player %s is attempting on the Target's life",
-                          currPlayer.getPlayerName()))*/;
-//                  if (currPlayer.getPlayerItemsLst().size() != 0) {
-//                    System.out.println(currPlayer.getItemsDamagesLst().toString());
-//                    // : to avoid invalid inputs may be use switch:
-////                    while (!currPlayer.checkValidItem(input)){
-////                      System.out.println("Sorry this is not a valid item to use!!");
-////                      System.out.println("Please use a valid item in your item's bag :))");
-////                      input = scanner.nextLine();
-////                    }
-//
-//
-//                    currPlayer.attemptTarget(input);
-//                    this.out.append(String.format("%s is trying to attempt on the target's life.\n",
-//                        currPlayer.getPlayerName()));
-//                  } else {
-                  // if players got no items:
-//                    System.out.println("Ohhhhh you got no items at your disposal! But! You can always poke...");
+
                   currPlayer.pcAttemptTarget(); // since no attempts here this method will just
                   // poke.
                   this.out
@@ -360,7 +354,6 @@ public class Controller {
                   // flip its boolean turn value:
                   currPlayer.flipTurn(); // now val is false.
                   currPlayer.setPlayerTurn(false); // now val is false.
-                  maxTurns--;
 
                   // end game if target killed
                   int currHealth = this.mansion.getTargetHealth();
@@ -375,16 +368,18 @@ public class Controller {
                     break;
                   }
 
-                  // TODO: succeed or failed?
-                  System.out.println();
+                  System.out.println("The pet DFS moved to room: " + this.mansion.getPet().getPetLocation());
                   break;
 
                 case "move": // to move the computer.
                   // : let computer move to a random room.
 //                  this.mansion
-                  ArrayList<String> neighborRooms = currPlayer.helperNeighborRooms();
-                  int roomsize = neighborRooms.size();
-                  int randNum = this.helperRandNum(roomsize - 1);
+                  ArrayList<String> neighborRooms = this.mansion.getAllNeighborsMap().get(currPlayer.getPlayerRoom());
+                  int roomsize = neighborRooms.size();//todoO:fix room size 0?
+                  int randNum = this.helperRandNum(roomsize);
+                  if (randNum -1 >= 0){
+                    randNum -= 1;
+                  }
                   String randRoom = neighborRooms.get(randNum); //pc will pick a random move.
                   currPlayer.movePlayer(randRoom);
                   this.out.append(String.format("%s is trying to move to another room.\n",
@@ -392,7 +387,7 @@ public class Controller {
                   // flip its boolean turn value:
                   currPlayer.flipTurn(); // now val is false.
                   currPlayer.setPlayerTurn(false); // now val is false.
-                  maxTurns--;
+                  System.out.println("The pet DFS moved to room: " + this.mansion.getPet().getPetLocation());
                   break;
                 case "pick": /* String pickUp() */
                   currPlayer.pickUp();
@@ -401,24 +396,26 @@ public class Controller {
                   // flip its boolean turn value:
                   currPlayer.flipTurn(); // now val is false.
                   currPlayer.setPlayerTurn(false); // now val is false.
-                  maxTurns--;
+                  System.out.println("The pet DFS moved to room: " + this.mansion.getPet().getPetLocation());
                   break;
-                case "look around": //TODO: check! does computer look around too?
-                  System.out.println(currPlayer.lookAround());
-                  this.out.append(String.format("%s is looking around on another player.\n",
-                      currPlayer.getPlayerName()));
-                  // flip its boolean turn value:
-                  currPlayer.flipTurn(); // now val is false.
-                  currPlayer.setPlayerTurn(false); // now val is false.
-                  maxTurns--;
-                  break;
+
                 default:
                   System.out.println("Input error !!");
+                  maxTurns +=1;
                   break;
               }
             }
 
-          } // end  while (currPlayer.getPlayerTurn()); because some actions don't cost a turn.
+          }
+          maxTurns -= 1;
+        if (maxTurns == 0) { //: check max turns before proceeding.
+          exit = true;
+          System.out
+              .println("Maximum turns reached ! Target just run away !! Maybe another day ... ");
+          this.out.append("Target escaped.");
+          break;
+        }
+          // end  while (currPlayer.getPlayerTurn()); because some actions don't cost a turn.
 //        } // end for().
 
 
@@ -474,9 +471,6 @@ public class Controller {
     }
     if (j == 2) {
       return "pick";
-    }
-    if (j == 3) {
-      return "look around";
     }
     return "wrong answer";
   }

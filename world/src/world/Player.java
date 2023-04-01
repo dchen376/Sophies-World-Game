@@ -40,7 +40,7 @@ public class Player implements PlayerBuilder {
     this.evidenceSet = this.mansion.getEvidenceSet();
     this.target = this.mansion.getTarget();
     // inputs from mansion:
-    this.playerTurn = false; // default is false. //TODO: double check!
+    this.playerTurn = true; // default is false. //: double check!
     // inputs from controller:
     this.playerTotalAllowedItem = playerTotalAllowedItem;
     this.computerOrHuman = computerOrHuman;
@@ -86,7 +86,7 @@ public class Player implements PlayerBuilder {
     }
 
     boolean seen = false;
-    ArrayList<String> neighborRooms = this.mansion.getAllNeighborsMap().get(this.getPlayerName());
+    ArrayList<String> neighborRooms = this.mansion.getAllNeighborsMap().get(this.getPlayerRoom());
     ArrayList<Player> allPlayers = this.mansion.getAllPlayers();
     neighborRooms.add(this.getPlayerRoom()); // also add player's current room to the list.
     /* to check if it's in a neighbor room OR the same room */
@@ -119,8 +119,10 @@ public class Player implements PlayerBuilder {
 //    this.mansion.getTurnsMap().put(this.playerName, 0);
 
     if (this.seenPlayer()) {
+      this.mansion.getTurnsMap().put(this.playerName, 0);
       this.autoMoveTarget();
       this.mansion.getPet().dfsMove();
+      this.setPlayerTurn(false);
       return this.mansion.getTargetHealth();
     }
 
@@ -183,8 +185,10 @@ public class Player implements PlayerBuilder {
 //    this.mansion.getTurnsMap().put(this.playerName, 0);
 
     if (this.seenPlayer()) {
+      this.mansion.getTurnsMap().put(this.playerName, 0);
       this.autoMoveTarget();
       this.mansion.getPet().dfsMove();
+      this.setPlayerTurn(false);
       return this.mansion.getTargetHealth();
     }
 
@@ -245,7 +249,7 @@ public class Player implements PlayerBuilder {
     int roomIndex = this.mansion.getRoomNameIndexMap().get(playerRoom);
     /// what items in this room?
     String roomName = this.helperIndexGetRoomName(roomIndex);
-    // TODO: fix the null roomName
+    // TODOO: fix the null roomName
     ArrayList<String> allItems = this
         .helperRoomGetItems(roomName); /* here will get the items list for the room */
     /// can he pick it up?
@@ -429,7 +433,7 @@ public class Player implements PlayerBuilder {
   }
 
   @Override
-  public boolean checkValidRoom(String checkedRoom) { // TODO: put this check condition in the
+  public boolean checkValidRoom(String checkedRoom) { // : put this check condition in the
                                                       // driver.
     ArrayList<String> playerNeighbors = this.mansion.getAllNeighborsMap().get(this.playerRoom);
     for (String room : playerNeighbors) {
@@ -465,7 +469,7 @@ public class Player implements PlayerBuilder {
     // know the player's room (where they are) 1.
     String roomStr = this.mansion.getPlayersNameRoomMap().get(playerName);
     // what they carry 2.
-    // TODO: fix null input roomStr: so maybe use the a checker too here.
+    // TODOO: fix null input roomStr: so maybe use the a checker too here.
     ArrayList<String> allTheItems = this.helperRoomGetItems(roomStr);
     String itemsStr = allTheItems.toString();
 
