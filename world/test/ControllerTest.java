@@ -7,8 +7,8 @@ import java.io.IOException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import world.ControllerMock;
-import world.MansionMockModel;
+import controller.ControllerMock;
+import model.mansion.MansionMockModel;
 
 /**
  * junit test for COntroller class.

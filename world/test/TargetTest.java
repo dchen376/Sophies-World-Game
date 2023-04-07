@@ -7,8 +7,8 @@ import java.io.IOException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import world.Mansion;
-import world.Target;
+import model.mansion.Mansion;
+import model.target.Target;
 
 /**
  * test class for Target class.

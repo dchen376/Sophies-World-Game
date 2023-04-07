@@ -9,7 +9,7 @@ import java.util.HashMap;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import world.Mansion;
+import model.mansion.Mansion;
 
 /**
  * test class for Mansion class.

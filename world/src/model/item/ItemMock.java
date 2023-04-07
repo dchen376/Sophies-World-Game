@@ -1,8 +1,6 @@
-package world;
+package model.item;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import model.mansion.MansionMockModel;
 
 /**
  * this is the item class.

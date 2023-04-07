@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import world.Mansion;
-import world.Room;
+import model.mansion.Mansion;
+import model.room.Room;
 
 /**
  * Test class for Room class.

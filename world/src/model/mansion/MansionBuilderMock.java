@@ -1,4 +1,9 @@
-package world;
+package model.mansion;
+
+import model.player.PlayerMock;
+import model.room.RoomMock;
+import model.target.TargetMock;
+import model.item.ItemMock;
 
 import java.util.ArrayList;
 import java.util.HashMap;

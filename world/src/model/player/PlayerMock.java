@@ -1,4 +1,8 @@
-package world;
+package model.player;
+
+import model.target.TargetMock;
+import model.mansion.MansionMockModel;
+import model.pet.PetMock;
 
 import java.util.ArrayList;
 import java.util.HashSet;

@@ -1,6 +1,8 @@
-package world;
+package model.pet;
 
-import javax.swing.tree.TreeNode;
+import model.mansion.MansionMockModel;
+import model.pet.NaryTreeNode;
+
 import java.util.ArrayList;
 
 /**

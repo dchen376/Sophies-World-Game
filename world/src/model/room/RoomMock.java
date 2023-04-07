@@ -1,4 +1,6 @@
-package world;
+package model.room;
+
+import model.mansion.MansionMockModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;

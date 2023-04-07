@@ -1,8 +1,4 @@
-package world;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+package model.player;
 
 /**
  * this is the interface for the player object.

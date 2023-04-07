@@ -8,8 +8,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import world.Mansion;
-import world.Player;
+import model.mansion.Mansion;
+import model.player.Player;
 
 /**
  * test class for the Player class.

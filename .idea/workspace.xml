@@ -7,8 +7,35 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9ad33201-6778-4d61-ad39-becfec3d47e0" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/world/world/ControllerDriver.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/world/world/ControllerDriver.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/world/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/world/META-INF/MANIFEST.MF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/world/src/world/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/model/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/world/src/world/ControllerDriver.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/model/ControllerDriver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/world/src/world/ControllerMock.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/model/ControllerMock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/world/src/world/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/model/Item.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/world/src/world/ItemMock.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/model/ItemMock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/world/src/world/Mansion.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/model/Mansion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/world/src/world/MansionBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/model/MansionBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/world/src/world/MansionBuilderMock.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/model/MansionBuilderMock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/world/src/world/MansionDriver.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/model/MansionDriver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/world/src/world/MansionMockModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/model/MansionMockModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/world/src/world/NaryTreeNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/model/NaryTreeNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/world/src/world/Pet.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/model/Pet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/world/src/world/PetMock.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/model/PetMock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/world/src/world/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/model/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/world/src/world/PlayerBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/model/PlayerBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/world/src/world/PlayerBuilderMock.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/model/PlayerBuilderMock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/world/src/world/PlayerMock.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/model/PlayerMock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/world/src/world/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/model/Room.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/world/src/world/RoomMock.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/model/RoomMock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/world/src/world/Target.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/model/Target.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/world/src/world/TargetMock.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/src/model/TargetMock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/world/test/ControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/test/ControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/world/test/MansionTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/test/MansionTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/world/test/PlayerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/test/PlayerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/world/test/RoomTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/test/RoomTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/world/test/TargetTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/world/test/TargetTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,24 +63,24 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/world/src/world/Room.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/world/src/world/MansionBuilder.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/world/src/world/Target.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/world/src/model/Room.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/world/src/model/MansionBuilder.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/world/src/model/Target.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/world/test/PlayerTest.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/world/src/world/Controller.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/world/src/world/Item.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/world/src/world/MansionMockModel.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/world/src/world/ControllerMock.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/world/src/world/Player.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/world/src/model/Controller.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/world/src/model/Item.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/world/src/model/MansionMockModel.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/world/src/model/ControllerMock.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/world/src/model/Player.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../lab4--tictactoe/Controller/test/TicTacToeControllerTest.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/world/test/ControllerTest.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../lab4--tictactoe/Controller/src/tictactoe/TicTacToeConsoleController.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../lab4--tictactoe/Controller/src/tictactoe/TicTacToeModel.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/world/src/world/Mansion.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/world/src/model/Mansion.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/world/test/MansionTest.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/world/src/world/PlayerBuilder.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/world/src/world/ControllerDriver.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/world/src/world/MansionDriver.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/world/src/model/PlayerBuilder.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/world/src/model/ControllerDriver.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/world/src/model/MansionDriver.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/world/test/RoomTest.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/world/test/TargetTest.java" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -80,7 +107,7 @@
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4" value="" />
     <property name="create.test.in.the.same.root" value="true" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/world/test" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../lab6 - sentences" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../lab10 - view" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -237,12 +264,12 @@
           <option name="timeStamp" value="124" />
         </breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/world/src/world/Controller.java</url>
+          <url>file://$PROJECT_DIR$/world/src/model/Controller.java</url>
           <line>63</line>
           <option name="timeStamp" value="125" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/world/src/world/Player.java</url>
+          <url>file://$PROJECT_DIR$/world/src/model/Player.java</url>
           <line>90</line>
           <option name="timeStamp" value="129" />
         </line-breakpoint>

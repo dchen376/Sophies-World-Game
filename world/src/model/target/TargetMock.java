@@ -1,4 +1,6 @@
-package world;
+package model.target;
+
+import model.mansion.MansionMockModel;
 
 import java.util.HashMap;
 
