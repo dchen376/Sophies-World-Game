@@ -12,8 +12,6 @@ public class Target {
   private String targetName;
   private int targetHealth;
   private int targetLocation;
-  private HashMap<String, Integer> itemRoomMap;
-  private HashMap<String, Integer> itemDamageMap;
 
   /**
    * constructor.
@@ -63,6 +61,14 @@ public class Target {
 
   /*below are all getters & setters.*/
 
+  /**
+   * getter.
+   * @return get target's location
+   */
+  public int getTargetLocation() {
+    return targetLocation;
+  }
+
   public void setTargetLocation(int targetLocation) {
     this.targetLocation = targetLocation;
   }
@@ -99,12 +105,5 @@ public class Target {
     this.targetName = targetName;
   }
 
-  /**
-   * getter.
-   * @return get target's location
-   */
-  public int getTargetLocation() {
-    return targetLocation;
-  }
 
 }

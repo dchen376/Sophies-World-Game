@@ -26,4 +26,7 @@ public class NaryTreeNode {
  public List<NaryTreeNode> getChildren() {
   return children;
  }
+
+
+ //for the tests
 }

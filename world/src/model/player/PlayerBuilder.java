@@ -1,5 +1,7 @@
 package model.player;
 
+import java.util.ArrayList;
+
 /**
  * this is the interface for the player object.
  */
@@ -12,10 +14,6 @@ public interface PlayerBuilder {
    * @return true if it is one of the neighboring room.
    */
   boolean checkValidRoom(String checkedRoom);
-
-
-
-  // helper method for granting a player's invisibility for
 
   /**
    * check if a player has the blessings from the pet.
@@ -49,10 +47,6 @@ public interface PlayerBuilder {
    */
   int pcAttemptTarget();
 
-
-
-
-
   /**
    * to update the player's information.
    * 
@@ -66,6 +60,13 @@ public interface PlayerBuilder {
    * @return the picked item's name, as a type String.
    */
   String pickUp();
+
+  /*helper method to get an arraylist representation of player's
+   items with items with corresponding damage points.*/
+  ArrayList<String> getItemsDamagesLst();
+
+  /*check if a player posses the item or not*/
+  boolean checkValidItem(String checkedItem);
 
   /**
    * the player who is about to 'look Around' at his current location.
@@ -82,6 +83,9 @@ public interface PlayerBuilder {
    * @return
    */
   int movePlayer(String roomPicked);
+
+  /*returns the neighrboing rooms of the current room.*/
+  ArrayList<String> helperNeighborRooms();
 
   /**
    * Display the player's information.
@@ -103,7 +107,7 @@ public interface PlayerBuilder {
    * 
    * @return the number of more items a player can pick up.
    */
-  int pickMoreItems();
+  int checkPickMore();
 
   /**
    * flip the turns: 1 -> 0 0 -> 1.
@@ -112,4 +116,15 @@ public interface PlayerBuilder {
    */
   int flipTurn();
 
+  int helperRandNum(int i);
+
+  String helperIndexGetRoomName(int index);
+
+  ArrayList<String> helperRoomGetItems(String room);
+
+  boolean checkTurnsMap();
+
+  boolean isPlayerTurn();
+
+  String helperArrayListToString(ArrayList<String> arrLst);
 }

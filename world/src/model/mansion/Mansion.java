@@ -20,46 +20,52 @@ import javax.swing.*;
  * this is the model class.
  */
 public class Mansion implements MansionBuilder {
-  /* attributes */
-  private HashMap<Player, Boolean> petBlessings;
-  private HashMap<Integer, Boolean> dfsCheckMap;
-  private static final int BUFFER_SIZE = 4096;
 
-  /**
-   * private fields & private objects.
-   */
-  /* : add an evidence list to store used items */
-  Set<String> evidenceSet = new HashSet<String>();
-  private HashMap<String, ArrayList<String>> allNeighborsMap;
-  private String worldName;
-  /* pet attributes */
-  private String petName;
-  private int petLocation;
-  /* target attributes */
-  private String targetName;
-  private int targetHealth;
-  private int targetLocation;
-  /* room attributes */
-  private ArrayList<String> allRoomsNamesLst;
-  private ArrayList<ArrayList<ArrayList<Integer>>> listOfRoomCoordinates;
-  private HashMap<String, Integer> roomNameIndexMap; // <room name, room Index>
-  private int totalRooms;
-  /* item attributes */
-  private int totalItems;
-  private HashMap<String, Integer> totalItemsAllowedMap;
-  private HashMap<String, Integer> itemsDamageMap; // <item, damage>
-  private HashMap<String, Integer> itemsRoomMap; // <Item, room index>
-  /* graph info */
-  private Graphics graph;
+  //fields
+
   /* objects info */
   private Pet pet;
   private Item item;
   private Room room;
   private Target target;
   private ArrayList<Player> allPlayers;
-  private final HashMap<String, String> playersNameRoomMap; // update each time the players/target
+  private HashMap<String, String> playersNameRoomMap; // update each time the players/target
   private HashMap<String, ArrayList<String>> playersItemsMap; // *just 'put' new items into this
   private HashMap<String, Integer> turnsMap; // defaults are true -> 1.
+
+  /* graph info */
+  private Graphics graph;
+  private static final int BUFFER_SIZE = 4096; //note declare else where
+
+  /* world attributes */
+  private String worldName;
+
+  /*player attributes */
+  Set<String> evidenceSet = new HashSet<String>(); //note: declare else where
+
+  /* pet attributes */
+  private HashMap<Player, Boolean> petBlessings;
+  private HashMap<Integer, Boolean> dfsCheckMap;
+  private String petName;
+  private int petLocation;
+
+  /* target attributes */
+  private String targetName;
+  private int targetHealth;
+  private int targetLocation;
+
+  /* room attributes */
+  private HashMap<String, ArrayList<String>> allNeighborsMap;
+  private ArrayList<String> allRoomsNamesLst;
+  private ArrayList<ArrayList<ArrayList<Integer>>> listOfRoomCoordinates;
+  private HashMap<String, Integer> roomNameIndexMap; // <room name, room Index>
+  private int totalRooms;
+
+  /* item attributes */
+  private int totalItems;
+  private HashMap<String, Integer> totalItemsAllowedMap;
+  private HashMap<String, Integer> itemsDamageMap; // <item, damage>
+  private HashMap<String, Integer> itemsRoomMap; // <Item, room index>
 
   /**
    * Constructor.
@@ -92,6 +98,8 @@ public class Mansion implements MansionBuilder {
     this.dfsCheckMap = new HashMap<>();// return false if not checked, so default are all false.
     this.petBlessings = new HashMap<>();
   } // end of the constructor
+
+
 
   /**
    * Read the text file.
@@ -293,7 +301,8 @@ public class Mansion implements MansionBuilder {
 //
 //  }
 
-  public ArrayList<String> beforeGameMessage(int turns) {
+  @Override
+  public ArrayList<String> welcomeMessage(int turns) {
     ArrayList<String> welcome = new ArrayList<>();
     welcome.add(String.format("Welcome to the game: %s", this.worldName));
     welcome.add(String.format("There are %d players in this game!", this.allPlayers.size()));
@@ -310,16 +319,21 @@ public class Mansion implements MansionBuilder {
 
   /* below are only getters methods. */
 
+  @Override
   public HashMap<Player, Boolean> getPetBlessings() {
     return petBlessings;
   }
 
+  @Override
   public HashMap<Integer, Boolean> getDfsCheckMap() {
     return dfsCheckMap;
   }
 
+
+  //getters & setters.
+
   /**
-   * get all the players.
+   * getter.
    */
   public ArrayList<Player> getAllPlayers() {
     return allPlayers;
@@ -439,7 +453,6 @@ public class Mansion implements MansionBuilder {
    * 
    * @return arraylist for all the rooms' coordinates
    */
-  @Override
   public ArrayList<ArrayList<ArrayList<Integer>>> getListOfRoomCoordinates() {
     return listOfRoomCoordinates;
   }
@@ -449,7 +462,6 @@ public class Mansion implements MansionBuilder {
    * 
    * @return hashmap
    */
-  @Override
   public HashMap<String, ArrayList<String>> getAllNeighborsMap() {
     return allNeighborsMap;
   }
@@ -459,7 +471,6 @@ public class Mansion implements MansionBuilder {
    * 
    * @return target's health
    */
-  @Override
   public int getTargetHealth() {
     return targetHealth;
   }
@@ -469,7 +480,6 @@ public class Mansion implements MansionBuilder {
    * 
    * @return target location
    */
-  @Override
   public int getTargetLocation() {
     return targetLocation;
   }
@@ -479,7 +489,6 @@ public class Mansion implements MansionBuilder {
    * 
    * @return target name
    */
-  @Override
   public String getTargetName() {
     return this.targetName;
   }
@@ -489,7 +498,6 @@ public class Mansion implements MansionBuilder {
    * 
    * @return hashmap
    */
-  @Override
   public HashMap<String, Integer> getRoomNameIndexMap() {
     return this.roomNameIndexMap;
   }
@@ -499,7 +507,6 @@ public class Mansion implements MansionBuilder {
    * 
    * @return hashmap
    */
-  @Override
   public HashMap<String, Integer> getItemsRoomMap() {
     return this.itemsRoomMap;
   }
@@ -509,31 +516,36 @@ public class Mansion implements MansionBuilder {
    * 
    * @return hashmap
    */
-  @Override
   public HashMap<String, Integer> getItemsDamageMap() {
     return this.itemsDamageMap;
   }
 
+  /*getter*/
   public String getPetName() {
     return petName;
   }
 
+  //setter
   public void setPetName(String petName) {
     this.petName = petName;
   }
 
+  //getter
   public int getPetLocation() {
     return petLocation;
   }
 
+  //setter
   public void setPetLocation(int petLocation) {
     this.petLocation = petLocation;
   }
 
+  //getter
   public Pet getPet() {
     return pet;
   }
 
+  /*getter*/
   public Set<String> getEvidenceSet() {
     return evidenceSet;
   }

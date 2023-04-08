@@ -152,15 +152,15 @@ public class Room {
     return neighbors;
   }
 
-  /**
-   * hashmap for all the neighbors of the player's current room.
-   *
-   * @return hashmap
-   */
-  public HashMap<String, ArrayList<String>> getAllNeighborsMap() {
-    for (int i = 0; i < this.mansion.getRoomNameIndexMap().size(); i++) {
-      this.mansion.getAllNeighborsMap().put(this.mansion.getAllRoomsNamesLst().get(i), this.getNeighbors(this.mansion.getAllRoomsNamesLst().get(i)));
-    }
-    return this.mansion.getAllNeighborsMap();
-  }
+//  /**
+//   * hashmap for all the neighbors of the player's current room.
+//   *
+//   * @return hashmap
+//   */
+//  public HashMap<String, ArrayList<String>> getAllNeighborsMap() {
+//    for (int i = 0; i < this.mansion.getRoomNameIndexMap().size(); i++) {
+//      this.mansion.getAllNeighborsMap().put(this.mansion.getAllRoomsNamesLst().get(i), this.getNeighbors(this.mansion.getAllRoomsNamesLst().get(i)));
+//    }
+//    return this.mansion.getAllNeighborsMap();
+//  }
 }
