@@ -90,6 +90,7 @@ public class ControllerMock {
   * @throws IOException for file handles.
   */
  public void playGame(MansionMockModel m) throws IOException {
+  //note: the above parameter causing that I need a mockController which I dont need.
   Objects.requireNonNull(m);
   this.m = m;
   Scanner scanController = new Scanner(in);

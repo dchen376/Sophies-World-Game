@@ -95,12 +95,6 @@ public interface PlayerBuilder {
    */
   String displayPlayerInfo(String playerName);
 
-  /**
-   * automatically move the target during each turn.
-   * 
-   * @return the room index it moved to, as a type of string.
-   */
-  int autoMoveTarget();
 
   /**
    * check if a player can pick more items.

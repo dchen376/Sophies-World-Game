@@ -88,12 +88,15 @@ public class Controller {
 
 
     System.out.println("Welcome!!");
-//    System.out.println("Welcome to the game: " + this.mansion.getWorldName());
+    //note: worldname parsing is wrong.
+    System.out.println("Welcome to the game: " + this.mansion.getWorldName());
     System.out.println(String.format("There are %d rooms in this game: ", this.mansion.getTotalRooms()));
     System.out.println(this.mansion.getAllRoomsNamesLst().toString());
     System.out.println("Please follow the instructions below in order to add the players: ");
-//    System.out.println("The target is: " + this.mansion.getTargetName());
-//    System.out.println("The magic pet is: " + this.mansion.getPetName() + ". HOORAYYY!!!");
+    //note: targetname parsing is wrong.
+    System.out.println("The target is: " + this.mansion.getTargetName());
+    //note: pet name paring is wrong.
+    System.out.println("The magic pet is: " + this.mansion.getPetName() + ". HOORAYYY!!!");
 
     /* second, add total_turns, and parse the players */
     // 1. first line: an integer N (declaring how many players for this game).

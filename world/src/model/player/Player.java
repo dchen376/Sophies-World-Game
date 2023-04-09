@@ -125,7 +125,7 @@ public class Player implements PlayerBuilder {
 
     if (this.seenPlayer()) {
       this.mansion.getTurnsMap().put(this.playerName, 0);
-      this.autoMoveTarget();
+      this.mansion.getTarget().targetAutomove();
       this.mansion.getPet().dfsMove();
       this.setPlayerTurn(false);
       return this.mansion.getTargetHealth();
@@ -172,7 +172,7 @@ public class Player implements PlayerBuilder {
 
     /* costing a TURN */
     this.mansion.getTurnsMap().put(this.playerName, 0);
-    this.autoMoveTarget();
+    this.mansion.getTarget().targetAutomove();
     this.mansion.getPet().dfsMove();
     this.setPlayerTurn(false);
 
@@ -190,7 +190,7 @@ public class Player implements PlayerBuilder {
 
     if (this.seenPlayer()) {
       this.mansion.getTurnsMap().put(this.playerName, 0);
-      this.autoMoveTarget();
+      this.mansion.getTarget().targetAutomove();
       this.mansion.getPet().dfsMove();
       this.setPlayerTurn(false);
       return this.mansion.getTargetHealth();
@@ -221,7 +221,7 @@ public class Player implements PlayerBuilder {
 
     /* costing a TURN */
     this.mansion.getTurnsMap().put(this.playerName, 0);
-    this.autoMoveTarget();
+    this.mansion.getTarget().targetAutomove();
     this.mansion.getPet().dfsMove();
     this.setPlayerTurn(false);
 
@@ -265,7 +265,7 @@ public class Player implements PlayerBuilder {
 
     /* costing a TURN */
     this.mansion.getTurnsMap().put(this.playerName, 0);
-    this.autoMoveTarget();
+    this.mansion.getTarget().targetAutomove();
     this.mansion.getPet().dfsMove();
     this.setPlayerTurn(false);
 
@@ -386,7 +386,7 @@ public class Player implements PlayerBuilder {
 
     /* costing a TURN */
     this.mansion.getTurnsMap().put(this.playerName, 0);
-    this.autoMoveTarget();
+    this.mansion.getTarget().targetAutomove();
     this.mansion.getPet().dfsMove();
     this.setPlayerTurn(false);
 
@@ -428,7 +428,7 @@ public class Player implements PlayerBuilder {
 
     /* costing a TURN */
     this.mansion.getTurnsMap().put(this.playerName, 0);
-    this.autoMoveTarget();
+    this.mansion.getTarget().targetAutomove();
     this.pet.dfsMove();
     this.setPlayerTurn(false);
 
@@ -481,59 +481,7 @@ public class Player implements PlayerBuilder {
     return ans;
   }
 
-  /**
-   * the TARGET!! moves one index room forward in the world each time by calling
-   * this method.
-   *
-   * @return Integer (the room's index the TARGET just moved to)
-   */
-  @Override
-  public int autoMoveTarget() { // this method probably wil be called from any methods that
-    // return 1;
 
-    // TARGET TARGET MOVE!!! EVERY TURN!!!! OF THE GAME!
-
-    int totalRooms = this.mansion.getItemsRoomMap().size();
-    int targetLocation = this.target.getTargetLocation();
-    if (targetLocation + 1 != totalRooms) {
-      targetLocation += 1;
-      this.target.setTargetLocation(targetLocation);
-    } else {
-      targetLocation = 0;
-      this.target.setTargetLocation(targetLocation);
-    }
-
-//    // 1. the target moves to one of a random room.
-//    // CHECK:
-//    int roomIndex = targetLocation;
-//    String roomStr = this.helperIndexGetRoomName(roomIndex);
-//    /// items in this room?
-//    ArrayList<String> allItemsLst = this.helperRoomGetItems(roomStr);
-//    String itemsStr = this.helperArrayListToString(allItemsLst); // 2.
-
-//    /// 3. target taking damge:
-//    for (String playerName : this.playersTargetNameRoomMap.keySet()) {
-//      if (this.playersTargetNameRoomMap.get(playerName).equals(roomStr)) {
-//        // items the each player has:
-//        ArrayList<String> itemsLst = this.playersItemsMap.get(playerName);
-//
-//        if (itemsLst == null) {
-//          return targetLocation; // if no items for the player simply return.
-//        }
-//        if (!itemsLst.isEmpty()) {
-//          for (String eachItem : itemsLst) {
-//            int damage = this.itemsDamageMap.get(eachItem);
-//            this.targetHealth -= damage;
-//          }
-//        }
-//      }
-//    }
-
-    // 2.check if there's player(s) in the room and INTERACT!
-    // - target taking damages from each player.
-
-    return this.target.getTargetLocation();
-  }
 
   /**
    * check how many more items a player can still pick up.

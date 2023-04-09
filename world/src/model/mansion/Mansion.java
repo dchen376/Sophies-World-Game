@@ -101,10 +101,11 @@ public class Mansion implements MansionBuilder {
 
 
 
+
   /**
    * Read the text file.
    */
-  public void readFile(Readable readable) {
+  public void readFile(Readable readable) { //todo: fix the readFile()
     StringBuilder text = new StringBuilder();
     CharBuffer buffer = CharBuffer.allocate(BUFFER_SIZE);
     try {
@@ -121,7 +122,7 @@ public class Mansion implements MansionBuilder {
 
     /*
      * 1st part: parse first 4 line: 35 36 Sophie's World 100 Albert Knag the
-     * Mysterious cat 35
+     * Mysterious cat 35 //note: not correct!
      */
     /* 1st line parsing */
     String[] lines = text.toString().split("\n"); /// split the text by lines.
@@ -132,8 +133,8 @@ public class Mansion implements MansionBuilder {
     for (int i = 2; i < eachLine.length; i++) { /// parsing the first line info after '35 36 ':
       eachLineStringBuilder.append(eachLine[i]).append(" ");
     }
-    eachLineStringBuilder.deleteCharAt(eachLine.length - 1); /// deleting the last appended val: "
-    worldName = eachLineStringBuilder.toString(); /// assign 'worldName' to 'Sophie's World'.
+//    eachLineStringBuilder.deleteCharAt(eachLine.length - 1); /// deleting the last appended val: "
+    worldName = eachLineStringBuilder.toString().trim(); /// assign 'worldName' to 'Sophie's World'.
     eachLineStringBuilder.setLength(0); /// reset the stringbuilder.
     /* 2nd line parsing */
     eachLine = lines[1].toString().split(" "); // parse 2nd line: 100 Albert Knag
@@ -143,7 +144,7 @@ public class Mansion implements MansionBuilder {
       eachLineStringBuilder.append(eachLine[i]).append(" ");
     }
     eachLineStringBuilder.deleteCharAt(eachLine.length - 1); /// Albert Knag
-    targetName = eachLineStringBuilder.toString(); /// assign 'targetName' to 'Albert Knag'.
+    targetName = eachLineStringBuilder.toString().trim(); /// assign 'targetName' to 'Albert Knag'.
     eachLineStringBuilder.setLength(0); // reset the stringbuilder.
 //    System.out.println("target nameee is: " + targetName);
     target.setTargetName(targetName);
@@ -319,12 +320,12 @@ public class Mansion implements MansionBuilder {
 
   /* below are only getters methods. */
 
-  @Override
+
   public HashMap<Player, Boolean> getPetBlessings() {
     return petBlessings;
   }
 
-  @Override
+
   public HashMap<Integer, Boolean> getDfsCheckMap() {
     return dfsCheckMap;
   }
