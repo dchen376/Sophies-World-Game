@@ -4,18 +4,23 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+
+import controller.Controller;
+import model.mansion.MansionBuilder;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import controller.ControllerMock;
 import model.mansion.MansionMockModel;
+import view.View;
+import view.ViewBuilder;
 
 /**
  * junit test for COntroller class.
  */
 public class ControllerTest {
-  /* mock model */ MansionMockModel mansionMock;
-  /* mock controller */ ControllerMock controllerMock;
+  /* mock model */ MansionBuilder mansionBuilder;
+  ViewBuilder viewBuilder;
+  /* mock controller */ Controller controller;
   private FileReader in;
   private StringBuilder out = new StringBuilder();
   private StringBuilder outMock = new StringBuilder();
@@ -32,8 +37,9 @@ public class ControllerTest {
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }
-    mansionMock = new MansionMockModel();
-    controllerMock = new ControllerMock(in, outMock);
+    mansionBuilder = new MansionMockModel();
+    viewBuilder = new View(mansionBuilder);
+    controller = new Controller(in, outMock, mansionBuilder,viewBuilder);
   }
 
   /**
@@ -54,7 +60,7 @@ public class ControllerTest {
   @Test
   public void mockModelTest() throws IOException {
 
-    controllerMock.playGame(mansionMock);
+    controller.playGame();
     String expectedOut = "playgame() started.\n" + "File path entered correctly.\n"
         + "FileReader parsed in this file path.\n" + "Mock model read this file\n"
         + "The Mansion has been just drawn.\n"

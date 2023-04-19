@@ -1,6 +1,16 @@
 package model.mansion;
 
+import model.item.Item;
+import model.pet.Pet;
+import model.player.Player;
+import model.room.Room;
+import model.target.Target;
+
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
 
 /**
  * MansionBuilder Interface.
@@ -22,97 +32,120 @@ public interface MansionBuilder {
   void drawWorld();
 
   /**
-   *  a welcome messageb before starting the game play.
-   * @param turns how many total turns for the game.
-   * @return a welcome message for the player.
+   * the welcome message.
+   * @param turns the # of turns
+   * @return the welcome message.
    */
   ArrayList<String> welcomeMessage(int turns);
 
+  /**
+   * get the blessings from the pet.
+   * it's a hashmap.
+   * @return the hashmap
+   */
+  HashMap<Player, Boolean> getPetBlessings();
 
-//  /**
-//   * getter.
-//   * @return target's health
-//   */
-//  int getTargetHealth();
-//
-//  /**
-//   * getter.
-//   * @return target's location
-//   */
-//  int getTargetLocation();
-//
-//  /**
-//   * getter.
-//   * @return target's name
-//   */
-//  String getTargetName();
-//
-//  /**
-//   * this method gets all the items names from each room, and at each index
-//   * represents the related room index.
-//   *
-//   * @return all items names
-//   */
-//  HashMap<String, Integer> getItemsRoomMap();
-//
-//  /**
-//   * this method will get the damage of each item in the 'world'.
-//   *
-//   * @return an array-list of array-list representing the damages of the items.
-//   */
-//  HashMap<String, Integer> getItemsDamageMap();
-//
-//  /**
-//   * getter.
-//   * @return all the players
-//   */
-//  ArrayList<Player> getAllPlayers();
-//
-//  /**
-//   * getter.
-//   * @return total items allowed for each player as hashmap
-//   */
-//  HashMap<String, Integer> getTotalItemsAllowedMap();
-//
-//  /**
-//   * getter.
-//   * @return item object
-//   */
-//  Item getItem();
-//
-//  /**
-//   * getter.
-//   * @return room object
-//   */
-//  Room getRoom();
-//
-//  /**
-//   * getter.
-//   * @return target object.
-//   */
-//  Target getTarget();
-//
-//  /**
-//   * getter.
-//   * @return all the names of the rooms as a list
-//   */
-//  ArrayList<String> getAllRoomsNamesLst();
-//
-//  /**
-//   * getter.
-//   * @return hashmap for rooms and players(and target)
-//   */
-//  HashMap<String, String> getPlayersNameRoomMap();
-//
-//  /**
-//   * getter.
-//   * @return hashmap of all items for each player
-//   */
-//  HashMap<String, ArrayList<String>> getPlayersItemsMap();
-//
-//  /**
-//   * getter.
-//   * @return hashmap for players' turns.
-//   */
-//  HashMap<String, Integer> getTurnsMap();
+  /**
+   * get the dfs check hash map.
+   * @return the hashmap
+   */
+  HashMap<Integer, Boolean> getDfsCheckMap();
+
+  /**
+   * get all the players.
+   * @return an arraylist.
+   */
+  ArrayList<Player> getAllPlayers();
+
+  /**
+   * get the hashmap for total items allowed for each player.
+   * @return hashmap.
+   */
+  HashMap<String, Integer> getTotalItemsAllowedMap();
+
+  /**
+   * get the graph.
+   * @return graph
+   */
+  Graphics getGraph();
+
+  /**
+   * get the total items.
+   * @return total items
+   */
+  int getTotalItems();
+
+  /**
+   * total rooms
+   * @return the total rooms.
+   */
+  int getTotalRooms();
+
+  /*getter*/
+  Item getItem();
+
+  /*getter*/
+  Room getRoom();
+
+  /*getter*/
+  String getWorldName();
+
+  /*getter*/
+  Target getTarget();
+
+  /*getter*/
+  ArrayList<String> getAllRoomsNamesLst();
+
+  /*getter*/
+  HashMap<String, String> getPlayersNameRoomMap();
+
+  /*getter*/
+  HashMap<String, ArrayList<String>> getPlayersItemsMap();
+
+  /*getter*/
+  HashMap<String, Integer> getTurnsMap();
+
+  /*getter*/
+  ArrayList<ArrayList<ArrayList<Integer>>> getListOfRoomCoordinates();
+
+  /*getter*/
+  HashMap<String, ArrayList<String>> getAllNeighborsMap();
+
+  /*getter*/
+  int getTargetHealth();
+
+  /*getter*/
+  int getTargetLocation();
+
+  /*getter*/
+  String getTargetName();
+
+  /*getter*/
+  HashMap<String, Integer> getRoomNameIndexMap();
+
+  /*getter*/
+  HashMap<String, Integer> getItemsRoomMap();
+
+  /*getter*/
+  HashMap<String, Integer> getItemsDamageMap();
+
+  /* getter */
+  String getPetName();
+
+  // setter
+  void setPetName(String petName);
+
+  // getter
+  int getPetLocation();
+
+  // setter
+  void setPetLocation(int petLocation);
+
+  // getter
+  Pet getPet();
+
+  /* getter */
+  Set<String> getEvidenceSet();
+
+ BufferedImage getImg();
 }

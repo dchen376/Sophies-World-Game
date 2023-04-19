@@ -1,7 +1,7 @@
 package model.pet;
 
 import model.mansion.Mansion;
-import model.pet.NaryTreeNode;
+import model.mansion.MansionBuilder;
 
 import java.util.ArrayList;
 
@@ -9,15 +9,15 @@ import java.util.ArrayList;
  * this is the pet class.
  */
 public class  Pet {
-  private Mansion mansion;
+  private MansionBuilder mansionBuilder;
   private String petName;
   private int petLocation;
 
   /**
    * constructor.
    */
-  public Pet(Mansion mansion, String petName, int petLocation) {
-    this.mansion = mansion;
+  public Pet(MansionBuilder mansionBuilder, String petName, int petLocation) {
+    this.mansionBuilder = mansionBuilder;
     this.petName = petName;
     this.petLocation = petLocation;
   }
@@ -39,19 +39,19 @@ public class  Pet {
     ArrayList<Integer> res = this.getDfsResult(root);
 
     /*3. perform the actual move for the pet*/
-    for (int i = 0; i < this.mansion.getTotalRooms(); i++){
-      if (!this.mansion.getDfsCheckMap().get(i)){
-        this.mansion.getPet().setPetLocation(i);
-        this.mansion.getDfsCheckMap().put(i, true); //true means the room's been visited already.
+    for (int i = 0; i < this.mansionBuilder.getTotalRooms(); i++){
+      if (!this.mansionBuilder.getDfsCheckMap().get(i)){
+        this.mansionBuilder.getPet().setPetLocation(i);
+        this.mansionBuilder.getDfsCheckMap().put(i, true); //true means the room's been visited already.
         return i; //return the current index the pet's at.
       }
     }
     //if not returning from above, meaning all hash values are false!
-    for (int i = 0; i < this.mansion.getTotalRooms(); i++){
-      this.mansion.getDfsCheckMap().put(i, false);
+    for (int i = 0; i < this.mansionBuilder.getTotalRooms(); i++){
+      this.mansionBuilder.getDfsCheckMap().put(i, false);
     }
 
-    this.mansion.getPet().setPetLocation(0);
+    this.mansionBuilder.getPet().setPetLocation(0);
     return 0; //now return the original starting position of the pet.
   }
   //helper function to get the dfs result
@@ -78,17 +78,17 @@ public class  Pet {
    */
   private NaryTreeNode helperPopulateTree() {
     // file in readfile()
-    ArrayList<String> allRooms = this.mansion.getAllRoomsNamesLst();
+    ArrayList<String> allRooms = this.mansionBuilder.getAllRoomsNamesLst();
     int size = allRooms.size();
     int index = 0;
     NaryTreeNode root = new NaryTreeNode(index);
     NaryTreeNode dupRoot = root;
     while (index < size) {
       root = new NaryTreeNode(index); // starting with index 0.
-      ArrayList<String> allNeighbors = this.mansion.getAllNeighborsMap().get(allRooms.get(index++));
+      ArrayList<String> allNeighbors = this.mansionBuilder.getAllNeighborsMap().get(allRooms.get(index++));
       for (int i = 0; i < allNeighbors.size(); i++) {
         String room = allNeighbors.get(i);
-        int roomIndex = this.mansion.getRoomNameIndexMap().get(room);
+        int roomIndex = this.mansionBuilder.getRoomNameIndexMap().get(room);
         root.addChild(new NaryTreeNode(roomIndex));
       }
     } // end of while() loop.

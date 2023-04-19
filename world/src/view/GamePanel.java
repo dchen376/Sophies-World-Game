@@ -1,32 +1,52 @@
 package view;
 
 import model.mansion.Mansion;
+import model.mansion.MansionBuilder;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class GamePanel extends JPanel {
 
  /*field*/
-  private Mansion model;
+  private MansionBuilder model;
+  private BufferedImage image;
 
   /**
    * constructor.
    */
-  public GamePanel(Mansion model) {
-    setPreferredSize(new Dimension(3 * 100 + 30, 3 * 100 + 50));
+  public GamePanel(MansionBuilder model) {
+    setPreferredSize(new Dimension(1600, 1300));
     // addMouseListener(this);
     this.model = model;
   }
 
   @Override
   public void paintComponent(Graphics g) {
-//  super.paintComponent(g);
+  super.paintComponent(g);
 //  Graphics2D g2 = (Graphics2D) g;
 //  g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 //  g2.setStroke(new BasicStroke(5));
+   this.image = this.model.getImg();
+   g.drawImage(image, 0, 0, null);
+
+
+
+//todo: make a prompt window for text.
+//   g.setColor(Color.GRAY);
+//   g.setFont(new Font("Arial", Font.PLAIN, 14));
+//   String prompt = "";
+//   while (true){
 //
-//  // Draws the board
+//   g.drawString(prompt, 10, 20);
+//
+//
+//   }
+
+
+
+  // note: Draws the world (boxes)
 //  for (int row = 0; row < 3; row++) {
 //   for (int col = 0; col < 3; col++) {
 //    int x = col * 100;

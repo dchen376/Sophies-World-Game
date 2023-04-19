@@ -6,6 +6,7 @@ import java.util.Random;
 import java.util.Set;
 
 import model.mansion.Mansion;
+import model.mansion.MansionBuilder;
 import model.pet.Pet;
 import model.target.Target;
 
@@ -15,7 +16,7 @@ import model.target.Target;
 public class Player implements PlayerBuilder {
   /* fields */
   /* objects */
-  private Mansion mansion;
+  private MansionBuilder mansionBuilder;
   private Pet pet;
   private Target target;
   /* attributes */
@@ -31,19 +32,19 @@ public class Player implements PlayerBuilder {
   /**
    * Constructor.
    * 
-   * @param mansion                the mansion object for the whole game.
+   * @param mansionBuilder                the mansion object for the whole game.
    * @param computerOrHuman        computer or human player
    * @param playerName             the player's name
    * @param playerRoom             the player's room
    * @param playerTotalAllowedItem the total items allowed to carry for the
    *                               player.
    */
-  public Player(Mansion mansion, String computerOrHuman, String playerName, String playerRoom,
+  public Player(MansionBuilder mansionBuilder, String computerOrHuman, String playerName, String playerRoom,
       int playerTotalAllowedItem) {
-    this.mansion = mansion;
-    this.pet = this.mansion.getPet();
-    this.evidenceSet = this.mansion.getEvidenceSet();
-    this.target = this.mansion.getTarget();
+    this.mansionBuilder = mansionBuilder;
+    this.pet = this.mansionBuilder.getPet();
+    this.evidenceSet = this.mansionBuilder.getEvidenceSet();
+    this.target = this.mansionBuilder.getTarget();
     // inputs from mansion:
     this.playerTurn = true; // default is false. //: double check!
     // inputs from controller:
@@ -55,21 +56,21 @@ public class Player implements PlayerBuilder {
     this.evidenceSet = new HashSet<>();
     // below inputs from mansion:
     // update maps:
-    this.mansion.getTotalItemsAllowedMap().put(this.playerName, this.playerTotalAllowedItem);
-    this.mansion.getPlayersNameRoomMap().put(this.playerName, this.playerRoom);
-    this.mansion.getTurnsMap().put(this.playerName, 1); // default is 1 for true
+    this.mansionBuilder.getTotalItemsAllowedMap().put(this.playerName, this.playerTotalAllowedItem);
+    this.mansionBuilder.getPlayersNameRoomMap().put(this.playerName, this.playerRoom);
+    this.mansionBuilder.getTurnsMap().put(this.playerName, 1); // default is 1 for true
   }
 
   /* methods added for milestone3: gameplay */
 
   @Override
   public String movePet() {
-    int movedLoc = this.mansion.getRoomNameIndexMap().get(this.getPlayerRoom());
+    int movedLoc = this.mansionBuilder.getRoomNameIndexMap().get(this.getPlayerRoom());
     // pet moved to this location for a brief moment; hence,
     // the player whoever is the next turn will have someway
     // to find out this sneak move.
     pet.setPetLocation(movedLoc);
-    this.mansion.getPetBlessings().put(this, true);
+    this.mansionBuilder.getPetBlessings().put(this, true);
 
     String roomName = this.helperIndexGetRoomName(movedLoc);
     return roomName;
@@ -78,7 +79,7 @@ public class Player implements PlayerBuilder {
   // helper method for granting a player's invisibility for
   @Override
   public boolean checkBlessings() {
-    return this.mansion.getPetBlessings().get(this);
+    return this.mansionBuilder.getPetBlessings().get(this);
   }
 
   // implemented the seen methods
@@ -86,18 +87,18 @@ public class Player implements PlayerBuilder {
   public boolean seenPlayer() {
     // : if a pet is in here, the this place cannot be seen:
     if (checkBlessings()) {
-      this.mansion.getPetBlessings().put(this, false); // update the blessings.
+      this.mansionBuilder.getPetBlessings().put(this, false); // update the blessings.
       return false; // if blessed, then cannot be seen by others.
     }
 
     boolean seen = false;
-    ArrayList<String> neighborRooms = this.mansion.getAllNeighborsMap().get(this.getPlayerRoom());
-    ArrayList<Player> allPlayers = this.mansion.getAllPlayers();
+    ArrayList<String> neighborRooms = this.mansionBuilder.getAllNeighborsMap().get(this.getPlayerRoom());
+    ArrayList<Player> allPlayers = this.mansionBuilder.getAllPlayers();
     neighborRooms.add(this.getPlayerRoom()); // also add player's current room to the list.
     /* to check if it's in a neighbor room OR the same room */
     for (String room : neighborRooms) {
       for (Player player : allPlayers) {
-        if (room.equals(this.mansion.getPlayersNameRoomMap().get(player.getPlayerName()))) {
+        if (room.equals(this.mansionBuilder.getPlayersNameRoomMap().get(player.getPlayerName()))) {
           seen = true;
           break;
         }
@@ -124,11 +125,11 @@ public class Player implements PlayerBuilder {
 //    this.mansion.getTurnsMap().put(this.playerName, 0);
 
     if (this.seenPlayer()) {
-      this.mansion.getTurnsMap().put(this.playerName, 0);
-      this.mansion.getTarget().targetAutomove();
-      this.mansion.getPet().dfsMove();
+      this.mansionBuilder.getTurnsMap().put(this.playerName, 0);
+      this.mansionBuilder.getTarget().targetAutomove();
+      this.mansionBuilder.getPet().dfsMove();
       this.setPlayerTurn(false);
-      return this.mansion.getTargetHealth();
+      return this.mansionBuilder.getTargetHealth();
     }
 
     // if attack is seen: still cost the turn but did nothing to target:
@@ -141,7 +142,7 @@ public class Player implements PlayerBuilder {
     /* find item with the max damage the player had. */
     for (int i = 0; i < this.playerItemsLst.size(); i++) {
       currItem = this.playerItemsLst.get(i);
-      currDamage = this.mansion.getItemsRoomMap().get(currItem);
+      currDamage = this.mansionBuilder.getItemsRoomMap().get(currItem);
       if (currDamage > maxDamage) {
         maxDamage = currDamage;
       }
@@ -171,9 +172,9 @@ public class Player implements PlayerBuilder {
     /* target move during each turn */
 
     /* costing a TURN */
-    this.mansion.getTurnsMap().put(this.playerName, 0);
-    this.mansion.getTarget().targetAutomove();
-    this.mansion.getPet().dfsMove();
+    this.mansionBuilder.getTurnsMap().put(this.playerName, 0);
+    this.mansionBuilder.getTarget().targetAutomove();
+    this.mansionBuilder.getPet().dfsMove();
     this.setPlayerTurn(false);
 
     return target.getTargetHealth();
@@ -189,11 +190,11 @@ public class Player implements PlayerBuilder {
 //    this.mansion.getTurnsMap().put(this.playerName, 0);
 
     if (this.seenPlayer()) {
-      this.mansion.getTurnsMap().put(this.playerName, 0);
-      this.mansion.getTarget().targetAutomove();
-      this.mansion.getPet().dfsMove();
+      this.mansionBuilder.getTurnsMap().put(this.playerName, 0);
+      this.mansionBuilder.getTarget().targetAutomove();
+      this.mansionBuilder.getPet().dfsMove();
       this.setPlayerTurn(false);
-      return this.mansion.getTargetHealth();
+      return this.mansionBuilder.getTargetHealth();
     }
 
     int maxDamage = 1; // if the player doesn't have items(weapons), then poke.
@@ -220,9 +221,9 @@ public class Player implements PlayerBuilder {
     }
 
     /* costing a TURN */
-    this.mansion.getTurnsMap().put(this.playerName, 0);
-    this.mansion.getTarget().targetAutomove();
-    this.mansion.getPet().dfsMove();
+    this.mansionBuilder.getTurnsMap().put(this.playerName, 0);
+    this.mansionBuilder.getTarget().targetAutomove();
+    this.mansionBuilder.getPet().dfsMove();
     this.setPlayerTurn(false);
 
     return target.getTargetHealth();
@@ -235,7 +236,7 @@ public class Player implements PlayerBuilder {
    */
   @Override
   public void updatePlayerRoomInfo(String roomName) {
-    this.mansion.getPlayersNameRoomMap().put(playerName, roomName);
+    this.mansionBuilder.getPlayersNameRoomMap().put(playerName, roomName);
   }
 
   /**
@@ -249,24 +250,24 @@ public class Player implements PlayerBuilder {
 
 //    this.mansion.getTurnsMap().put(this.playerName, 0);
     /// which room player at?
-    int roomIndex = this.mansion.getRoomNameIndexMap().get(playerRoom);
+    int roomIndex = this.mansionBuilder.getRoomNameIndexMap().get(playerRoom);
     /// what items in this room?
     String roomName = this.helperIndexGetRoomName(roomIndex);
     // TODOO: fix the null roomName
     ArrayList<String> allItems = this
         .helperRoomGetItems(roomName); /* here will get the items list for the room */
     /// can he pick it up?
-    if (!allItems.isEmpty() && (this.mansion.getTotalItemsAllowedMap().get(this.playerName)
+    if (!allItems.isEmpty() && (this.mansionBuilder.getTotalItemsAllowedMap().get(this.playerName)
         - playerItemsLst.size()) > 0) {
       playerItemsLst.add(allItems.get(0)); // always picked the 1st item in the list.
-      this.mansion.getItemsRoomMap().remove(allItems.get(0)); // room's removed the item.
-      this.mansion.getPlayersItemsMap().put(this.playerName, playerItemsLst); // add it to hashmap:
+      this.mansionBuilder.getItemsRoomMap().remove(allItems.get(0)); // room's removed the item.
+      this.mansionBuilder.getPlayersItemsMap().put(this.playerName, playerItemsLst); // add it to hashmap:
     }
 
     /* costing a TURN */
-    this.mansion.getTurnsMap().put(this.playerName, 0);
-    this.mansion.getTarget().targetAutomove();
-    this.mansion.getPet().dfsMove();
+    this.mansionBuilder.getTurnsMap().put(this.playerName, 0);
+    this.mansionBuilder.getTarget().targetAutomove();
+    this.mansionBuilder.getPet().dfsMove();
     this.setPlayerTurn(false);
 
     // return the picked up item?
@@ -284,7 +285,7 @@ public class Player implements PlayerBuilder {
     ArrayList<String> allItems = this.getPlayerItemsLst();
     ArrayList<String> res = new ArrayList<>();
     for (String item : allItems) {
-      int damage = this.mansion.getItem().getDamageAmount(item);
+      int damage = this.mansionBuilder.getItem().getDamageAmount(item);
       String str = item + " -> " + damage + ". ";
       res.add(str);
     }
@@ -319,10 +320,10 @@ public class Player implements PlayerBuilder {
     /* get current room */
     String currRoom = this.playerRoom;
     ArrayList<Player> playersReside = new ArrayList<>();
-    this.mansion.getPlayersNameRoomMap();
+    this.mansionBuilder.getPlayersNameRoomMap();
 
-    for (int i = 0; i < this.mansion.getAllPlayers().size(); i++) {
-      for (Player player : this.mansion.getAllPlayers()) {
+    for (int i = 0; i < this.mansionBuilder.getAllPlayers().size(); i++) {
+      for (Player player : this.mansionBuilder.getAllPlayers()) {
         if (player.getPlayerRoom().equals(currRoom)
             && !player.getPlayerName().equals(this.getPlayerName())) {
           /* get all players in current room */
@@ -331,11 +332,11 @@ public class Player implements PlayerBuilder {
       }
     }
     /* get all players in neighboring rooms */
-    ArrayList<String> neighborRooms = this.mansion.getAllNeighborsMap().get(this.getPlayerRoom());
+    ArrayList<String> neighborRooms = this.mansionBuilder.getAllNeighborsMap().get(this.getPlayerRoom());
     for (int i = 0; i < neighborRooms.size(); i++) {
-      for (int j = 0; j < this.mansion.getAllPlayers().size(); j++) {
-        if (neighborRooms.get(i).equals(this.mansion.getAllPlayers().get(j).getPlayerRoom())) {
-          playersReside.add(this.mansion.getAllPlayers().get(j));
+      for (int j = 0; j < this.mansionBuilder.getAllPlayers().size(); j++) {
+        if (neighborRooms.get(i).equals(this.mansionBuilder.getAllPlayers().get(j).getPlayerRoom())) {
+          playersReside.add(this.mansionBuilder.getAllPlayers().get(j));
         }
       }
     }
@@ -353,10 +354,10 @@ public class Player implements PlayerBuilder {
 
     // 2-2 to also indicate if pets is nearing? (if so, indicate which room is
     // invisible. if no, just say no.)
-    int petLoc = this.mansion.getPet().getPetLocation();
+    int petLoc = this.mansionBuilder.getPet().getPetLocation();
     ArrayList<Integer> neighborsIndex = new ArrayList<>();
     for (int i = 0; i < neighborRooms.size(); i++) {
-      neighborsIndex.add(this.mansion.getRoomNameIndexMap().get(neighborRooms.get(i)));
+      neighborsIndex.add(this.mansionBuilder.getRoomNameIndexMap().get(neighborRooms.get(i)));
     } // finished adding room index to this list.
 
     for (int i = 0; i < neighborsIndex.size(); i++) {
@@ -371,7 +372,7 @@ public class Player implements PlayerBuilder {
 
     // 2-3 to also indicate if target is nearing?
 
-    int tarLoc = this.mansion.getTargetLocation();
+    int tarLoc = this.mansionBuilder.getTargetLocation();
     for (int i = 0; i < neighborsIndex.size(); i++) {
       if (tarLoc == neighborsIndex.get(i)) {
         finalRes.add(String.format("The Target is nearing!!! The target is at room: %s",
@@ -385,9 +386,9 @@ public class Player implements PlayerBuilder {
     }
 
     /* costing a TURN */
-    this.mansion.getTurnsMap().put(this.playerName, 0);
-    this.mansion.getTarget().targetAutomove();
-    this.mansion.getPet().dfsMove();
+    this.mansionBuilder.getTurnsMap().put(this.playerName, 0);
+    this.mansionBuilder.getTarget().targetAutomove();
+    this.mansionBuilder.getPet().dfsMove();
     this.setPlayerTurn(false);
 
     return finalRes.toString();
@@ -419,7 +420,7 @@ public class Player implements PlayerBuilder {
 //    String neighborRoom = playerNeighbors.get(index);
     String neighborRoom = roomPicked;
     // update hashmaps:
-    int neighborIndex = this.mansion.getRoomNameIndexMap().get(neighborRoom);
+    int neighborIndex = this.mansionBuilder.getRoomNameIndexMap().get(neighborRoom);
     this.playerRoom = this.helperIndexGetRoomName(neighborIndex); // to update player's current room
     this.updatePlayerRoomInfo(playerRoom);
     this.setPlayerTurn(false);
@@ -427,8 +428,8 @@ public class Player implements PlayerBuilder {
     // return the moved to room index?
 
     /* costing a TURN */
-    this.mansion.getTurnsMap().put(this.playerName, 0);
-    this.mansion.getTarget().targetAutomove();
+    this.mansionBuilder.getTurnsMap().put(this.playerName, 0);
+    this.mansionBuilder.getTarget().targetAutomove();
     this.pet.dfsMove();
     this.setPlayerTurn(false);
 
@@ -438,7 +439,7 @@ public class Player implements PlayerBuilder {
   @Override
   public boolean checkValidRoom(String checkedRoom) { // : put this check condition in the
                                                       // driver.
-    ArrayList<String> playerNeighbors = this.mansion.getAllNeighborsMap().get(this.playerRoom);
+    ArrayList<String> playerNeighbors = this.mansionBuilder.getAllNeighborsMap().get(this.playerRoom);
     for (String room : playerNeighbors) {
       if (checkedRoom.equals(room)) {
         return true;
@@ -453,7 +454,7 @@ public class Player implements PlayerBuilder {
    * @return return the player's neighboring rooms.
    */
   @Override public ArrayList<String> helperNeighborRooms() {
-    ArrayList<String> res = this.mansion.getAllNeighborsMap().get(this.getPlayerRoom());
+    ArrayList<String> res = this.mansionBuilder.getAllNeighborsMap().get(this.getPlayerRoom());
     return res;
   }
 
@@ -470,7 +471,7 @@ public class Player implements PlayerBuilder {
   public String displayPlayerInfo(String playerName) {
     // this doesn't cost a turn.
     // know the player's room (where they are) 1.
-    String roomStr = this.mansion.getPlayersNameRoomMap().get(playerName);
+    String roomStr = this.mansionBuilder.getPlayersNameRoomMap().get(playerName);
     // what they carry 2.
     // TODOO: fix null input roomStr: so maybe use the a checker too here.
     ArrayList<String> allTheItems = this.helperRoomGetItems(roomStr);
@@ -490,7 +491,7 @@ public class Player implements PlayerBuilder {
    */
   @Override
   public int checkPickMore() {
-    int total = this.mansion.getTotalItemsAllowedMap().get(this.playerName);
+    int total = this.mansionBuilder.getTotalItemsAllowedMap().get(this.playerName);
     int size = this.playerItemsLst.size();
     return total - size;
   }
@@ -532,8 +533,8 @@ public class Player implements PlayerBuilder {
    * @return the string representation
    */
   @Override public String helperIndexGetRoomName(int index) {
-    for (String str : this.mansion.getRoomNameIndexMap().keySet()) {
-      if (this.mansion.getRoomNameIndexMap().get(str) == index) {
+    for (String str : this.mansionBuilder.getRoomNameIndexMap().keySet()) {
+      if (this.mansionBuilder.getRoomNameIndexMap().get(str) == index) {
         return str;
       }
     }
@@ -550,9 +551,9 @@ public class Player implements PlayerBuilder {
     if (room == null) {
       return null; // if the room doesn't exist.
     }
-    int roomIndex = this.mansion.getRoomNameIndexMap().get(room);
-    for (String item : this.mansion.getItemsRoomMap().keySet()) {
-      if (roomIndex == this.mansion.getItemsRoomMap().get(item)) {
+    int roomIndex = this.mansionBuilder.getRoomNameIndexMap().get(room);
+    for (String item : this.mansionBuilder.getItemsRoomMap().keySet()) {
+      if (roomIndex == this.mansionBuilder.getItemsRoomMap().get(item)) {
         arrLst.add(item);
       }
     }
@@ -579,9 +580,9 @@ public class Player implements PlayerBuilder {
    * @return boolean
    */
   @Override public boolean checkTurnsMap() {
-    if (this.mansion.getTurnsMap().get(this.playerName) == 1) {
+    if (this.mansionBuilder.getTurnsMap().get(this.playerName) == 1) {
       return true;
-    } else if (this.mansion.getTurnsMap().get(this.playerName) == 0) {
+    } else if (this.mansionBuilder.getTurnsMap().get(this.playerName) == 0) {
       return false;
     }
     return false;

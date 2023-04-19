@@ -1,12 +1,12 @@
 package model.target;
 
-import model.mansion.Mansion;
+import model.mansion.MansionBuilder;
 
 /**
  * this is the target class.
  */
 public class Target {
-  private Mansion mansion;
+  private MansionBuilder mansionBuilder;
   private String targetName;
   private int targetHealth;
   private int targetLocation;
@@ -17,8 +17,8 @@ public class Target {
    * @param targetHealth target health
    * @param targetLocation target location
    */
-  public Target(Mansion mansion, String targetName, int targetHealth, int targetLocation) {
-    this.mansion = mansion;
+  public Target(MansionBuilder mansionBuilder, String targetName, int targetHealth, int targetLocation) {
+    this.mansionBuilder = mansionBuilder;
     this.targetName = targetName;
     this.targetHealth = targetHealth;
     this.targetLocation = targetLocation;
@@ -36,9 +36,9 @@ public class Target {
 
     /// if target starts at room 0, it takes the damage from this room before moving
     /// to the next room:
-    for (String str : this.mansion.getItemsRoomMap().keySet()) {
-      if (this.mansion.getItemsRoomMap().get(str) == 0) {
-        int damage = this.mansion.getItemsRoomMap().get(str);
+    for (String str : this.mansionBuilder.getItemsRoomMap().keySet()) {
+      if (this.mansionBuilder.getItemsRoomMap().get(str) == 0) {
+        int damage = this.mansionBuilder.getItemsRoomMap().get(str);
         targetHealth -= damage;
       }
     } // end of the for-loop
@@ -46,9 +46,9 @@ public class Target {
     /// updating target location & move it to the next room:
     targetLocation += 1;
 
-    for (String str : this.mansion.getItemsRoomMap().keySet()) {
-      if (this.mansion.getItemsRoomMap().get(str) == targetLocation) {
-        int damage = this.mansion.getItemsRoomMap().get(str);
+    for (String str : this.mansionBuilder.getItemsRoomMap().keySet()) {
+      if (this.mansionBuilder.getItemsRoomMap().get(str) == targetLocation) {
+        int damage = this.mansionBuilder.getItemsRoomMap().get(str);
         targetHealth -= damage;
       }
     }
@@ -67,7 +67,7 @@ public class Target {
 
     // TARGET TARGET MOVE!!! EVERY TURN!!!! OF THE GAME!
 
-    int totalRooms = this.mansion.getItemsRoomMap().size();
+    int totalRooms = this.mansionBuilder.getItemsRoomMap().size();
     int targetLocation = this.getTargetLocation();
     if (targetLocation + 1 != totalRooms) {
       targetLocation += 1;

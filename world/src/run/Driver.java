@@ -1,5 +1,6 @@
 package run;
-
+import model.mansion.MansionBuilder;
+import view.*;
 import controller.Controller;
 import model.mansion.Mansion;
 
@@ -19,7 +20,7 @@ public class Driver {
   // PDP---Milestone-Mansion-Game-\out\artifacts\world_jar\world.jar"
 
   /* windows */
-//   C:\\Users\\dongpingchen\\Documents\\GitHub\\PDP---Milestone-Mansion-Game-\\world.txt
+//   C:\Users\dongpingchen\Documents\GitHub\PDP---Milestone-Mansion-Game-\text files\world.txt
 
   /* mac */
   // /Users/dongping/Documents/GitHub/PDP---Milestone-Mansion-Game-/world.txt
@@ -32,16 +33,26 @@ public class Driver {
    * @throws IOException if is the wrong file.
    */
   public static void main(String[] args) throws IOException {
-    Mansion mansion = new Mansion(); // model
-    System.out.println("please enter the file path to read: \n");
+    MansionBuilder model = new Mansion(); // model
 //    BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
 //    FileReader fr = new FileReader("/home/dongping/Documents/github repo/milestone/PDP---Milestone-Mansion-Game-/text files/world.txt");
 //    BufferedReader bf = new BufferedReader(fr);
 
-    BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-    StringBuilder strb = new StringBuilder();
-    Controller controller = new Controller(bf, strb); // controller
-    controller.playGame(mansion);
+    System.out.println("please enter the file path to read: \n");
+    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+    StringBuilder stringBuilder = new StringBuilder();
+
+
+
+    // 2. Create an instance of the view.
+    ViewBuilder view = new View(model);
+//    view.makeVisible();
+
+    // 3. Create an instance of the controller.
+//    Controller controller = new Controller(view, model);
+    // 4. Call playGame() on the controller.
+    Controller controller = new Controller(bufferedReader, stringBuilder, model, view); // controller
+    controller.playGame();
 
 
     //mac: /Users/dongping/Desktop/milestone 3/world.txt

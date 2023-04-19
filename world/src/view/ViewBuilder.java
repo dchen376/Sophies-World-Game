@@ -26,5 +26,9 @@ public interface ViewBuilder {
   * to set up the listener for the action.
   * @param actionListener the listener to be set up
   */
- void setListener(ActionListener actionListener);
+ void setButtonListener(ActionListener actionListener);
+
+ String getInputString();
+
+ void clearInputString();
 }
