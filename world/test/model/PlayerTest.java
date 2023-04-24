@@ -147,7 +147,7 @@ public class PlayerTest {
   @Test
   public void lookAround() {
     String expected = "[You are: Amy and is at room The Enlightenment, and is having items: []., The pet is not anywhere in your visibility yet; it is not in any of the neighboring rooms., The pet is not anywhere in your visibility yet; it is not in any of the neighboring rooms., The pet is not anywhere in your visibility yet; it is not in any of the neighboring rooms., The Target is not anywhere in your visibility yet; it is not in any of the neighboring rooms., The Target is not anywhere in your visibility yet; it is not in any of the neighboring rooms., The Target is not anywhere in your visibility yet; it is not in any of the neighboring rooms.]";
-    String actual = player1.lookAround();
+    String actual = player1.lookAround().toString();
     Assert.assertEquals(expected, actual);
   }
 

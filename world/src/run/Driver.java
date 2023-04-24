@@ -5,7 +5,6 @@ import controller.Controller;
 import model.mansion.Mansion;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -38,6 +37,9 @@ public class Driver {
 //    FileReader fr = new FileReader("/home/dongping/Documents/github repo/milestone/PDP---Milestone-Mansion-Game-/text files/world.txt");
 //    BufferedReader bf = new BufferedReader(fr);
 
+//    System.out.println(model.getWelcomeMessage());
+
+
     System.out.println("please enter the file path to read: \n");
     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
     StringBuilder stringBuilder = new StringBuilder();
@@ -53,6 +55,8 @@ public class Driver {
     // 4. Call playGame() on the controller.
     Controller controller = new Controller(bufferedReader, stringBuilder, model, view); // controller
     controller.playGame();
+
+
 
 
     //mac: /Users/dongping/Desktop/milestone 3/world.txt

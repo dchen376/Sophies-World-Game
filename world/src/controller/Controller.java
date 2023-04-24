@@ -6,10 +6,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 import model.mansion.MansionBuilder;
 import model.player.Player;
@@ -24,8 +21,33 @@ public class Controller implements ActionListener {
   /* class attributes */
   MansionBuilder model;
   ViewBuilder view;
+  GamePanel panel;
   private final Readable in;
   private final Appendable out;
+  private int totalTurns;
+  private ArrayList<ArrayList<String>> messageLst;
+
+  // added for milestone4:
+  private boolean firstTime;
+  private int tracker;
+//  private String outputText;
+  private int totalPlayers;
+  private int track_player;
+  private int track_four;
+  private int currentTurn;
+  Player currPlayer;
+  private boolean correctInput;
+  private boolean wrongInput;
+  private boolean attemptInput;
+  private boolean moveInput;
+  private boolean enterGame;
+  private boolean gameEnd;
+  private boolean failAttempt;
+
+  private String pName;
+  private String pRoom;
+  private String pType;
+  private int totalAllowed;
 
   /**
    * Constructor.
@@ -44,40 +66,394 @@ public class Controller implements ActionListener {
     this.view = viewBuilder;
 
     // set controller as the button listener.
-    view.setButtonListener((ActionListener) this);
+    this.view.setActionListener(this); // controller has control over BUTTON on view
 
     // add controller as the mouse click listener FOR Jframe.
-    view.addClickListener(this);
+    this.view.addClickListener(this); // controller has control over CLICK on view
 
     // add mouse listener FOR Jpanel.
-    GamePanel panel = new GamePanel(model);
-    panel.addMouseListener(new MouseClick(this));
-
+    this.panel = new GamePanel(model);
+    this.panel.addMouseListener(new MouseClick(this)); // controller has control over click on
+                                                       // GAMEPANEL.
+    // newly added:
+    this.firstTime = true;
+    this.messageLst = new ArrayList<>();
+    this.tracker = -1;
+    this.totalTurns = 0;
+    this.track_player = 0;
+    this.track_four = 0;
+    this.currentTurn = 1;
+    this.correctInput = true;
+    this.wrongInput = false;
+    this.attemptInput = false;
+    this.moveInput = false;
+    this.enterGame = false;
+    this.gameEnd = false;
+    this.failAttempt = false;
   } // end of constructor.
 
+  /**
+   * this method is for setting up the actions performed for the buttons.
+   * 
+   * @param e the button that is being clicked.
+   */
   @Override
   public void actionPerformed(ActionEvent e) {
     switch (e.getActionCommand()) { // read from the input text field
       case "Exit Button":
         System.exit(0);
+        break; /**/
+      case "Confirm Button": // TODO work on the logic confirm once player confirmed the action
+
+        System.out.println("output is: " + this.view.getTextField().getText());
+        if (firstTime) {
+          this.messageLst = this.getMessageLst();
+          this.view.getMyLabel()
+              .setText(this.lstGetHTML(this.messageLst.get(this.incrementTrack())));
+          this.view.getTextField().setVisible(true);
+          this.firstTime = false;
+          // set up the game:
+          break;
+        }
+
+        if (!this.view.getTextField().getText().isEmpty()) {
+          if (tracker == 0) {
+            System.out.println("tracker is 0");
+            this.setTotalTurns(Integer.parseInt(this.view.getTextField().getText()));
+            System.out.println("AND total turn is: " + this.view.getInputString());
+          } else if (tracker == 1) {
+            System.out.println("tracker is 1");
+            this.setTotalPlayers(Integer.parseInt(this.view.getTextField().getText()));
+            System.out.println("and total player is: " + this.view.getInputString());
+            this.totalPlayers = Integer.parseInt(this.view.getInputString());
+            this.messageLst = this.getMessageLst();
+          } else if (this.tracker <= (this.totalPlayers * 4)) { // set player values x4.
+
+
+
+            System.out.println("come here!");
+            System.out.println("how many palyers? : " + this.model.getAllPlayers());
+//            System.out.println(this.model.getAllPlayers().get(0).getPlayerName());
+            boolean checkAssign = false;
+            if (this.track_four == 0) { // player type.
+              if (!("human".equals(this.view.getTextField().getText().toLowerCase())
+                  || "computer".equals(this.view.getTextField().getText().toLowerCase()))) {
+                this.correctInput = false;
+                this.view.getTextField().setText("");
+                break;
+              }
+//              this.model.getAllPlayers().get(this.track_player).setComputerOrHuman(this.view.getTextField().getText());
+              this.correctInput = true;
+              track_four++;
+              this.pType = this.view.getInputString();
+            } else if (this.track_four == 1) { // player name.
+//              this.model.getAllPlayers().get(this.track_player).setPlayerName(this.view.getTextField().getText());
+              track_four++;
+              this.pName = this.view.getInputString();
+              this.correctInput = true;
+
+            } else if (this.track_four == 2) { // player room
+              ArrayList<String> roomLst = this.model.getAllRoomsNamesLst();
+              this.correctInput = false;
+              for (String room : roomLst) {
+                if (this.view.getTextField().getText().toLowerCase().equals(room.toLowerCase())) {
+                  this.correctInput = true;
+                }
+              } // check input ?correct
+              if (!this.correctInput) {
+                this.view.getTextField().setText("");
+                break;
+              }
+//              this.model.getAllPlayers().get(this.track_player).setPlayerRoom(this.view.getTextField().getText());
+              track_four++;
+              this.pRoom = this.view.getInputString();
+              this.correctInput = true;
+            } else if (this.track_four == 3) { // == 3. player total items.
+//              this.model.getAllPlayers().get(this.track_player).setPlayerTotalAllowedItem(Integer.parseInt(this.view.getTextField().getText()));
+              System.out.println("text is : " + this.view.getTextField().getText());
+              System.out.println("player name is: " + this.currPlayer.getPlayerName());
+              System.out.println("current hash map size: " + this.model.getTotalItemsAllowedMap().size());
+//              this.model.getTotalItemsAllowedMap().put(this.currPlayer.getPlayerName(), Integer.parseInt(this.view.getTextField().getText()));
+              track_four = 0;
+//              checkAssign = true;
+              this.totalAllowed = Integer.parseInt(this.view.getInputString());
+              this.model.getAllPlayers().add(new Player(this.model, this.pType, this.pName, this.pRoom, this.totalAllowed));
+
+            }
+//            if (checkAssign) {
+//              this.track_player++;
+//            }
+//            System.out.println("still here? for 2nd tracking place");
+          }
+//TODO here
+          else { // for each player actions.
+            this.correctInput = false; // to eliminate prev steps prompts.
+
+//            System.out.println("here now!! 3rd tracker for player actions");
+            System.out.println("Current player is: " + this.currPlayer);
+            String prevName = this.currPlayer.getPlayerName();
+            /* get current player */
+            for (int i = 0; i < this.model.getAllPlayers().size(); i++) {
+              if (this.model.getAllPlayers().get(i).getPlayerTurn()) {
+                this.currPlayer = this.model.getAllPlayers().get(i);
+                break;
+              }
+            }
+//            System.out.println("NOWWW current player is: " + this.currPlayer.getPlayerName());
+
+
+            if (prevName.equals(currPlayer.getPlayerName())){
+              for (Player player : this.model.getAllPlayers()){
+                player.setPlayerTurn(true);
+                this.model.getTurnsMap().put(player.getPlayerName(), 1);
+              }
+            }
+
+
+            /* get parameter inputs */ // note: parameter check before action prompts.
+            if (this.attemptInput) {
+//              if (Integer.parseInt(this.view.getTextField().getText()) == 0) { // with POKE.
+              if (this.model.getPlayersItemsMap().size() == 0) { // with POKE.
+//                System.out.println("here pc attempt");
+//                int prevHealth = this.model.getTargetHealth();
+//                int health = this.currPlayer.pcAttemptTarget();
+//                if (health == prevHealth){
+//                  this.failAttempt = true;
+//                }
+                this.currPlayer.pcAttemptTarget();
+                this.attemptInput = false;
+                this.currentTurn++;
+                this.helperNewPromptSamePlayer();
+                this.currPlayer.setPlayerTurn(false);
+
+              } else { // with an item
+                String itemUsed = this.view.getTextField().getText();
+                boolean foundItem = false;
+                ArrayList<String> itemLst = this.currPlayer.getPlayerItemsLst();
+                /* check if it's a valid item. */
+                for (String item : itemLst) {
+                  if (itemUsed.toLowerCase().equals(item.toLowerCase())) {
+                    foundItem = true;
+                    // note: later add to evidence set.
+                    break;
+                  }
+                }
+                if (foundItem) { // for valid item.
+                  this.currPlayer.attemptTarget(itemUsed);
+                  this.attemptInput = false;
+                  this.currentTurn++;
+                  this.helperNewPromptSamePlayer();
+                  this.currPlayer.setPlayerTurn(false); // note set player turn
+                  break;
+                } else { // for invalid item.
+                  this.view.clearInputString();
+//                this.currentTurn--;
+                  break;
+                }
+              }
+            } // end of if(this.attemptInput)
+            else if (this.moveInput) {
+
+              String roomPicked = this.view.getTextField().getText();
+              boolean foundRoom = false;
+              ArrayList<String> neighborRooms = this.model.getRoom()
+                  .getNeighbors(this.currPlayer.getPlayerRoom());
+              for (String room : neighborRooms) {
+                if (roomPicked.toLowerCase().equals(room.toLowerCase())) {
+                  foundRoom = true;
+                  break;
+                }
+              }
+
+              if (foundRoom) { // if valid room input.
+                this.currPlayer.movePlayer(roomPicked);
+                this.moveInput = false;
+                this.currentTurn++;
+                this.helperNewPromptSamePlayer();
+                this.currPlayer.setPlayerTurn(false); // note set player turn
+                break;
+              }
+              else { // invalid input.
+                this.view.clearInputString();
+                break;
+              }
+            }
+
+            /* prompt whose turn. */ // TODO: all the prmopts
+            if (!this.enterGame) { // first round.
+//              System.out.println("first round");
+              this.view.getMyLabel()
+                  .setText(this.lstGetHTML(this.messageLst.get(this.incrementTrack())));
+              this.enterGame = true;
+            }
+            /* ending the game based on conditions */
+            else if (this.model.getTargetHealth() <= 0) {
+//              System.out.println("target killed");
+              this.gameEnd = true;
+              ArrayList<String> lst = new ArrayList<>();
+              lst.add("Target killed! Good Job!");
+              this.view.getMyLabel().setText(this.lstGetHTML(lst));
+              this.view.getTextField().setVisible(false);
+            } else if (this.currentTurn > this.totalTurns && this.model.getTargetHealth() > 0) {
+//              System.out.println("Total turns reached.");
+//              System.out.println("Target health is: " + this.model.getTargetHealth());
+//              System.out.println("Target is at: " + this.model.getTargetLocation());
+//              System.out.println("pet is at: " + this.model.getPetLocation());
+              this.gameEnd = true;
+              ArrayList<String> lst = new ArrayList<>();
+              lst.add("Total turns reached. Game Ended Now!");
+              this.view.getMyLabel().setText(this.lstGetHTML(lst));
+              this.view.getTextField().setVisible(false);
+//              break;
+            } else { // later rounds prompts.
+//              System.out.println("else? prompts");
+//              System.out.println("current turn is: " + this.currentTurn);
+//              System.out.println("total turn is: " + this.totalTurns); // note: some checks
+              ArrayList<String> lst = new ArrayList<>();
+              lst.add("Target current health is: " + this.model.getTargetHealth());
+              lst.add("Current turn: TURN " + (this.currentTurn));
+              lst.add("Actions -> Move Pet, Attempt, Move, Look Around, Pick, Display");
+              lst.add(String.format("%S, this is your turn!", this.currPlayer.getPlayerName()));
+              this.view.getMyLabel().setText(this.lstGetHTML(lst));
+            }
+//            else if (this.wrongInput){
+//              ArrayList<String> lst = new ArrayList<>();
+//              lst.add("Wrong input!");
+//              lst.add("Target current health is: " + this.model.getTargetHealth());
+//              lst.add("Current turn: TURN " + (this.currentTurn));
+//              lst.add(String.format("%S, this is your turn!", this. currPlayer.getPlayerName()));
+//              lst.add("Please re-enter: ");
+//              this.view.getMyLabel().setText(this.lstGetHTML(lst));
+//              System.out.println("wrong input??");
+//            }
+
+
+              
+              
+              //TODO:  Computer vs. Human
+
+              String action = this.view.getTextField().getText();
+
+            if ("human".equals(this.currPlayer.getComputerOrHuman())){
+              /* check first: Wrong action inputs */
+              this.wrongInput = false;
+              if (!("Move Pet".toLowerCase().equals(action.toLowerCase())
+                  || "Attempt".toLowerCase().equals(action.toLowerCase())
+                  || "Move".toLowerCase().equals(action.toLowerCase())
+                  || "Look Around".toLowerCase().equals(action.toLowerCase())
+                  || "Pick".toLowerCase().equals(action.toLowerCase())
+                  || "Display".toLowerCase().equals(action.toLowerCase()))) {
+                this.wrongInput = true;
+                this.view.getTextField().setText("");
+                break;
+              }
+            }
+
+
+            if ("computer".equals(this.currPlayer.getComputerOrHuman())){
+              /* check first: Wrong action inputs */
+              this.wrongInput = false;
+              if (!("Move Pet".toLowerCase().equals(action.toLowerCase())
+                  || "Attempt".toLowerCase().equals(action.toLowerCase())
+                  || "Move".toLowerCase().equals(action.toLowerCase())
+                  || "Pick".toLowerCase().equals(action.toLowerCase()))){
+                this.wrongInput = true;
+                this.view.getTextField().setText("");
+                break;
+              }
+            }
+            
+            
+            
+
+            // TODO: for robot options: move pet, attempt, move, pick
+
+            // condition check for prompting ending game message
+
+            /* check each correct action input */
+            if ("move pet".equals(action) && !this.gameEnd) {
+              this.currPlayer.movePet();
+              ArrayList<String> arrLst = new ArrayList<>();
+              arrLst.add("Pet has just moved!");
+              this.view.getMyLabel().setText(this.lstGetHTML(arrLst));
+              this.currPlayer.setPlayerTurn(false); // note set player turn
+
+            } else if ("attempt".equals(action) && !this.gameEnd) { // need parameter //
+              if ("human".equals(this.currPlayer.getComputerOrHuman())){
+                ArrayList<String> playerItemLst = new ArrayList<>();
+                playerItemLst
+                    .add("Please choose an item at your disposal; enter 0 if you don't have any. ");
+                playerItemLst.add("your items: " + this.currPlayer.getPlayerItemsLst().toString());
+                this.view.getMyLabel().setText(this.lstGetHTML(playerItemLst));
+                this.attemptInput = true;
+                this.view.clearInputString();
+              } 
+              else if ("computer".equals(this.currPlayer.getComputerOrHuman())) {
+                ArrayList<String> playerItemLst = new ArrayList<>();
+                playerItemLst
+                    .add("Computer Item attempting. Type yes for the next turn.");
+                this.currPlayer.pcAttemptTarget();
+                this.currentTurn++;
+                this.currPlayer.setPlayerTurn(false);
+                this.view.getMyLabel().setText(this.lstGetHTML(playerItemLst));
+                this.attemptInput = false;
+                this.view.clearInputString();
+                }
+            }else if ("move".equals(action) && !this.gameEnd) { // need parameter
+              ArrayList<String> moveLst = new ArrayList<>();
+              moveLst.add("please choose a room to move into");
+              ArrayList<String> neighborRooms = this.model.getRoom()
+                  .getNeighbors(this.currPlayer.getPlayerRoom());
+              moveLst.add(neighborRooms.toString());
+              this.view.getMyLabel().setText(this.lstGetHTML(moveLst));
+              this.moveInput = true;
+            } else if ("look around".equals(action) && !this.gameEnd) {
+              ArrayList<String> lstInfo = this.currPlayer.lookAround();
+              lstInfo.add("Type yes and \"Confirm\" for next turn.");
+              this.view.getMyLabel().setText(this.lstGetHTML(lstInfo));
+              this.currPlayer.setPlayerTurn(false); // note set player turn
+              this.currentTurn++;
+
+            } else if ("pick".equals(action) && !this.gameEnd) {
+              String itemPicked = this.currPlayer.pickUp();
+              ArrayList<String> lstInfo = new ArrayList<>();
+              lstInfo.add("Type yes and \"Confirm\" for next turn.");
+              if (itemPicked == null) {
+                lstInfo.add("Nothing in the room to pick!");
+              } else {
+                lstInfo.add("You've just picked: " + itemPicked);
+              }
+              this.view.getMyLabel().setText(this.lstGetHTML(lstInfo));
+              this.currPlayer.setPlayerTurn(false); // note set player turn
+              this.currentTurn++;
+            } else if ("display".equals(action) && !this.gameEnd) { // don't cost turn
+              String info = this.currPlayer.displayPlayerInfo(this.currPlayer.getPlayerName());
+              ArrayList<String> lstInfo = new ArrayList();
+              lstInfo.add("Type yes and \"Confirm\" to continue your turn.");
+              lstInfo.add(info);
+              this.view.getMyLabel().setText(this.lstGetHTML(lstInfo));
+//              this.currentTurn--;
+            }
+
+            this.view.clearInputString();
+          } // end tracking counts; end turn.
+
+          if (correctInput) {
+            this.view.getMyLabel()
+                .setText(this.lstGetHTML(this.messageLst.get(this.incrementTrack())));
+          }
+
+        } // for text is not empty.
+
+//        System.out.println("tracker is: " + tracker);
+        this.view.getTextField().setText("");
         break;
-      case "Confirm Button": //todo work on the logic confirm once player confirmed the action
-/* 1. 1st confirm: prompt the messages
-  2. player enter data inside the textfield
-  3. confirm again to prompt the next message
 
-
-  HOLD ON!!
-  confirm: only confirms number players for PREPAPRING the game.
-* */
-
-
-        String text = "";
-
-        break;
       default:
         throw new IllegalStateException("Error: unknown button");
+
     }
+
   }
 
   /**
@@ -86,11 +462,6 @@ public class Controller implements ActionListener {
    * @throws IOException for file handles.
    */
   public void playGame() throws IOException {
-    // : the user is provided with some limited information about where they are in
-    // the world at the start of their turn.
-    // This should not be the same information as the information providing by
-    // looking around.
-
     Objects.requireNonNull(model);
     Scanner scanner = new Scanner(in);
 
@@ -98,53 +469,37 @@ public class Controller implements ActionListener {
     String scannedLine = scanner.nextLine();
     File file = new File(scannedLine);
     try {
-      // Creates a reader using the FileReader
       FileReader fileReader = new FileReader(file);
-      // Reads the 'readable'
       this.model.readFile(fileReader); // readFile()
-      // Closes the reader
       fileReader.close();
     } catch (FileNotFoundException e) {
       e.getStackTrace();
     }
     this.model.drawWorld(); // drawWorld()
-
     view.makeVisible();
 
-//    System.out.println(this.mansion.welcomeMessage().toString());
-
     System.out.println("Welcome!!");
-    // note: worldname parsing is wrong.
     System.out.println("Welcome to the game: " + this.model.getWorldName());
     System.out
         .println(String.format("There are %d rooms in this game: ", this.model.getTotalRooms()));
     System.out.println(this.model.getAllRoomsNamesLst().toString());
     System.out.println("Please follow the instructions below in order to add the players: ");
-    // note: targetname parsing is wrong.
     System.out.println("The target is: " + this.model.getTargetName());
-    // note: pet name paring is wrong.
     System.out.println("The magic pet is: " + this.model.getPetName() + ". HOORAYYY!!!");
 
-    /* second, add total_turns, and parse the players */
-    // 1. first line: an integer N (declaring how many players for this game).
-    /// for example, 2
     ArrayList<Player> allPlayers = this.model.getAllPlayers();
-    /* total turns for the game */
     System.out.println("please input the total number of turns allowed for this game: \n");
     String totalTurnsStr = scanner.nextLine(); // 20 turns for example.
-    int totalTurns = Integer.parseInt(totalTurnsStr);
+    this.totalTurns = Integer.parseInt(totalTurnsStr);
     out.append(totalTurnsStr + '\n');
-    /* total players for the game */
     System.out.println("Please input the total number of players for this game: \n");
     String totalPlayersStr = scanner.nextLine(); // READ 1ST LINE: 2
-    int totalPlayers = Integer.parseInt(totalPlayersStr);
+    this.totalPlayers = Integer.parseInt(totalPlayersStr);
     out.append(totalPlayersStr + '\n');
-    // 2. next N lines: each line represent each players information:
-    /// line1(x4): h playerA, The Top Hat, 5(total items allowed)
-    /// line2 (x4) : c(if it's just a pc) computerA, 3(room), 3(total items allowed)
+
     for (int i = 0; i < totalPlayers; i++) { // next N lines for players info.
       System.out.println("Is this a human player or maybe a computer?\n");
-      String typeStr = scanner.nextLine();
+      String typeStr = scanner.nextLine().toLowerCase();
       while (!(typeStr.equals("human") || typeStr.equals("computer"))) {
         System.out.println("Wrong input! Please re-enter: ");
         typeStr = scanner.nextLine();
@@ -186,7 +541,7 @@ public class Controller implements ActionListener {
       out.append(String.format("%s is successfully added to this Mansion.", playerNameStr));
 
       /* populate hashmap: petBlessings */
-      this.model.getPetBlessings().put(player, false);
+      this.model.getPetBlessingsMap().put(player, false);
 
     } // end of for loop; finished adding all the Players.
 
@@ -203,6 +558,7 @@ public class Controller implements ActionListener {
 
       /* check whoever turn it is, and let it make the move */
       /* via switch() statements */
+      // note: actual game play soon
       for (int i = 0; i < totalPlayers; i++) {
 
         /* the current player. */
@@ -461,7 +817,7 @@ public class Controller implements ActionListener {
         if (i + 1 == totalPlayers) { // once one round reached:
           // 1. reset blessings.
           for (Player player : this.model.getAllPlayers()) {
-            this.model.getPetBlessings().put(player, false);
+            this.model.getPetBlessingsMap().put(player, false);
           } // after each round, the blessings will all be gone and have to be regained.
           // 2. reset player turns map.
           for (int j = 0; j < totalPlayers; j++) {
@@ -507,6 +863,104 @@ public class Controller implements ActionListener {
       return "pick";
     }
     return "wrong answer";
+  }
+
+  // newly added:
+
+  public int getTotalTurns() {
+    return totalTurns;
+  }
+
+
+  public void setTotalTurns(int totalTurns) {
+    this.totalTurns = totalTurns;
+  }
+
+  public void setTotalPlayers(int totalPlayers) {
+    this.totalPlayers = totalPlayers;
+  }
+
+  private String lstGetHTML(ArrayList<String> lst) {
+    StringBuilder sb = new StringBuilder();
+    sb.append("<html>");
+    for (int i = 0; i < lst.size() - 2; i++) {
+      sb.append(lst.get(i));
+      sb.append("<br>");
+    }
+    sb.append(lst.get(lst.size() - 1));
+    sb.append("<br>");
+    sb.append("</html>");
+
+    return sb.toString();
+  }
+
+  private int incrementTrack() {
+    // if (tracker + 1 < this.messageLst.size()) {
+    this.tracker++;
+    // }
+    return this.tracker;
+  }
+
+  public ArrayList<ArrayList<String>> getMessageLst() { // tdo: keep update this list.
+    this.messageLst = new ArrayList<>();
+    ArrayList<String> welcomeLst = this.model.getWelcomeMessage();
+    welcomeLst.add("please input the total number of turns allowed for this game:");
+    this.messageLst.add(welcomeLst);
+
+    this.messageLst.add(new ArrayList<String>(
+        Arrays.asList("Please input the total number of players for this game: ")));
+
+    for (int i = 0; i < this.model.getAllPlayers().size(); i++) {
+      this.messageLst
+          .add(new ArrayList<String>(Arrays.asList("Is this a human player or maybe a computer?")));
+      this.messageLst.add(new ArrayList<String>(Arrays.asList("Please give this player a name: ")));
+      this.messageLst.add(new ArrayList<String>(
+          Arrays.asList("Please input the name of the room to first drop the player:")));
+      this.messageLst.add(new ArrayList<String>(Arrays
+          .asList("please input the total amount items allowed for this player to possess:")));
+    }
+    welcomeLst = this.model.getBeforeGameMessage(this.getTotalTurns());
+    welcomeLst.add("please type YES! and \'Confirm\'");
+    this.messageLst.add(welcomeLst);
+
+    // this.currentTurn = 1;
+    // for (int i = 0; i < this.model.getAllPlayers().size(); i++) {
+    //
+    // ArrayList<String> lst = new ArrayList<>();
+    // lst.add("Target current health is: " + this.model.getTargetHealth());
+    // lst.add("Current turn: TURN " + this.currentTurn++);
+    //// lst.add("Please pick one of the following actions!");
+    // lst.add("Actions -> Move Pet, Attempt, Move, Look Around, Pick, Display");
+    //
+    // lst.add(String.format("%S, this is your turn!",
+    // this.model.getAllPlayers().get(i).getPlayerName()));
+    // this.messageLst.add(lst);
+    // System.out.println(lst);
+    // }
+
+    return this.messageLst;
+  }
+
+  /**
+   * set the label message for current player.
+   */
+  private void helperNewPromptSamePlayer() {
+    this.view.clearInputString();
+
+    ArrayList<String> lst = new ArrayList<>();
+    lst.add("Target current health is: " + this.model.getTargetHealth());
+    lst.add("Current turn: TURN " + (this.currentTurn));
+    lst.add("Actions -> Move Pet, Attempt, Move, Look Around, Pick, Display");
+
+    for (int i = 0; i < this.model.getAllPlayers().size(); i++) {
+      if (this.model.getAllPlayers().get(i).getPlayerTurn()) {
+        this.currPlayer = this.model.getAllPlayers().get(i);
+        break;
+      }
+    }
+
+    lst.add(String.format("%S, this is your turn!", this.currPlayer.getPlayerName()));
+    this.view.getMyLabel().setText(this.lstGetHTML(lst));
   }
 
 } // end of Controller.java

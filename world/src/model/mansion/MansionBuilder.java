@@ -1,23 +1,21 @@
 package model.mansion;
 
-import model.item.Item;
-import model.pet.Pet;
-import model.player.Player;
-import model.room.Room;
-import model.target.Target;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
+import model.item.Item;
+import model.pet.Pet;
+import model.player.Player;
+import model.room.Room;
+import model.target.Target;
+
 /**
  * MansionBuilder Interface.
  */
 public interface MansionBuilder {
-
-
 
   /**
    * read the provided .txt file.
@@ -31,102 +29,111 @@ public interface MansionBuilder {
    */
   void drawWorld();
 
+  ArrayList<String> getWelcomeMessage();
+
   /**
    * the welcome message.
+   * 
    * @param turns the # of turns
    * @return the welcome message.
    */
-  ArrayList<String> welcomeMessage(int turns);
+  ArrayList<String> getBeforeGameMessage(int turns);
 
   /**
-   * get the blessings from the pet.
-   * it's a hashmap.
+   * get the blessings from the pet. it's a hashmap.
+   * 
    * @return the hashmap
    */
-  HashMap<Player, Boolean> getPetBlessings();
+  HashMap<Player, Boolean> getPetBlessingsMap();
 
   /**
    * get the dfs check hash map.
+   * 
    * @return the hashmap
    */
   HashMap<Integer, Boolean> getDfsCheckMap();
 
   /**
    * get all the players.
+   * 
    * @return an arraylist.
    */
   ArrayList<Player> getAllPlayers();
 
   /**
    * get the hashmap for total items allowed for each player.
+   * 
    * @return hashmap.
    */
   HashMap<String, Integer> getTotalItemsAllowedMap();
 
   /**
    * get the graph.
+   * 
    * @return graph
    */
   Graphics getGraph();
 
   /**
    * get the total items.
+   * 
    * @return total items
    */
   int getTotalItems();
 
   /**
    * total rooms
+   * 
    * @return the total rooms.
    */
   int getTotalRooms();
 
-  /*getter*/
+  /* getter */
   Item getItem();
 
-  /*getter*/
+  /* getter */
   Room getRoom();
 
-  /*getter*/
+  /* getter */
   String getWorldName();
 
-  /*getter*/
+  /* getter */
   Target getTarget();
 
-  /*getter*/
+  /* getter */
   ArrayList<String> getAllRoomsNamesLst();
 
-  /*getter*/
+  /* getter */
   HashMap<String, String> getPlayersNameRoomMap();
 
-  /*getter*/
+  /* getter */
   HashMap<String, ArrayList<String>> getPlayersItemsMap();
 
-  /*getter*/
+  /* getter */
   HashMap<String, Integer> getTurnsMap();
 
-  /*getter*/
+  /* getter */
   ArrayList<ArrayList<ArrayList<Integer>>> getListOfRoomCoordinates();
 
-  /*getter*/
+  /* getter */
   HashMap<String, ArrayList<String>> getAllNeighborsMap();
 
-  /*getter*/
+  /* getter */
   int getTargetHealth();
 
-  /*getter*/
+  /* getter */
   int getTargetLocation();
 
-  /*getter*/
+  /* getter */
   String getTargetName();
 
-  /*getter*/
+  /* getter */
   HashMap<String, Integer> getRoomNameIndexMap();
 
-  /*getter*/
+  /* getter */
   HashMap<String, Integer> getItemsRoomMap();
 
-  /*getter*/
+  /* getter */
   HashMap<String, Integer> getItemsDamageMap();
 
   /* getter */
@@ -147,5 +154,8 @@ public interface MansionBuilder {
   /* getter */
   Set<String> getEvidenceSet();
 
- BufferedImage getImg();
+  BufferedImage getImg();
+
+  //newly added:
+  void setAllPlayers(ArrayList<Player> allPlayers);
 }

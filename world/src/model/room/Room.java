@@ -83,9 +83,10 @@ public class Room {
    * @return all the neighbors of the current room as a String arrayList.
    */
   public ArrayList<String> getNeighbors(String roomName) {
-    int roomIndex = this.mansionBuilder.getRoomNameIndexMap().get(roomName);
+    roomName = roomName.toLowerCase();
+    int currRoomIndex = this.mansionBuilder.getRoomNameIndexMap().get(roomName);
     ArrayList<ArrayList<Integer>> coordinates =
-        this.mansionBuilder.getListOfRoomCoordinates().get(roomIndex); // gets
+        this.mansionBuilder.getListOfRoomCoordinates().get(currRoomIndex); // gets
     int x1 = coordinates.get(0).get(0);
     int y1 = coordinates.get(0).get(1);
     int x2 = coordinates.get(1).get(0);
@@ -95,12 +96,16 @@ public class Room {
     ArrayList<Integer> roomIndexes = new ArrayList<>();
     ArrayList<String> rooms = this.mansionBuilder.getAllRoomsNamesLst(); // gets all room names.
     for (int i = 0; i < rooms.size(); i++) {
-      if (i == roomIndex) {
+      if (i == currRoomIndex) {
         continue; // if it's the current room that is checking, skip it.
       }
 
       ArrayList<ArrayList<Integer>> checkedCoords = this.mansionBuilder.getListOfRoomCoordinates().get(i);
+//      System.out.println("Current room is: " + rooms.get(i));
+//      System.out.println("current room coordinates: " + checkedCoords.toString());
+
       int a1 = checkedCoords.get(0).get(0);
+
       int b1 = checkedCoords.get(0).get(1);
       int a2 = checkedCoords.get(1).get(0);
       int b2 = checkedCoords.get(1).get(1);
@@ -109,37 +114,59 @@ public class Room {
       if (y1 == b2) { // check if the room is just above.
         len = x1 + width;
         if (len >= a2 && a2 > x1) {
+//          System.out.println("here1 is: " + i);
           roomIndexes.add(i);
         } else if (a1 < len && a1 >= x1) {
+//          System.out.println("here2 is: " + i);
+
           roomIndexes.add(i);
         } else if (a1 < x1 && a2 > x2) {
+//          System.out.println("here3 is: " + i);
+
           roomIndexes.add(i);
         }
-      } else if (b1 == y2) { // check if it's below it.
+      } else if (y2 == b1) { // check if it's below it.
         len = x1 + width;
         if (a2 <= len && a2 > x1) {
           roomIndexes.add(i);
+//          System.out.println("here4 is: " + i);
+
         } else if (a1 < len && a1 >= x1) {
           roomIndexes.add(i);
+//          System.out.println("here5 is: " + i);
+
         } else if (a1 < x1 && a2 > x2) {
           roomIndexes.add(i);
+//          System.out.println("here6 is: " + i);
+
         }
       } else if (x1 == a2) { // check if it's on the left of it.
         len = y1 + height;
         if (b2 <= len && b2 > y1) {
+//          System.out.println("here7 is: " + i);
+
           roomIndexes.add(i);
         } else if (b1 >= y1 && b1 < len) {
+//          System.out.println("here8 is: " + i);
+
           roomIndexes.add(i);
         } else if (b1 < y1 && b2 > y2) {
+//          System.out.println("here9 is: " + i);
+
           roomIndexes.add(i);
         }
       } else if (x2 == a1) { // check if it's on the right.
         len = y1 + height;
         if (b2 <= len && b2 > y1) {
           roomIndexes.add(i);
+//          System.out.println("here10 is: " + i);
+
         } else if (b1 >= y1 && b1 < len) {
+//          System.out.println("here11 is: " + i);
+
           roomIndexes.add(i);
         } else if (b1 < y1 && b2 > y2) {
+//          System.out.println("here12 is: " + i);
           roomIndexes.add(i);
         }
       }
@@ -148,7 +175,7 @@ public class Room {
     ArrayList<String> allRooms = rooms;
     ArrayList<String> neighbors = new ArrayList<String>();
     for (Integer num : roomIndexes) {
-      neighbors.add(allRooms.get(num)); // the name of that neighbor room.
+      neighbors.add(allRooms.get(num).toLowerCase()); // the name of that neighbor room.
     }
     return neighbors;
   }

@@ -2,6 +2,7 @@ package view;
 
 import controller.Controller;
 
+import javax.swing.*;
 import java.awt.event.ActionListener;
 
 public interface ViewBuilder {
@@ -26,7 +27,13 @@ public interface ViewBuilder {
   * to set up the listener for the action.
   * @param actionListener the listener to be set up
   */
- void setButtonListener(ActionListener actionListener);
+ void setActionListener(ActionListener actionListener);
+
+ JTextField getTextField();
+
+ JLabel getMyLabel();
+
+ void setLabelDisplay(String message);
 
  String getInputString();
 

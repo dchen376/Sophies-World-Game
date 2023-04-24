@@ -74,7 +74,7 @@ public interface PlayerBuilder {
    * @param playerName the name of the player performing the action.
    * @return the lookAround result, as a type of String.
    */
-  String lookAround();
+  ArrayList<String> lookAround();
 
   /**
    * move the player.
@@ -121,4 +121,14 @@ public interface PlayerBuilder {
   boolean isPlayerTurn();
 
   String helperArrayListToString(ArrayList<String> arrLst);
+
+ void setPlayerTotalAllowedItem(int playerTotalAllowedItem);
+
+  void setComputerOrHuman(String computerOrHuman);
+
+  void setPlayerName(String playerName);
+
+  void setPlayerRoom(String playerRoom);
+
+ int getPlayerRoomIndex();
 }

@@ -63,11 +63,9 @@ public class Target {
    * @return Integer (the room's index the TARGET just moved to)
    */
   public int targetAutomove() { // this method probably wil be called from any methods that
-    // return 1;
 
     // TARGET TARGET MOVE!!! EVERY TURN!!!! OF THE GAME!
-
-    int totalRooms = this.mansionBuilder.getItemsRoomMap().size();
+    int totalRooms = this.mansionBuilder.getTotalRooms();
     int targetLocation = this.getTargetLocation();
     if (targetLocation + 1 != totalRooms) {
       targetLocation += 1;
@@ -76,7 +74,8 @@ public class Target {
       targetLocation = 0;
       this.setTargetLocation(targetLocation);
     }
-
+    this.setTargetLocation(targetLocation);
+    System.out.println("target just autooo moooooved: " + this.targetLocation);
     return this.getTargetLocation();
   }
 
@@ -124,6 +123,12 @@ public class Target {
    */
   public void setTargetName(String targetName) {
     this.targetName = targetName;
+  }
+
+  //newly added:
+  public String getTargetLocationName (){
+    int index = this.getTargetLocation();
+    return this.mansionBuilder.getAllRoomsNamesLst().get(index);
   }
 
 }

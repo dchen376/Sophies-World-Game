@@ -1,11 +1,5 @@
 package model.mansion;
 
-import model.item.Item;
-import model.pet.Pet;
-import model.player.Player;
-import model.room.Room;
-import model.target.Target;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -16,14 +10,23 @@ import java.util.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import model.item.Item;
+import model.pet.Pet;
+import model.player.Player;
+import model.room.Room;
+import model.target.Target;
 
-/** todo: this mock model don't need to actual implement BUT APPEND!!
- * this is the model class.
+/**
+ * todo: this mock model don't need to actual implement BUT APPEND!! this is the
+ * model class.
  */
 public class MansionMockModel implements MansionBuilder {
 
   // fields
 
+  private static final int BUFFER_SIZE = 4096; // note declare else where
+  /* player attributes */
+  Set<String> evidenceSet = new HashSet<String>(); // note: declare else where
   /* objects info */
   private Pet pet;
   private Item item;
@@ -33,17 +36,10 @@ public class MansionMockModel implements MansionBuilder {
   private HashMap<String, String> playersNameRoomMap; // update each time the players/target
   private HashMap<String, ArrayList<String>> playersItemsMap; // *just 'put' new items into this
   private HashMap<String, Integer> turnsMap; // defaults are true -> 1.
-
   /* graph info */
   private Graphics graph;
-  private static final int BUFFER_SIZE = 4096; // note declare else where
-
   /* world attributes */
   private String worldName;
-
-  /* player attributes */
-  Set<String> evidenceSet = new HashSet<String>(); // note: declare else where
-
   /* pet attributes */
   private HashMap<Player, Boolean> petBlessings;
   private HashMap<Integer, Boolean> dfsCheckMap;
@@ -132,7 +128,8 @@ public class MansionMockModel implements MansionBuilder {
     for (int i = 2; i < eachLine.length; i++) { /// parsing the first line info after '35 36 ':
       eachLineStringBuilder.append(eachLine[i]).append(" ");
     }
-    //    eachLineStringBuilder.deleteCharAt(eachLine.length - 1); /// deleting the last appended val: "
+    // eachLineStringBuilder.deleteCharAt(eachLine.length - 1); /// deleting the
+    // last appended val: "
     worldName = eachLineStringBuilder.toString().trim(); /// assign 'worldName' to 'Sophie's World'.
     eachLineStringBuilder.setLength(0); /// reset the stringbuilder.
     /* 2nd line parsing */
@@ -145,7 +142,7 @@ public class MansionMockModel implements MansionBuilder {
     eachLineStringBuilder.deleteCharAt(eachLine.length - 1); /// Albert Knag
     targetName = eachLineStringBuilder.toString().trim(); /// assign 'targetName' to 'Albert Knag'.
     eachLineStringBuilder.setLength(0); // reset the stringbuilder.
-    //    System.out.println("target nameee is: " + targetName);
+    // System.out.println("target nameee is: " + targetName);
     target.setTargetName(targetName);
 
     /* 3rd line parsing */
@@ -272,7 +269,12 @@ public class MansionMockModel implements MansionBuilder {
   }
 
   @Override
-  public ArrayList<String> welcomeMessage(int turns) {
+  public ArrayList<String> getWelcomeMessage() {
+    return null;
+  }
+
+  @Override
+  public ArrayList<String> getBeforeGameMessage(int turns) {
     ArrayList<String> welcome = new ArrayList<>();
     welcome.add(String.format("Welcome to the game: %s", this.worldName));
     welcome.add(String.format("There are %d players in this game!", this.allPlayers.size()));
@@ -289,9 +291,10 @@ public class MansionMockModel implements MansionBuilder {
 
   /* below are only getters methods. */
   @Override
-  public HashMap<Player, Boolean> getPetBlessings() {
+  public HashMap<Player, Boolean> getPetBlessingsMap() {
     return petBlessings;
   }
+
   @Override
   public HashMap<Integer, Boolean> getDfsCheckMap() {
     return dfsCheckMap;
@@ -312,7 +315,8 @@ public class MansionMockModel implements MansionBuilder {
    *
    * @return hashmap
    */
-  @Override public HashMap<String, Integer> getTotalItemsAllowedMap() {
+  @Override
+  public HashMap<String, Integer> getTotalItemsAllowedMap() {
     // return this.getAllPlayers().get(0).getTotalItemsAllowedMap();
     return totalItemsAllowedMap;
   }
@@ -322,7 +326,8 @@ public class MansionMockModel implements MansionBuilder {
    *
    * @return graphics for the graph
    */
-  @Override public Graphics getGraph() {
+  @Override
+  public Graphics getGraph() {
     return graph;
   }
 
@@ -331,7 +336,8 @@ public class MansionMockModel implements MansionBuilder {
    *
    * @return total items
    */
-  @Override public int getTotalItems() {
+  @Override
+  public int getTotalItems() {
     return totalItems;
   }
 
@@ -340,7 +346,8 @@ public class MansionMockModel implements MansionBuilder {
    *
    * @return total rooms
    */
-  @Override public int getTotalRooms() {
+  @Override
+  public int getTotalRooms() {
     return totalRooms;
   }
 
@@ -349,7 +356,8 @@ public class MansionMockModel implements MansionBuilder {
    *
    * @return item
    */
-  @Override public Item getItem() {
+  @Override
+  public Item getItem() {
     return item;
   }
 
@@ -358,7 +366,8 @@ public class MansionMockModel implements MansionBuilder {
    *
    * @return room
    */
-  @Override public Room getRoom() {
+  @Override
+  public Room getRoom() {
     return room;
   }
 
@@ -367,7 +376,8 @@ public class MansionMockModel implements MansionBuilder {
    *
    * @return name of the world
    */
-  @Override public String getWorldName() {
+  @Override
+  public String getWorldName() {
     return worldName;
   }
 
@@ -376,7 +386,8 @@ public class MansionMockModel implements MansionBuilder {
    *
    * @return get target location
    */
-  @Override public Target getTarget() {
+  @Override
+  public Target getTarget() {
     return target;
   }
 
@@ -385,7 +396,8 @@ public class MansionMockModel implements MansionBuilder {
    *
    * @return arraylist
    */
-  @Override public ArrayList<String> getAllRoomsNamesLst() {
+  @Override
+  public ArrayList<String> getAllRoomsNamesLst() {
     return allRoomsNamesLst;
   }
 
@@ -394,7 +406,8 @@ public class MansionMockModel implements MansionBuilder {
    *
    * @return hashmap
    */
-  @Override public HashMap<String, String> getPlayersNameRoomMap() {
+  @Override
+  public HashMap<String, String> getPlayersNameRoomMap() {
     return playersNameRoomMap;
   }
 
@@ -403,7 +416,8 @@ public class MansionMockModel implements MansionBuilder {
    *
    * @return hashmap
    */
-  @Override public HashMap<String, ArrayList<String>> getPlayersItemsMap() {
+  @Override
+  public HashMap<String, ArrayList<String>> getPlayersItemsMap() {
     return playersItemsMap;
   }
 
@@ -412,7 +426,8 @@ public class MansionMockModel implements MansionBuilder {
    *
    * @return hashmap
    */
-  @Override public HashMap<String, Integer> getTurnsMap() {
+  @Override
+  public HashMap<String, Integer> getTurnsMap() {
     return turnsMap;
   }
 
@@ -421,7 +436,8 @@ public class MansionMockModel implements MansionBuilder {
    *
    * @return arraylist for all the rooms' coordinates
    */
-  @Override public ArrayList<ArrayList<ArrayList<Integer>>> getListOfRoomCoordinates() {
+  @Override
+  public ArrayList<ArrayList<ArrayList<Integer>>> getListOfRoomCoordinates() {
     return listOfRoomCoordinates;
   }
 
@@ -430,7 +446,8 @@ public class MansionMockModel implements MansionBuilder {
    *
    * @return hashmap
    */
-  @Override public HashMap<String, ArrayList<String>> getAllNeighborsMap() {
+  @Override
+  public HashMap<String, ArrayList<String>> getAllNeighborsMap() {
     return allNeighborsMap;
   }
 
@@ -439,7 +456,8 @@ public class MansionMockModel implements MansionBuilder {
    *
    * @return target's health
    */
-  @Override public int getTargetHealth() {
+  @Override
+  public int getTargetHealth() {
     return targetHealth;
   }
 
@@ -448,7 +466,8 @@ public class MansionMockModel implements MansionBuilder {
    *
    * @return target location
    */
-  @Override public int getTargetLocation() {
+  @Override
+  public int getTargetLocation() {
     return targetLocation;
   }
 
@@ -457,7 +476,8 @@ public class MansionMockModel implements MansionBuilder {
    *
    * @return target name
    */
-  @Override public String getTargetName() {
+  @Override
+  public String getTargetName() {
     return this.targetName;
   }
 
@@ -466,7 +486,8 @@ public class MansionMockModel implements MansionBuilder {
    *
    * @return hashmap
    */
-  @Override public HashMap<String, Integer> getRoomNameIndexMap() {
+  @Override
+  public HashMap<String, Integer> getRoomNameIndexMap() {
     return this.roomNameIndexMap;
   }
 
@@ -475,7 +496,8 @@ public class MansionMockModel implements MansionBuilder {
    *
    * @return hashmap
    */
-  @Override public HashMap<String, Integer> getItemsRoomMap() {
+  @Override
+  public HashMap<String, Integer> getItemsRoomMap() {
     return this.itemsRoomMap;
   }
 
@@ -484,42 +506,54 @@ public class MansionMockModel implements MansionBuilder {
    *
    * @return hashmap
    */
-  @Override public HashMap<String, Integer> getItemsDamageMap() {
+  @Override
+  public HashMap<String, Integer> getItemsDamageMap() {
     return this.itemsDamageMap;
   }
 
   /* getter */
-  @Override public String getPetName() {
+  @Override
+  public String getPetName() {
     return petName;
   }
 
   // setter
-  @Override  public void setPetName(String petName) {
+  @Override
+  public void setPetName(String petName) {
     this.petName = petName;
   }
 
   // getter
-  @Override  public int getPetLocation() {
+  @Override
+  public int getPetLocation() {
     return petLocation;
   }
 
   // setter
-  @Override public void setPetLocation(int petLocation) {
+  @Override
+  public void setPetLocation(int petLocation) {
     this.petLocation = petLocation;
   }
 
   // getter
-  @Override public Pet getPet() {
+  @Override
+  public Pet getPet() {
     return pet;
   }
 
   /* getter */
-  @Override public Set<String> getEvidenceSet() {
+  @Override
+  public Set<String> getEvidenceSet() {
     return evidenceSet;
   }
 
-  @Override public BufferedImage getImg() {
+  @Override
+  public BufferedImage getImg() {
     return null;
+  }
+
+  @Override public void setAllPlayers(ArrayList<Player> allPlayers) {
+
   }
 
 } // end of MansionMockModel.java

@@ -21,9 +21,11 @@ import model.target.Target;
  */
 public class Mansion implements MansionBuilder {
 
-  private BufferedImage img;
+  private static final int BUFFER_SIZE = 4096; // note declare else where
   // fields
-
+  /* player attributes */
+  Set<String> evidenceSet = new HashSet<String>(); // note: declare else where
+  private BufferedImage img;
   /* objects info */
   private Pet pet;
   private Item item;
@@ -33,19 +35,12 @@ public class Mansion implements MansionBuilder {
   private HashMap<String, String> playersNameRoomMap; // update each time the players/target
   private HashMap<String, ArrayList<String>> playersItemsMap; // *just 'put' new items into this
   private HashMap<String, Integer> turnsMap; // defaults are true -> 1.
-
   /* graph info */
   private Graphics graph;
-  private static final int BUFFER_SIZE = 4096; // note declare else where
-
   /* world attributes */
   private String worldName;
-
-  /* player attributes */
-  Set<String> evidenceSet = new HashSet<String>(); // note: declare else where
-
   /* pet attributes */
-  private HashMap<Player, Boolean> petBlessings;
+  private HashMap<Player, Boolean> petBlessingsMap;
   private HashMap<Integer, Boolean> dfsCheckMap;
   private String petName;
   private int petLocation;
@@ -67,6 +62,8 @@ public class Mansion implements MansionBuilder {
   private HashMap<String, Integer> totalItemsAllowedMap;
   private HashMap<String, Integer> itemsDamageMap; // <item, damage>
   private HashMap<String, Integer> itemsRoomMap; // <Item, room index>
+
+  // added for milestone4-view:
 
   /**
    * Constructor.
@@ -97,7 +94,7 @@ public class Mansion implements MansionBuilder {
     // *remove the items in this hashmap once the player pick it.
     this.turnsMap = new HashMap<>();
     this.dfsCheckMap = new HashMap<>();// return false if not checked, so default are all false.
-    this.petBlessings = new HashMap<>();
+    this.petBlessingsMap = new HashMap<>();
   } // end of the constructor
 
   /**
@@ -189,7 +186,7 @@ public class Mansion implements MansionBuilder {
       for (int j = 4; j < eachLine.length; j++) {
         eachLineStringBuilder.append(eachLine[j]).append(" ");
       }
-      String strRoomName = eachLineStringBuilder.toString().trim();
+      String strRoomName = eachLineStringBuilder.toString().trim().toLowerCase();
       eachLineStringBuilder.setLength(0); // reset the stringbuilder.
       /// add to the final arraylist: 'roomNames'
       this.roomNameIndexMap.put(strRoomName, i);
@@ -209,12 +206,12 @@ public class Mansion implements MansionBuilder {
       for (int j = 2; j < eachLine.length; j++) {
         eachLineStringBuilder.append(eachLine[j]).append(" "); /// parse the rest as String: the
       }
-      String strItemName = eachLineStringBuilder.toString().trim();
+      String strItemName = eachLineStringBuilder.toString().trim().toLowerCase();
       eachLineStringBuilder.setLength(0); /// reset the string.
       /// (1) PUT to hashmap 'itemDamgeMap' during each iteration:
-      itemsDamageMap.put(strItemName, itemDamage);
+      itemsDamageMap.put(strItemName.toLowerCase(), itemDamage);
       /// (2) Put to hashmap ' itemRoomMap':
-      itemsRoomMap.put(strItemName, itemRoom);
+      itemsRoomMap.put(strItemName.toLowerCase(), itemRoom);
       /// (3) update allNeighborsMap:
       this.allNeighborsMap = this.getRoom().getAllNeighborsMap();
     } // end of the for-loop for reading the information of items.
@@ -272,26 +269,40 @@ public class Mansion implements MansionBuilder {
   }
 
   @Override
-  public ArrayList<String> welcomeMessage(int turns) {
+  public ArrayList<String> getWelcomeMessage() {
     ArrayList<String> welcome = new ArrayList<>();
+    welcome.add("Welcome!!");
     welcome.add(String.format("Welcome to the game: %s", this.worldName));
+    welcome.add("Welcome, Players!!");
+    welcome.add("Our target in this game is: " + this.getTargetName());
+    welcome.add("Target's initial health: " + this.getTargetHealth());
+    welcome.add("Our magical pet is: " + this.getPetName());
+    welcome.add("HOORAYYYY!!!");
+    return welcome;
+  }
+
+  @Override
+  public ArrayList<String> getBeforeGameMessage(int turns) {
+    ArrayList<String> welcome = new ArrayList<>();
+    welcome.add(String.format("All Right!! Game Staring SOON!!! :P "));
     welcome.add(String.format("There are %d players in this game!", this.allPlayers.size()));
     welcome.add(String.format("Target and Pet both starting at the first starting room: %s",
         this.allRoomsNamesLst.get(0)));
-    for (Player player : this.getAllPlayers()) {
-      welcome.add(String.format("Player, %s, chose to start at room: %s", player.getPlayerName(),
-          player.getPlayerRoom()));
-    }
+//    for (Player player : this.getAllPlayers()) {
+//      welcome.add(String.format("Player, %s, chose to start at room: %s", player.getPlayerName(),
+//          player.getPlayerRoom()));
+//    }
     welcome.add(String.format("there are %d turns for this game! GOOD LUCK!!!", turns));
-    welcome.add("Game is starting NOW!");
+    welcome.add("Game STARTING NOW!");
     return welcome;
   }
 
   /* below are only getters methods. */
   @Override
-  public HashMap<Player, Boolean> getPetBlessings() {
-    return petBlessings;
+  public HashMap<Player, Boolean> getPetBlessingsMap() {
+    return petBlessingsMap;
   }
+
   @Override
   public HashMap<Integer, Boolean> getDfsCheckMap() {
     return dfsCheckMap;
@@ -312,7 +323,8 @@ public class Mansion implements MansionBuilder {
    * 
    * @return hashmap
    */
-  @Override public HashMap<String, Integer> getTotalItemsAllowedMap() {
+  @Override
+  public HashMap<String, Integer> getTotalItemsAllowedMap() {
     // return this.getAllPlayers().get(0).getTotalItemsAllowedMap();
     return totalItemsAllowedMap;
   }
@@ -322,7 +334,8 @@ public class Mansion implements MansionBuilder {
    * 
    * @return graphics for the graph
    */
-  @Override public Graphics getGraph() {
+  @Override
+  public Graphics getGraph() {
     return graph;
   }
 
@@ -331,7 +344,8 @@ public class Mansion implements MansionBuilder {
    * 
    * @return total items
    */
-  @Override public int getTotalItems() {
+  @Override
+  public int getTotalItems() {
     return totalItems;
   }
 
@@ -340,7 +354,8 @@ public class Mansion implements MansionBuilder {
    * 
    * @return total rooms
    */
-  @Override public int getTotalRooms() {
+  @Override
+  public int getTotalRooms() {
     return totalRooms;
   }
 
@@ -349,7 +364,8 @@ public class Mansion implements MansionBuilder {
    * 
    * @return item
    */
-  @Override public Item getItem() {
+  @Override
+  public Item getItem() {
     return item;
   }
 
@@ -358,7 +374,8 @@ public class Mansion implements MansionBuilder {
    * 
    * @return room
    */
-  @Override public Room getRoom() {
+  @Override
+  public Room getRoom() {
     return room;
   }
 
@@ -367,7 +384,8 @@ public class Mansion implements MansionBuilder {
    * 
    * @return name of the world
    */
-  @Override public String getWorldName() {
+  @Override
+  public String getWorldName() {
     return worldName;
   }
 
@@ -376,7 +394,8 @@ public class Mansion implements MansionBuilder {
    * 
    * @return get target location
    */
-  @Override public Target getTarget() {
+  @Override
+  public Target getTarget() {
     return target;
   }
 
@@ -385,7 +404,8 @@ public class Mansion implements MansionBuilder {
    * 
    * @return arraylist
    */
-  @Override public ArrayList<String> getAllRoomsNamesLst() {
+  @Override
+  public ArrayList<String> getAllRoomsNamesLst() {
     return allRoomsNamesLst;
   }
 
@@ -394,7 +414,8 @@ public class Mansion implements MansionBuilder {
    * 
    * @return hashmap
    */
-  @Override public HashMap<String, String> getPlayersNameRoomMap() {
+  @Override
+  public HashMap<String, String> getPlayersNameRoomMap() {
     return playersNameRoomMap;
   }
 
@@ -403,7 +424,8 @@ public class Mansion implements MansionBuilder {
    * 
    * @return hashmap
    */
-  @Override public HashMap<String, ArrayList<String>> getPlayersItemsMap() {
+  @Override
+  public HashMap<String, ArrayList<String>> getPlayersItemsMap() {
     return playersItemsMap;
   }
 
@@ -412,7 +434,8 @@ public class Mansion implements MansionBuilder {
    * 
    * @return hashmap
    */
-  @Override public HashMap<String, Integer> getTurnsMap() {
+  @Override
+  public HashMap<String, Integer> getTurnsMap() {
     return turnsMap;
   }
 
@@ -421,7 +444,8 @@ public class Mansion implements MansionBuilder {
    * 
    * @return arraylist for all the rooms' coordinates
    */
-  @Override public ArrayList<ArrayList<ArrayList<Integer>>> getListOfRoomCoordinates() {
+  @Override
+  public ArrayList<ArrayList<ArrayList<Integer>>> getListOfRoomCoordinates() {
     return listOfRoomCoordinates;
   }
 
@@ -430,7 +454,8 @@ public class Mansion implements MansionBuilder {
    * 
    * @return hashmap
    */
-  @Override public HashMap<String, ArrayList<String>> getAllNeighborsMap() {
+  @Override
+  public HashMap<String, ArrayList<String>> getAllNeighborsMap() {
     return allNeighborsMap;
   }
 
@@ -439,8 +464,9 @@ public class Mansion implements MansionBuilder {
    * 
    * @return target's health
    */
-  @Override public int getTargetHealth() {
-    return targetHealth;
+  @Override
+  public int getTargetHealth() {
+    return this.target.getTargetHealth();
   }
 
   /**
@@ -448,8 +474,9 @@ public class Mansion implements MansionBuilder {
    * 
    * @return target location
    */
-  @Override public int getTargetLocation() {
-    return targetLocation;
+  @Override
+  public int getTargetLocation() {
+    return this.target.getTargetLocation();
   }
 
   /**
@@ -457,7 +484,8 @@ public class Mansion implements MansionBuilder {
    * 
    * @return target name
    */
-  @Override public String getTargetName() {
+  @Override
+  public String getTargetName() {
     return this.targetName;
   }
 
@@ -466,7 +494,8 @@ public class Mansion implements MansionBuilder {
    * 
    * @return hashmap
    */
-  @Override public HashMap<String, Integer> getRoomNameIndexMap() {
+  @Override
+  public HashMap<String, Integer> getRoomNameIndexMap() {
     return this.roomNameIndexMap;
   }
 
@@ -475,7 +504,8 @@ public class Mansion implements MansionBuilder {
    * 
    * @return hashmap
    */
-  @Override public HashMap<String, Integer> getItemsRoomMap() {
+  @Override
+  public HashMap<String, Integer> getItemsRoomMap() {
     return this.itemsRoomMap;
   }
 
@@ -484,42 +514,57 @@ public class Mansion implements MansionBuilder {
    * 
    * @return hashmap
    */
-  @Override public HashMap<String, Integer> getItemsDamageMap() {
+  @Override
+  public HashMap<String, Integer> getItemsDamageMap() {
     return this.itemsDamageMap;
   }
 
   /* getter */
-  @Override public String getPetName() {
+  @Override
+  public String getPetName() {
     return petName;
   }
 
   // setter
-  @Override  public void setPetName(String petName) {
+  @Override
+  public void setPetName(String petName) {
     this.petName = petName;
   }
 
   // getter
-  @Override  public int getPetLocation() {
+  @Override
+  public int getPetLocation() {
     return petLocation;
   }
 
   // setter
-  @Override public void setPetLocation(int petLocation) {
+  @Override
+  public void setPetLocation(int petLocation) {
     this.petLocation = petLocation;
   }
 
   // getter
-  @Override public Pet getPet() {
+  @Override
+  public Pet getPet() {
     return pet;
   }
 
   /* getter */
-  @Override public Set<String> getEvidenceSet() {
+  @Override
+  public Set<String> getEvidenceSet() {
     return evidenceSet;
   }
 
   @Override
   public BufferedImage getImg() {
     return img;
+  }
+
+
+
+  //newly added:
+@Override
+  public void setAllPlayers(ArrayList<Player> allPlayers) {
+    this.allPlayers = allPlayers;
   }
 } // end of Mansion.java

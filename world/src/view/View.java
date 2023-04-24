@@ -13,8 +13,8 @@ public class View extends JFrame implements ViewBuilder{
  private JButton exitButton;
  private JButton confirmButton;
 
- private JTextField input = new JTextField();
- private JLabel label = new JLabel("Welcome to the game! Click \"Confirm\" to Start!!");
+ private JTextField textField;
+ private JLabel myLabel;
 
 
 
@@ -33,12 +33,19 @@ public class View extends JFrame implements ViewBuilder{
   this.setLayout(new FlowLayout(FlowLayout.CENTER)); // set the layout manager
   this.setTitle("Sophie's World ");
 
+  /*add gameLabel*/
+  this.myLabel = new JLabel("Welcome to the game! Click \"Confirm\" to Start!!");
+//  Dimension labelSize = myLabel.getPreferredSize();
+//  labelSize.height = 250;
+//  myLabel.setPreferredSize(labelSize);
+
   // add Jpanel -> JFrame
   GamePanel gameBoard = new GamePanel(model);
   this.add(gameBoard);
 
-  add(this.label);
-  add(this.input);
+  this.textField= new JTextField(20);
+  add(this.myLabel);
+  add(this.textField);
 
   this.confirmButton = new JButton("Confirm");
   this.confirmButton.setActionCommand("Confirm Button");
@@ -66,11 +73,13 @@ public class View extends JFrame implements ViewBuilder{
 
  @Override public void makeVisible() {
   setVisible(true); // set it visible to display.
+  this.textField.setVisible(false);
   pack();
 
  }
 
- @Override public void setButtonListener(ActionListener actionListener) {
+ @Override public void setActionListener(ActionListener actionListener) {
+  /*adding action for each button*/
   exitButton.addActionListener(actionListener);
   confirmButton.addActionListener(actionListener);
  }
@@ -80,17 +89,30 @@ public class View extends JFrame implements ViewBuilder{
 
  }
 
+ @Override
+ public JTextField getTextField() {
+  return textField;
+ }
+ @Override
+ public JLabel getMyLabel() {
+  return myLabel;
+ }
 
+ @Override
+ public void setLabelDisplay(String message) {
+//  this.gameLabel = gameLabel;
+  this.myLabel.setText(message);
+ }
 
  @Override
  public String getInputString() {
-  return input.getText();
+  return textField.getText();
  }
 
 
  @Override
  public void clearInputString() {
-  input.setText("");
+  textField.setText("");
  }
 
 
