@@ -48,6 +48,8 @@ public class Controller implements ActionListener {
   private String pRoom;
   private String pType;
   private int totalAllowed;
+  private int currIndexPlayer;
+  private boolean stageTwoEnd;
 
   /**
    * Constructor.
@@ -90,6 +92,9 @@ public class Controller implements ActionListener {
     this.enterGame = false;
     this.gameEnd = false;
     this.failAttempt = false;
+    this.currIndexPlayer = 0;
+    this.stageTwoEnd = false;
+
   } // end of constructor.
 
   /**
@@ -126,8 +131,11 @@ public class Controller implements ActionListener {
             this.setTotalPlayers(Integer.parseInt(this.view.getTextField().getText()));
             System.out.println("and total player is: " + this.view.getInputString());
             this.totalPlayers = Integer.parseInt(this.view.getInputString());
+            System.out.println("total player: ");
             this.messageLst = this.getMessageLst();
-          } else if (this.tracker <= (this.totalPlayers * 4)) { // set player values x4.
+          } else if (this.tracker <= (this.totalPlayers * 4)  + 1) { // set player values x4.
+//          } else if (!this.stageTwoEnd) { // set player values x4.
+
 
 
 
@@ -171,28 +179,32 @@ public class Controller implements ActionListener {
             } else if (this.track_four == 3) { // == 3. player total items.
 //              this.model.getAllPlayers().get(this.track_player).setPlayerTotalAllowedItem(Integer.parseInt(this.view.getTextField().getText()));
               System.out.println("text is : " + this.view.getTextField().getText());
-              System.out.println("player name is: " + this.currPlayer.getPlayerName());
-              System.out.println("current hash map size: " + this.model.getTotalItemsAllowedMap().size());
+//              System.out.println("player name is: " + this.currPlayer.getPlayerName());
+//              System.out.println("current hash map size: " + this.model.getTotalItemsAllowedMap().size());
 //              this.model.getTotalItemsAllowedMap().put(this.currPlayer.getPlayerName(), Integer.parseInt(this.view.getTextField().getText()));
               track_four = 0;
 //              checkAssign = true;
               this.totalAllowed = Integer.parseInt(this.view.getInputString());
               this.model.getAllPlayers().add(new Player(this.model, this.pType, this.pName, this.pRoom, this.totalAllowed));
+              this.currPlayer = this.model.getAllPlayers().get(this.currIndexPlayer);
+//              if (this.currIndexPlayer == this.totalPlayers){
+//                this.stageTwoEnd = true;
+//                break;
+//              }
+              this.currIndexPlayer++;
+              this.messageLst = this.getMessageLst();
+
 
             }
-//            if (checkAssign) {
-//              this.track_player++;
-//            }
-//            System.out.println("still here? for 2nd tracking place");
           }
-//TODO here
+
           else { // for each player actions.
             this.correctInput = false; // to eliminate prev steps prompts.
 
 //            System.out.println("here now!! 3rd tracker for player actions");
-            System.out.println("Current player is: " + this.currPlayer);
+            System.out.println("Current player is: " + this.currPlayer.getPlayerName());
             String prevName = this.currPlayer.getPlayerName();
-            /* get current player */
+            /* get current player */ //TODO here
             for (int i = 0; i < this.model.getAllPlayers().size(); i++) {
               if (this.model.getAllPlayers().get(i).getPlayerTurn()) {
                 this.currPlayer = this.model.getAllPlayers().get(i);
@@ -223,8 +235,9 @@ public class Controller implements ActionListener {
                 this.currPlayer.pcAttemptTarget();
                 this.attemptInput = false;
                 this.currentTurn++;
-                this.helperNewPromptSamePlayer();
                 this.currPlayer.setPlayerTurn(false);
+                this.helperNewPromptNextPlayer();
+
 
               } else { // with an item
                 String itemUsed = this.view.getTextField().getText();
@@ -242,8 +255,8 @@ public class Controller implements ActionListener {
                   this.currPlayer.attemptTarget(itemUsed);
                   this.attemptInput = false;
                   this.currentTurn++;
-                  this.helperNewPromptSamePlayer();
                   this.currPlayer.setPlayerTurn(false); // note set player turn
+                  this.helperNewPromptNextPlayer();
                   break;
                 } else { // for invalid item.
                   this.view.clearInputString();
@@ -269,8 +282,8 @@ public class Controller implements ActionListener {
                 this.currPlayer.movePlayer(roomPicked);
                 this.moveInput = false;
                 this.currentTurn++;
-                this.helperNewPromptSamePlayer();
                 this.currPlayer.setPlayerTurn(false); // note set player turn
+                this.helperNewPromptNextPlayer();
                 break;
               }
               else { // invalid input.
@@ -279,15 +292,8 @@ public class Controller implements ActionListener {
               }
             }
 
-            /* prompt whose turn. */ // TODO: all the prmopts
-            if (!this.enterGame) { // first round.
-//              System.out.println("first round");
-              this.view.getMyLabel()
-                  .setText(this.lstGetHTML(this.messageLst.get(this.incrementTrack())));
-              this.enterGame = true;
-            }
             /* ending the game based on conditions */
-            else if (this.model.getTargetHealth() <= 0) {
+             if (this.model.getTargetHealth() <= 0) {
 //              System.out.println("target killed");
               this.gameEnd = true;
               ArrayList<String> lst = new ArrayList<>();
@@ -427,6 +433,12 @@ public class Controller implements ActionListener {
               this.currPlayer.setPlayerTurn(false); // note set player turn
               this.currentTurn++;
             } else if ("display".equals(action) && !this.gameEnd) { // don't cost turn
+
+              if ("computer".equals(this.currPlayer.getComputerOrHuman())){
+                this.view.getTextField().setText("");
+                break;
+              }
+
               String info = this.currPlayer.displayPlayerInfo(this.currPlayer.getPlayerName());
               ArrayList<String> lstInfo = new ArrayList();
               lstInfo.add("Type yes and \"Confirm\" to continue your turn.");
@@ -910,7 +922,7 @@ public class Controller implements ActionListener {
     this.messageLst.add(new ArrayList<String>(
         Arrays.asList("Please input the total number of players for this game: ")));
 
-    for (int i = 0; i < this.model.getAllPlayers().size(); i++) {
+    for (int i = 0; i < this.totalPlayers; i++) {
       this.messageLst
           .add(new ArrayList<String>(Arrays.asList("Is this a human player or maybe a computer?")));
       this.messageLst.add(new ArrayList<String>(Arrays.asList("Please give this player a name: ")));
@@ -944,7 +956,7 @@ public class Controller implements ActionListener {
   /**
    * set the label message for current player.
    */
-  private void helperNewPromptSamePlayer() {
+  private void helperNewPromptNextPlayer() {
     this.view.clearInputString();
 
     ArrayList<String> lst = new ArrayList<>();
@@ -958,6 +970,8 @@ public class Controller implements ActionListener {
         break;
       }
     }
+
+
 
     lst.add(String.format("%S, this is your turn!", this.currPlayer.getPlayerName()));
     this.view.getMyLabel().setText(this.lstGetHTML(lst));

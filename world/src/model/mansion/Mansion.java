@@ -285,13 +285,13 @@ public class Mansion implements MansionBuilder {
   public ArrayList<String> getBeforeGameMessage(int turns) {
     ArrayList<String> welcome = new ArrayList<>();
     welcome.add(String.format("All Right!! Game Staring SOON!!! :P "));
-    welcome.add(String.format("There are %d players in this game!", this.allPlayers.size()));
+    welcome.add(String.format("There are %d players in this game!", this.getAllPlayers().size()));
     welcome.add(String.format("Target and Pet both starting at the first starting room: %s",
         this.allRoomsNamesLst.get(0)));
-//    for (Player player : this.getAllPlayers()) {
-//      welcome.add(String.format("Player, %s, chose to start at room: %s", player.getPlayerName(),
-//          player.getPlayerRoom()));
-//    }
+    for (Player player : this.getAllPlayers()) {
+      welcome.add(String.format("Player, %s, chose to start at room: %s", player.getPlayerName(),
+          player.getPlayerRoom()));
+    }
     welcome.add(String.format("there are %d turns for this game! GOOD LUCK!!!", turns));
     welcome.add("Game STARTING NOW!");
     return welcome;
